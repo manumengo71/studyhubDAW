@@ -25,5 +25,6 @@ class UsersSeeder extends Seeder
         $userProfileSeeder = new UserProfileSeeder();
         $userProfileSeeder->run($users);
         $userProfileSeeder->run($unverifiedUser);
+        $userProfileSeeder->createAdminProfile();
     }
 }
