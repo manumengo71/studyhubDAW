@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -11,9 +12,33 @@ class UserProfileSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-    */
-    public function run(): void
+     */
+    public function run($users): void
     {
-        UserProfile::factory(10)->create();
+        foreach ($users as $user) {
+            $this->createUserProfile($user);
+        }
+
+        $admin = User::where('username', 'admin')->first();
+        if ($admin && $admin->userProfile === null) {
+            UserProfile::factory()->create([
+                'user_id' => $admin->id,
+                'name' => 'AdminName',
+                'surname' => 'AdminSurname',
+                'second_surname' => 'AdminSecondSurname',
+                'birthdate' => '2024-01-01',
+                'biological_gender' => 'Masculino',
+            ]);
+        }
+    }
+
+    /**
+     * Crear users profiles
+     */
+    public function createUserProfile(User $user): void
+    {
+        UserProfile::factory()->create([
+            'user_id' => $user->id,
+        ]);
     }
 }
