@@ -33,7 +33,7 @@
 
         <div>
             <x-input-label for="birthdate" :value="__('Birthdate')" />
-            <x-text-input id="birthdate" name="birthdate" type="text" onfocus="(this.type='date')" class="mt-1 block w-full" :value="old('birthdate', optional($userProfile)->birthdate->format('d/m/Y'))" required autofocus autocomplete="birthdate" />
+            <x-text-input id="birthdate" name="birthdate" type="text" onfocus="(this.type='date')" class="mt-1 block w-full" :value="old('birthdate', optional($userProfile->birthdate)->format('d/m/Y'))" required autofocus autocomplete="birthdate" />
             <x-input-error class="mt-2" :messages="$errors->get('birthdate')" />
         </div>
 
