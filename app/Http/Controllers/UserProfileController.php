@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserProfileController extends Controller
 {
@@ -25,8 +26,25 @@ class UserProfileController extends Controller
             'biological_gender' => 'required|string|max:255',
         ]);
 
+        if ($request->hasFile('avatar')) {
+            // Eliminar la imagen actual
+            $userProfile->clearMediaCollection('users_avatar');
+
+            // Subir la nueva imagen
+            $userProfile->addMediaFromRequest('avatar')->toMediaCollection('users_avatar');
+        }elseif ($request->input('avatar-remove') == 1) {
+            $userProfile->clearMediaCollection('users_avatar');
+        }
+
         $userProfile->update($request->all());
 
         return redirect()->route('profile.edit')->with('status', 'Perfil actualizado correctamente.');
+    }
+
+    public function getUserAvatarById($id)
+    {
+        $avatar = DB::table('media')->where('model_id', $id)->first();
+
+        return $avatar;
     }
 }

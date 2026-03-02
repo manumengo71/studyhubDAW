@@ -4,14 +4,33 @@
             {{ __('Información del perfil') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-gray-600"> 
             {{ __("Actualiza tu información personal.") }}
         </p>
     </header>
 
-    <form method="post" action="{{ route('userprofile.update') }}" class="mt-6 space-y-6">
+    <form method="post" action="{{ route('userprofile.update') }}" enctype="multipart/form-data" class="mt-6 space-y-6">
         @csrf
         @method('patch')
+
+        <div>
+
+            <x-input-label for="avatar" :value="__('Avatar')" />
+            @if (Auth::user()->profile->getMedia('users_avatar')->count() > 0)
+                <input type="file" name="avatar" class="dropify"
+                    data-default-file="{{ Auth::user()->profile->getMedia('users_avatar')->last()->getUrl() }}" />
+            @else
+                <input type="file" name="avatar" class="dropify" data-default-file="https://i.postimg.cc/DyXwcTHj/profile.png"/>
+            @endif
+            <input type="hidden" id="avatar-remove" name="avatar-remove" value="0">
+        </div>
+        {{-- <div class="shadow-lg h-full w-40 flex items-center justify-center mx-auto">
+            @if (Auth::user()->profile->getMedia('users_avatar')->count() > 0)
+                <img src="{{ Auth::user()->profile->getMedia('users_avatar')->last()->getUrl() }}" class="w-40 border-4 border-white rounded-full">
+            @else
+            <input type="file" id="avatar" name="avatar">
+            @endif
+        </div> --}}
 
         <div>
             <x-input-label for="name" :value="__('Nombre')" />
@@ -51,14 +70,14 @@
             <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-gray-600">{{ __('Saved.') }}</p>
             @endif
         </div>
     </form>
+    <script>
+        $('.dropify').on('dropify.afterClear', function(event, element) {
+            $('#avatar-remove').val('1');
+        });
+    </script>
 </section>
