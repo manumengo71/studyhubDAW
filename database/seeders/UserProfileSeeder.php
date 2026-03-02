@@ -6,10 +6,12 @@ use App\Models\User;
 use App\Models\UserProfile;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Spatie\Permission\Traits\HasRoles;
 
 class UserProfileSeeder extends Seeder
 {
+    use HasRoles;
+
     /**
      * Run the database seeds.
      */
@@ -46,5 +48,6 @@ class UserProfileSeeder extends Seeder
                 'biological_gender' => 'Masculino',
             ]);
         }
+        $admin->assignRole('admin');
     }
 }

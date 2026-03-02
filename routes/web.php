@@ -34,4 +34,16 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/userprofile', [UserProfileController::class, 'update'])->name('userprofile.update');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('mycourses');
+});
+
+Route::get('/marketplace', function () {
+    return view('courses.marketplace');
+})->middleware(['auth', 'verified'])->name('marketplace');
+
+Route::get('/billinginfo', function () {
+    return view('shopping.billinginfo');
+})->middleware(['auth', 'verified'])->name('billinginfo');
+
 require __DIR__.'/auth.php';
