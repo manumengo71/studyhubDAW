@@ -109,7 +109,7 @@
                                     Imagen del curso
                                 </label>
                                 <input type="file" name="imageCourse" id="imageCourse" class="dropify"
-                                    data-height="100" data-default-file="https://i.postimg.cc/cHwRxVfC/logo.jpg" />
+                                    data-height="100" data-default-file="https://i.postimg.cc/HkL86Lc1/sinfoto.png" />
                             </div>
                         </div>
                     </div>

@@ -1,12 +1,12 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-20">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center pt-6">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-16 w-16 fill-current text-gray-800" />
+                        <x-application-logo class="w-16 h-16 rounded-full -translate-y-3"/>
                     </a>
                 </div>
 
@@ -28,13 +28,12 @@
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('billinginfo')" :active="request()->routeIs('billinginfo')">
-                        {{ __('Información del pago') }}
+                        {{ __('Información de pago') }}
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @can('admin')
-                        <x-nav-link>
-                            {{-- :href="route('billinginfo')" :active="request()->routeIs('billinginfo')" --}}
+                        <x-nav-link :href="route('admin')" :active="request()->routeIs('billinginfo')">
                             {{ __('Acceso admin') }}
                         </x-nav-link>
                     @endcan

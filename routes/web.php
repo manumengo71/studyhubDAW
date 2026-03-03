@@ -55,3 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/createCourse', [App\Http\Controllers\CourseController::class, 'store'])->name('storeCourse');
 });
 require __DIR__.'/auth.php';
+
+Route::get('/admin', function () {
+    return view('admin.index');
+})->middleware(['auth', 'verified'])->name('admin');
