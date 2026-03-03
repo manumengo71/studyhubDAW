@@ -46,4 +46,8 @@ Route::get('/billinginfo', function () {
     return view('shopping.billinginfo');
 })->middleware(['auth', 'verified'])->name('billinginfo');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/createCourse', [App\Http\Controllers\CourseController::class, 'create'])->name('createCourse');
+    Route::post('/createCourse', [App\Http\Controllers\CourseController::class, 'store'])->name('storeCourse');
+});
 require __DIR__.'/auth.php';

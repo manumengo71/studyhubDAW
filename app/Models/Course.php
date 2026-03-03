@@ -20,5 +20,7 @@ class Course extends Model
         'short_description',
         'description',
         'language',
+        'owner_id',
+        'courses_categories_id',
     ];
 }
