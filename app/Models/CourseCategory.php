@@ -11,5 +11,9 @@ class CourseCategory extends Model
 
     protected $table = 'courses_categories';
     protected $primaryKey = 'id';
+    protected $fillable = [
+        'name',
+        'description',
+    ];
 
 }
