@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\Course;
+use App\Models\CourseCategory;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,7 +41,9 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/marketplace', function () {
-    return view('courses.marketplace');
+    $courses = Course::all();
+    $temas = CourseCategory::all();
+    return view('courses.marketplace', compact('courses', 'temas'));
 })->middleware(['auth', 'verified'])->name('marketplace');
 
 Route::get('/billinginfo', function () {

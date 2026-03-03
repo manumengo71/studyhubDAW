@@ -9,7 +9,7 @@
     <x-slot name="slot">
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('storeCourse') }}" method="POST">
+                <form action="{{ route('storeCourse') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-5">
                         <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
@@ -89,7 +89,7 @@
                             </div>
 
                             <!-- Desplegable de Categoría -->
-                            <div class="w-1/3">
+                            <div class="w-1/4">
                                 <label for="courses_categories_id" class="block text-sm font-medium text-gray-700 mb-1">
                                     Categoría
                                 </label>
@@ -103,10 +103,18 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
+
+                            <div class="">
+                                <label for="imageCourse" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Imagen del curso
+                                </label>
+                                <input type="file" name="imageCourse" id="imageCourse" class="dropify"
+                                    data-height="100" data-default-file="https://i.postimg.cc/cHwRxVfC/logo.jpg" />
+                            </div>
                         </div>
                     </div>
 
-                    <div>
+                    <div class="flex justify-center">
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
                             Crear curso

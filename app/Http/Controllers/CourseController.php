@@ -55,6 +55,16 @@ class CourseController extends Controller
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
 
+        if ($request->hasFile('imageCourse')) {
+            // Eliminar la imagen actual
+            $curso->clearMediaCollection('courses_images');
+
+            // Subir la nueva imagen
+            $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
+        } elseif ($request->input('avatar-remove') == 1) {
+            $curso->clearMediaCollection('courses_images');
+        }
+
         return redirect()->route('marketplace');
     }
 
