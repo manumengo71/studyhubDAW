@@ -56,6 +56,22 @@ Route::middleware(['auth'])->group(function () {
 });
 require __DIR__.'/auth.php';
 
-Route::get('/admin', function () {
-    return view('admin.index');
-})->middleware(['auth', 'verified'])->name('admin');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::prefix('admin')->group(function () {
+        Route::get('/', function () {
+            return view('admin.index');
+        })->name('admin');
+        Route::get('/users', function() {
+            return view('admin.listado-usuario');
+        })->name('admin.users');
+        Route::get('/courses', function() {
+            return view('admin.listado-cursos');
+        })->name('admin.courses');
+        Route::get('/categories', function() {
+            return view('admin.listado-categorias');
+        })->name('admin.categories');
+        Route::get('/roles', function() {
+            return view('admin.roles');
+        })->name('admin.roles');
+    });
+});
