@@ -15,7 +15,11 @@ class CourseController extends Controller
      */
     public function index(): View
     {
-        return view('courses.mycourses');
+        $user = auth()->user();
+        $courses = Course::withTrashed()->where('owner_id', $user->id)->paginate(5);
+        $coursesAll = Course::all();
+        $temas = CourseCategory::all();
+        return view('courses.mycourses', compact('courses', 'temas', 'user'));
     }
 
     /**
@@ -55,6 +59,8 @@ class CourseController extends Controller
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
 
+        $curso->delete();
+
         if ($request->hasFile('imageCourse')) {
             // Eliminar la imagen actual
             $curso->clearMediaCollection('courses_images');
@@ -92,11 +98,21 @@ class CourseController extends Controller
         //
     }
 
+    public function activate(Request $request)
+    {
+        $curso = Course::withTrashed()->find($request->id);
+        $curso->restore();
+
+        return redirect()->route('mycourses');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Course $course)
     {
-        //
+        $course->delete();
+
+        return redirect()->route('mycourses');
     }
 }

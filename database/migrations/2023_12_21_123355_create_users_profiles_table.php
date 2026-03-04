@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('birthdate')->nullable();
             $table->enum('biological_gender', ['Masculino', 'Femenino', 'Otro'])->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('language');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

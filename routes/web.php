@@ -38,6 +38,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('mycourses');
+
+    Route::put('/courses-activate/{id}', [App\Http\Controllers\CourseController::class, 'activate'])->name('courses.activate');
+    Route::delete('/courses/{course}', [App\Http\Controllers\CourseController::class, 'destroy'])->name('courses.destroy');
 });
 
 Route::get('/marketplace', function () {
