@@ -116,18 +116,17 @@
                                                 <span
                                                     class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                     <span aria-hidden
-                                                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                        class="absolute inset-0 bg-green-400 opacity-50 rounded-full"></span>
                                                     <span class="relative">ACTIVO</span>
                                                 </span>
                                             @else
                                                 <span
                                                     class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                     <span aria-hidden
-                                                        class="absolute inset-0 bg-red-200 opacity-50 rounded-full"></span>
+                                                        class="absolute inset-0 bg-red-400 opacity-50 rounded-full"></span>
                                                     <span class="relative">INACTIVO</span>
                                                 </span>
                                             @endif
-
                                         </td>
                                         <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm flex">
                                             <div class="flex items-center mr-4">

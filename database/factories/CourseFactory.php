@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\User;
 use App\Models\CourseCategory;
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Course>
- */
+use App\Models\Course;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 class CourseFactory extends Factory
 {
     /**
@@ -17,13 +16,15 @@ class CourseFactory extends Factory
      */
     public function definition(): array
     {
+        $categoriesIds = CourseCategory::pluck('id')->toArray();
+
         return [
-            'name' => fake()->name,
-            'short_description' => fake()->sentence,
-            'description' => fake()->paragraph,
-            'language' => fake()->languageCode,
+            'name' => $this->faker->name,
+            'short_description' => $this->faker->sentence,
+            'description' => $this->faker->paragraph,
+            'language' => $this->faker->languageCode,
             'owner_id' => User::factory(),
-            'courses_categories_id' => CourseCategory::inRandomOrder()->first()->id,
+            'courses_categories_id' => $this->faker->randomElement($categoriesIds),
         ];
     }
 }
