@@ -69,5 +69,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/categories', [App\Http\Controllers\AdminController::class, 'listCategories'])->name('listCategories');
         Route::get('/roles', [App\Http\Controllers\AdminController::class, 'listRoles'])->name('listRoles');
 
+        Route::get('/createCategory', [App\Http\Controllers\AdminController::class, 'createCategory'])->name('createCategory');
+        Route::post('/storeCategory', [App\Http\Controllers\AdminController::class, 'storeCategory'])->name('storeCategory');
+        Route::get('/createRole', [App\Http\Controllers\AdminController::class, 'createRole'])->name('createRole');
+        Route::post('/storeRole', [App\Http\Controllers\AdminController::class, 'storeRole'])->name('storeRole');
     });
 });

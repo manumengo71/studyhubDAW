@@ -18,8 +18,10 @@
                 <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id=""
                     placeholder="Buscar...">
                     <div class="lg:ml-40 ml-10 space-x-8">
+                        <form action="{{ route('createCategory') }}" method="GET">
                         <button
                             class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Nueva Categoría</button>
+                        </form>
                     </div>
             </div>
         </div>

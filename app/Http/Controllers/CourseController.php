@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseController\StoreRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -17,7 +18,6 @@ class CourseController extends Controller
     {
         $user = auth()->user();
         $courses = Course::withTrashed()->where('owner_id', $user->id)->paginate(5);
-        $coursesAll = Course::all();
         $temas = CourseCategory::all();
         return view('courses.mycourses', compact('courses', 'temas', 'user'));
     }
@@ -39,7 +39,7 @@ class CourseController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -59,6 +59,7 @@ class CourseController extends Controller
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
 
+        //
         $curso->delete();
 
         if ($request->hasFile('imageCourse')) {
@@ -71,7 +72,11 @@ class CourseController extends Controller
             $curso->clearMediaCollection('courses_images');
         }
 
-        return redirect()->route('marketplace');
+        if (url()->previous() === route('listCourses')) {
+            return redirect()->route('listCourses');
+        } else {
+            return redirect()->route('marketplace');
+        }
     }
 
     /**
@@ -115,4 +120,6 @@ class CourseController extends Controller
 
         return redirect()->route('mycourses');
     }
+
+
 }

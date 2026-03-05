@@ -33,7 +33,47 @@ class AdminController extends Controller
 
     public function listRoles()
     {
-        $roles = Role::withTrashed()->paginate(5);
+        $roles = Role::all();
         return view('admin.roles', compact('roles'));
+    }
+
+    public function createCategory(): View
+    {
+        return view('admin.createCategory');
+    }
+
+    public function storeCategory(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+        ]);
+
+        $category = CourseCategory::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+        ]);
+
+        return redirect()->route('listCategories')->with('success', 'Categoría creada correctamente');
+    }
+
+    public function createRole(): View
+    {
+        return view('admin.createRole');
+    }
+
+    public function storeRole(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'guard_name' => 'required|string',
+        ]);
+
+        $role = Role::create([
+            'name' => $request->input('name'),
+            'guard_name' => $request->input('guard_name'),
+        ]);
+
+        return redirect()->route('listRoles')->with('success', 'Rol creado correctamente');
     }
 }
