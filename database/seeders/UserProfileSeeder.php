@@ -15,21 +15,15 @@ class UserProfileSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run($users): void
+    public function run(): void
     {
-        foreach ($users as $user) {
-            $this->createUserProfile($user);
-        }
-    }
+        $users = User::all();
 
-    /**
-     * Crear users profiles
-     */
-    public function createUserProfile(User $user): void
-    {
-        UserProfile::factory()->create([
-            'user_id' => $user->id,
-        ]);
+        foreach ($users as $user) {
+            UserProfile::factory()->create([
+                'user_id' => $user->id,
+            ]);
+        }
     }
 
     /**

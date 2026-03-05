@@ -17,13 +17,14 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         $categoriesIds = CourseCategory::pluck('id')->toArray();
+        $userIds = User::pluck('id')->toArray();
 
         return [
             'name' => $this->faker->name,
             'short_description' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'language' => $this->faker->languageCode,
-            'owner_id' => User::factory(),
+            'owner_id' => $this->faker->randomElement($userIds),
             'courses_categories_id' => $this->faker->randomElement($categoriesIds),
         ];
     }

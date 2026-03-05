@@ -23,7 +23,6 @@ class UserProfileFactory extends Factory
         $biologicalGenders = ['Masculino', 'Femenino', 'Otro'];
 
         return [
-            'user_id' => User::factory(),
             'name' => fake()->name,
             'surname' => fake()->lastName,
             'second_surname' => fake()->lastName,
