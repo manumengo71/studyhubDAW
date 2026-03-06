@@ -11,8 +11,12 @@ class StoreRoleRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        // return auth()->user()->hasRole('admin');
-        return true;
+        // IMPORTANTE: En visualStudioCode salta un error al acceder a hasRole, pero funciona correctamente. (Dejo mensaje por posibles errores a futuro).
+        if (auth()->user()->hasRole('admin')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

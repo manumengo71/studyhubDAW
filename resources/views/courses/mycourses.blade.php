@@ -128,43 +128,45 @@
                                                 </span>
                                             @endif
                                         </td>
-                                        <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm flex">
-                                            <div class="flex items-center mr-4">
-                                                <form action="" method="POST" class="inline">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit"
-                                                        class="text-red-500 hover:text-red-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"
-                                                            class="w-8 h-8 mr-2" />
-                                                    </button>
-                                                </form>
-                                            </div>
+                                        <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm">
+                                            <div class="flex">
+                                                <div class="items-center">
+                                                    <form action="" method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <button type="submit"
+                                                            class="text-red-500 hover:text-red-700 flex items-center">
+                                                            <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"
+                                                                class="w-8 h-8 mr-2" />
+                                                        </button>
+                                                    </form>
+                                                </div>
 
-                                            <div class="flex items-center">
-                                                <form action="{{ route('courses.destroy', $course) }}" method="POST"
-                                                    class="inline">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit"
-                                                        class="text-red-500 hover:text-red-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/dVc5QDHc/desactivar.png"
-                                                            class="w-8 h-8 mr-2" />
-                                                    </button>
-                                                </form>
-                                            </div>
+                                                <div class="flex items-center">
+                                                    <form action="{{ route('courses.destroy', $course) }}"
+                                                        method="POST" class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                            class="text-red-500 hover:text-red-700 flex items-center">
+                                                            <img src="https://i.postimg.cc/dVc5QDHc/desactivar.png"
+                                                                class="w-8 h-8 mr-2" />
+                                                        </button>
+                                                    </form>
+                                                </div>
 
-                                            <div class="flex items-center">
-                                                <form action="{{ route('courses.activate', $course->id) }}"
-                                                    method="POST" class="inline">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="submit"
-                                                        class="text-red-500 hover:text-red-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/y8F3B855/done.png"
-                                                            class="w-8 h-8 mr-2" />
-                                                    </button>
-                                                </form>
+                                                <div class="flex items-center">
+                                                    <form action="{{ route('courses.activate', $course->id) }}"
+                                                        method="POST" class="inline">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button type="submit"
+                                                            class="text-red-500 hover:text-red-700 flex items-center">
+                                                            <img src="https://i.postimg.cc/y8F3B855/done.png"
+                                                                class="w-8 h-8 mr-2" />
+                                                        </button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

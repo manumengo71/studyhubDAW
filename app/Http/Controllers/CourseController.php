@@ -61,6 +61,8 @@ class CourseController extends Controller
         // Si recibe una imagen, se guarda.
         if ($request->hasFile('imageCourse')) {
             $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
+        } else {
+            $curso->addMediaFromUrl('https://i.postimg.cc/HkL86Lc1/sinfoto.png')->toMediaCollection('courses_images');
         }
 
         // Se redirige a la página anterior.

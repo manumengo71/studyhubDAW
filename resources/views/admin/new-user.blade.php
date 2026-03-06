@@ -13,8 +13,8 @@
                     @csrf
                     {{-- 1 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/3">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/3">
                                 <label for="username" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Username
                                 </label>
@@ -24,7 +24,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3 mt-4 md:mt-0">
                                 <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Email
                                 </label>
@@ -35,7 +35,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3 mt-4 md:mt-0">
                                 <label for="password" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Contraseña
                                 </label>
@@ -51,8 +51,8 @@
 
                     {{-- 2 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/3">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/3">
                                 <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Nombre
                                 </label>
@@ -63,7 +63,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3 mt-4 md:mt-0">
                                 <label for="surname" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Primer Apellido
                                 </label>
@@ -74,7 +74,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3 mt-4 md:mt-0">
                                 <label for="second_surname" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Segundo Apellido
                                 </label>
@@ -90,8 +90,8 @@
 
                     {{-- 3 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/4">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/4">
                                 <label for="birthdate" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Fecha de Necimiento
                                 </label>
@@ -101,7 +101,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="md:w-1/4 mt-4 md:mt-0">
                                 <label for="gender" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Género Biológico
                                 </label>
@@ -116,7 +116,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="md:w-1/4 mt-4 md:mt-0">
                                 <label for="role" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Rol
                                 </label>
@@ -131,7 +131,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="md:w-1/4 mt-4 md:mt-0">
                                 <label for="avatar" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Foto de Perfil
                                 </label>
