@@ -44,9 +44,9 @@
                         @enderror
                     </div>
                     <div class="mb-5">
-                        <div class="flex space-x-4">
+                        <div class="md:flex md:space-x-4">
                             <!-- Desplegable de Idioma -->
-                            <div class="w-1/3">
+                            <div class="md:w-1/3">
                                 <label for="language" class="block text-sm font-medium text-gray-700 mb-1">
                                     Idioma
                                 </label>
@@ -75,7 +75,7 @@
                                 @enderror
                             </div>
 
-                            <div class="w-1/3">
+                            <div class="md:w-1/3">
                                 <label for="owner_username" class="block text-sm font-medium text-gray-700 mb-1">
                                     Creador
                                 </label>
@@ -89,7 +89,7 @@
                             </div>
 
                             <!-- Desplegable de Categoría -->
-                            <div class="w-1/4">
+                            <div class="md:w-1/4">
                                 <label for="courses_categories_id" class="block text-sm font-medium text-gray-700 mb-1">
                                     Categoría
                                 </label>

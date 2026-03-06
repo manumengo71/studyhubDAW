@@ -87,7 +87,6 @@
                                                         class="w-8 h-8 mr-2" />
                                                 </a>
                                             </div>
-
                                             <div class="flex items-center">
                                                 <a href="" class="text-red-500 hover:text-red-700 flex items-center">
                                                     <img src="https://i.postimg.cc/gjvrsmwC/delete-Image.png"

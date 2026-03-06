@@ -87,12 +87,7 @@
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                @if ($user->profile->name=="")
-                                                    Sin nombre
-                                                @else
                                                 {{ $user->profile->name }}
-
-                                                @endif
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -119,10 +114,9 @@
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 @if ($user->roles == '')
                                                     Sin Rol
-                                                    @else
+                                                @else
                                                     {{ $user->roles }}
                                                 @endif
-
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm flex">

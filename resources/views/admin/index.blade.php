@@ -6,7 +6,7 @@
     </x-slot>
 
     {{-- Crear cinco botones --}}
-    <div class="flex justify-center">
+    <div class="md:flex md:justify-center">
         <a href="/admin/users">
             <button class="w-48 bg-blue-500 hover:bg-blue-700 text-white font-bold mx-8 my-8 py-2 px-4 rounded">
                 Listado de Usuarios

@@ -21,7 +21,7 @@
                     <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id=""
                         placeholder="Buscar...">
                 </div>
-                <div class="lg:ml-40 ml-10 space-x-8">
+                <div class="lg:ml-40 ml-10 space-y-4 sm:flex sm:space-x-8 sm:space-y-0">
                     <button
                         class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
                         comprados</button>
@@ -155,8 +155,8 @@
                                             </div>
 
                                             <div class="flex items-center">
-                                                <form action="{{ route('courses.activate', $course->id) }}" method="POST"
-                                                    class="inline">
+                                                <form action="{{ route('courses.activate', $course->id) }}"
+                                                    method="POST" class="inline">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="submit"

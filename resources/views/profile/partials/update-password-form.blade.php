@@ -13,36 +13,36 @@
         @csrf
         @method('put')
 
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Contraseña actual')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
-        </div>
+        <div class="md:flex md:space-x-4">
+            <div class="md:w-1/3">
+                <x-input-label for="update_password_current_password" :value="__('Contraseña actual')" />
+                <x-text-input id="update_password_current_password" name="current_password" type="password"
+                    class="mt-1 block w-full" autocomplete="current-password" />
+                <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+            </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('Nueva contraseña')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-        </div>
+            <div class="md:w-1/3 mt-4 md:mt-0">
+                <x-input-label for="update_password_password" :value="__('Nueva contraseña')" />
+                <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full"
+                    autocomplete="new-password" />
+                <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+            </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirmar contraseña')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
-        </div>
+            <div class="md:w-1/3 mt-4 md:mt-0">
+                <x-input-label for="update_password_password_confirmation" :value="__('Confirmar contraseña')" />
+                <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password"
+                    class="mt-1 block w-full" autocomplete="new-password" />
+                <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+            </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Guardar') }}</x-primary-button>
+            <div class="flex items-center gap-4 mt-4 md:mt-6">
+                <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
-            @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
+                @if (session('status') === 'password-updated')
+                    <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                        class="text-sm text-gray-600">{{ __('Saved.') }}</p>
+                @endif
+            </div>
         </div>
     </form>
 </section>

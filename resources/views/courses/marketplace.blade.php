@@ -43,18 +43,18 @@
                                 <div class="hidden duration-200 ease-linear group" data-carousel-item
                                     data-tema-id="{{ $tema->id }}">
                                     @if ($course->getMedia('courses_images')->count() > 0)
-                                        <div class="relative">
+                                        <div class="relative flex items-center justify-center">
                                             <img src="{{ $course->getMedia('courses_images')->last()->getUrl() }}"
-                                                class="block w-full object-cover h-full" alt="...">
+                                                class="block w-48 object-cover h-48 md:w-full md:h-full" alt="...">
                                             <div
                                                 class="absolute block w-50 -translate-x-1/2 -translate-y-1/2 bottom-5 left-1/2 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                                 <h2 class="text-2xl font-bold text-white">{{ $course->name }}</h2>
                                             </div>
                                         </div>
                                     @else
-                                        <div class="relative">
+                                        <div class="relative flex items-center justify-center">
                                             <img src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
-                                                class="block w-full object-cover h-full" alt="...">
+                                                class="block w-48 object-cover h-48 md:w-full md:h-full" alt="...">
                                             <div
                                                 class="absolute block w-50 -translate-x-1/2 -translate-y-1/2 bottom-5 left-1/2 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                                 <h2 class="text-2xl font-bold text-white">{{ $course->name }}</h2>
