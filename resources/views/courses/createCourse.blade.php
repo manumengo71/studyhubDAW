@@ -108,8 +108,12 @@
                                 <label for="imageCourse" class="block text-sm font-medium text-gray-700 mb-1">
                                     Imagen del curso
                                 </label>
-                                <input type="file" name="imageCourse" id="imageCourse" class="dropify"
-                                    data-height="100" data-default-file="https://i.postimg.cc/HkL86Lc1/sinfoto.png" />
+                                <input type="file" name="imageCourse" id="imageCourse"
+                                    accept="image/png, image/jpeg, image/jpg" class="dropify" data-height="100"
+                                    data-default-file="https://i.postimg.cc/HkL86Lc1/sinfoto.png" />
+                                @error('imageCourse')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
                     </div>

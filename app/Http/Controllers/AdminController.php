@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminController\StoreCategoryRequest;
+use App\Http\Requests\AdminController\StoreRoleRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\User;
@@ -42,18 +44,19 @@ class AdminController extends Controller
         return view('admin.createCategory');
     }
 
-    public function storeCategory(Request $request)
+    public function storeCategory(StoreCategoryRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-        ]);
+        $request->safe();
 
+        // Se valida los datos en el request.
+
+        // Se crea la categoría
         $category = CourseCategory::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
 
+        // Se devuelve a listCategories con mensaje de éxito.
         return redirect()->route('listCategories')->with('success', 'Categoría creada correctamente');
     }
 
@@ -62,18 +65,19 @@ class AdminController extends Controller
         return view('admin.createRole');
     }
 
-    public function storeRole(Request $request)
+    public function storeRole(StoreRoleRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'guard_name' => 'required|string',
-        ]);
+        $request->safe();
 
+        // Se valida los datos en el request.
+
+        // Se crea el rol
         $role = Role::create([
             'name' => $request->input('name'),
             'guard_name' => $request->input('guard_name'),
         ]);
 
+        // Devolver a listRoles con mensaje de éxito.
         return redirect()->route('listRoles')->with('success', 'Rol creado correctamente');
     }
 }

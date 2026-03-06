@@ -12,8 +12,9 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
+    use HasRoles;
 
 
     /**
@@ -48,7 +49,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function profile()
-{
-    return $this->hasOne(UserProfile::class);
-}
+    {
+        return $this->hasOne(UserProfile::class);
+    }
 }

@@ -41,15 +41,11 @@ class CourseController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'short_description' => 'required|string|max:255',
-            'description' => 'required|string',
-            'language' => 'required|string',
-            'owner_id' => 'required',
-            'courses_categories_id' => 'required',
-        ]);
+        $request->safe();
 
+        // Se valida los datos en el request.
+
+        // Se crea el curso
         $curso = Course::create([
             'name' => $request->input('name'),
             'short_description' => $request->input('short_description'),
@@ -59,19 +55,15 @@ class CourseController extends Controller
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
 
-        //
+        // SoftDelete del curso para que no aparezca en la lista de cursos (Se puede activar después)
         $curso->delete();
 
+        // Si recibe una imagen, se guarda.
         if ($request->hasFile('imageCourse')) {
-            // Eliminar la imagen actual
-            $curso->clearMediaCollection('courses_images');
-
-            // Subir la nueva imagen
             $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
-        } elseif ($request->input('avatar-remove') == 1) {
-            $curso->clearMediaCollection('courses_images');
         }
 
+        // Se redirige a la página anterior.
         if (url()->previous() === route('listCourses')) {
             return redirect()->route('listCourses');
         } else {
@@ -120,6 +112,4 @@ class CourseController extends Controller
 
         return redirect()->route('mycourses');
     }
-
-
 }
