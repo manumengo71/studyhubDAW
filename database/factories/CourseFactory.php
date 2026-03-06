@@ -18,12 +18,13 @@ class CourseFactory extends Factory
     {
         $categoriesIds = CourseCategory::pluck('id')->toArray();
         $userIds = User::pluck('id')->toArray();
+        $languages = ['Español', 'Inglés', 'Francés', 'Alemán', 'Italiano', 'Portugués', 'Chino (Mandarín)', 'Hindi', 'Árabe', 'Bengalí', 'Ruso', 'Japonés', 'Malayo', 'Telugu', 'Vietnamita', 'Coreano'];
 
         return [
             'name' => $this->faker->name,
             'short_description' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'language' => $this->faker->languageCode,
+            'language' => $this->faker->randomElement($languages),
             'owner_id' => $this->faker->randomElement($userIds),
             'courses_categories_id' => $this->faker->randomElement($categoriesIds),
         ];

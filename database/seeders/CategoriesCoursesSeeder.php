@@ -13,6 +13,16 @@ class CategoriesCoursesSeeder extends Seeder
      */
     public function run(): void
     {
-        CourseCategory::factory()->count(30)->create();
+        $categories = [
+            'Programación', 'Diseño', 'Marketing', 'Finanzas', 'Inglés', 'Cocina',
+            'Música', 'Fotografía', 'Idiomas', 'Negocios', 'Desarrollo Personal',
+            'Ofimática', 'Diseño Web', 'Desarrollo Web', 'Desarrollo Móvil', 'Videojuegos',
+            'Matemáticas', 'Ciencias', 'Humanidades', 'Ciencias Sociales', 'Estilo de Vida',
+            'Belleza', 'Salud', 'Fitness', 'Deportes', 'Otros'
+        ];
+
+        foreach ($categories as $category) {
+            CourseCategory::factory()->categoryName($category)->create();
+        }
     }
 }

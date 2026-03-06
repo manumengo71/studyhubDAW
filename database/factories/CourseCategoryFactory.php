@@ -14,17 +14,16 @@ class CourseCategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $categories = [
-            'Programación', 'Diseño', 'Marketing', 'Finanzas', 'Inglés', 'Cocina',
-            'Música', 'Fotografía', 'Idiomas', 'Negocios', 'Desarrollo Personal',
-            'Ofimática', 'Diseño Web', 'Desarrollo Web', 'Desarrollo Móvil', 'Videojuegos',
-            'Matemáticas', 'Ciencias', 'Humanidades', 'Ciencias Sociales', 'Estilo de Vida',
-            'Belleza', 'Salud', 'Fitness', 'Deportes', 'Otros'
-        ];
-
         return [
-            'name' => $this->faker->randomElement($categories),
-            'description' => $this->faker->sentence, // Cambiado de fake()->sentence a $this->faker->sentence
+            'name' => $this->faker->unique()->word,
+            'description' => $this->faker->sentence,
         ];
+    }
+
+    public function categoryName($name)
+    {
+        return $this->state([
+            'name' => $name,
+        ]);
     }
 }
