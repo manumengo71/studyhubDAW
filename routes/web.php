@@ -73,5 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/storeCategory', [App\Http\Controllers\AdminController::class, 'storeCategory'])->name('storeCategory');
         Route::get('/createRole', [App\Http\Controllers\AdminController::class, 'createRole'])->name('createRole');
         Route::post('/storeRole', [App\Http\Controllers\AdminController::class, 'storeRole'])->name('storeRole');
+        Route::get('/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('createUser');
+        Route::post('/storeUser', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('storeUser');
     });
 });

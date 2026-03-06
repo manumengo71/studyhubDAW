@@ -11,6 +11,8 @@ use App\Models\userProfile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+
 
 class AdminController extends Controller
 {
@@ -80,4 +82,55 @@ class AdminController extends Controller
         // Devolver a listRoles con mensaje de éxito.
         return redirect()->route('listRoles')->with('success', 'Rol creado correctamente');
     }
+
+    public function createUser(): View
+    {
+        $roles = Role::all();
+
+        return view('admin.new-user', compact('roles'));
+    }
+
+    public function storeUser(Request $request)
+    {
+        // dd($request);
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string',
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'second_surname' => 'required|string|max:255',
+            'birthdate' => 'required|date',
+            'gender' => 'required|string',
+            'role' => 'nullable|string',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = User::create([
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        $userProfile = UserProfile::create([
+            'user_id' => $user->id,
+            'name' => $request->input('name'),
+            'surname' => $request->input('surname'),
+            'second_surname' => $request->input('second_surname'),
+            'birthdate' => $request->input('birthdate'),
+            'biological_gender' => $request->input('gender'),
+        ]);
+
+        $userProfile = UserProfile::where('user_id', $user->id)->first();
+
+        // Subir la nueva imagen
+        if ($request->hasFile('avatar')) {
+            $userProfile->addMediaFromRequest('avatar')->toMediaCollection('users_avatar');
+        }
+
+        $user->assignRole($request->input('role'));
+
+        return redirect()->route('listUsers')->with('success', 'Usuario creado correctamente');
+    }
+
 }
