@@ -65,6 +65,10 @@
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Rol
                                     </th>
+                                <th
+                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    Status
+                                </th>
                                     <th
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Opciones
@@ -112,17 +116,34 @@
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                @if ($user->roles == '')
+                                                @if ($user->roles->isEmpty())
                                                     Sin Rol
                                                 @else
-                                                    {{ $user->roles }}
+                                                    {{ $user->roles->first()->name }}
                                                 @endif
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                            @if ($user->deleted_at == null)
+                                                <span
+                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                    <span aria-hidden
+                                                        class="absolute inset-0 bg-green-400 opacity-50 rounded-full"></span>
+                                                    <span class="relative">ACTIVO</span>
+                                                </span>
+                                            @else
+                                                <span
+                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                    <span aria-hidden
+                                                        class="absolute inset-0 bg-red-400 opacity-50 rounded-full"></span>
+                                                    <span class="relative">INACTIVO</span>
+                                                </span>
+                                            @endif
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="flex items-center mr-4">
-                                                    <a href=""
+                                                    <a href="editUser/{{ $user->id }}"
                                                         class="text-blue-500 hover:text-blue-700 flex items-center">
                                                         <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"
                                                             class="w-8 h-8 mr-2" />
@@ -130,7 +151,7 @@
                                                 </div>
 
                                                 <div class="flex items-center">
-                                                    <a href=""
+                                                    <a href="admin/deleteUSer/{{ $user->id }}"
                                                         class="text-red-500 hover:text-red-700 flex items-center">
                                                         <img src="https://i.postimg.cc/gjvrsmwC/delete-Image.png"
                                                             class="w-8 h-8 mr-2" />

@@ -36,7 +36,7 @@
                     <div class="flex justify-center">
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
-                            Crear ccategoría
+                            Crear categoría
                         </button>
                     </div>
                 </form>

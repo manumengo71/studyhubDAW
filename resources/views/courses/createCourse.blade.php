@@ -11,42 +11,56 @@
             <div class="mx-auto w-full">
                 <form action="{{ route('storeCourse') }}" method="POST" enctype="multipart/form-data">
                     @csrf
+
+
+                    {{-- 1 --}}
                     <div class="mb-5">
-                        <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
-                            Nombre del curso
-                        </label>
-                        <input type="text" name="name" id="name" placeholder="Curso numero #1"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        @error('name')
-                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                        @enderror
+                        <div class="flex space-x-4">
+                            <div class="w-1/2">
+                                <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
+                                    Nombre del curso
+                                </label>
+                                <input type="text" name="name" id="name" placeholder="Curso numero #1"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                @error('name')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="w-1/2">
+                                <label for="short_description" class="mb-3 block text-base font-medium text-[#07074D]">
+                                    Pequeña descripción
+                                </label>
+                                <input type="text" name="short_description" id="short_description"
+                                    placeholder="Curso de programación con laravel"
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                @error('short_description')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
+
+                    {{-- 2 --}}
                     <div class="mb-5">
-                        <label for="short_description" class="mb-3 block text-base font-medium text-[#07074D]">
-                            Pequeña descripción
-                        </label>
-                        <input type="text" name="short_description" id="short_description"
-                            placeholder="Curso de programación con laravel"
-                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
-                        @error('short_description')
-                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                        @enderror
+                        <div class="flex space-x-4">
+                            <div class="w-full">
+                                <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
+                                    Descripción
+                                </label>
+                                <textarea rows="4" name="description" id="description"
+                                    placeholder="En este curso aprenderas a crear un CRUD con laravel y..."
+                                    class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
+                                @error('description')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-5">
-                        <label for="description" class="mb-3 block text-base font-medium text-[#07074D]">
-                            Descripción
-                        </label>
-                        <textarea rows="4" name="description" id="description"
-                            placeholder="En este curso aprenderas a crear un CRUD con laravel y..."
-                            class="w-full resize-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"></textarea>
-                        @error('description')
-                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                        @enderror
-                    </div>
+
+                    {{-- 3 --}}
                     <div class="mb-5">
                         <div class="md:flex md:space-x-4">
-                            <!-- Desplegable de Idioma -->
-                            <div class="md:w-1/3">
+                            <div class="md:w-1/4">
                                 <label for="language" class="block text-sm font-medium text-gray-700 mb-1">
                                     Idioma
                                 </label>
@@ -74,8 +88,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-
-                            <div class="md:w-1/3">
+                            <div class="md:w-1/4">
                                 <label for="owner_username" class="block text-sm font-medium text-gray-700 mb-1">
                                     Creador
                                 </label>
@@ -87,8 +100,6 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-
-                            <!-- Desplegable de Categoría -->
                             <div class="md:w-1/4">
                                 <label for="courses_categories_id" class="block text-sm font-medium text-gray-700 mb-1">
                                     Categoría
@@ -103,8 +114,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-
-                            <div class="">
+                            <div class="w-1/4">
                                 <label for="imageCourse" class="block text-sm font-medium text-gray-700 mb-1">
                                     Imagen del curso
                                 </label>
