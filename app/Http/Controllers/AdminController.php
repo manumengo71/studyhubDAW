@@ -137,7 +137,8 @@ class AdminController extends Controller
 
     public function editUser($id)
     {
-        $user = User::findOrFail($id);
+        $user = User::withTrashed($id)->first();
+        // $user = User::findOrFail($id);
         $userProfile = UserProfile::where('user_id', $user->id)->first();
         $roles = Role::all();
 
@@ -145,52 +146,108 @@ class AdminController extends Controller
     }
 
     public function updateUser(UpdateUserRequest $request): RedirectResponse
-{
-    $request->safe();
+    {
+        $request->safe();
 
-    $user = User::findOrFail($request->id);
-    $user->update([
-        'username' => $request->input('username'),
-        'email' => $request->input('email'),
-        'password' => Hash::make($request->input('password')),
-    ]);
+        $user = User::findOrFail($request->id);
+        $user->update([
+            'username' => $request->input('username'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+        ]);
 
-    if ($user->isDirty('email')) {
-        $user->email_verified_at = null;
-    }
+        if ($user->isDirty('email')) {
+            $user->email_verified_at = null;
+        }
 
-    $user->save();
+        $user->save();
 
-    $userProfile = $user->profile;
-    $userProfile->update([
-        'name' => $request->input('name'),
-        'surname' => $request->input('surname'),
-        'second_surname' => $request->input('second_surname'),
-        'birthdate' => $request->input('birthdate'),
-        'biological_gender' => $request->input('gender')
-    ]);
+        $userProfile = $user->profile;
+        $userProfile->update([
+            'name' => $request->input('name'),
+            'surname' => $request->input('surname'),
+            'second_surname' => $request->input('second_surname'),
+            'birthdate' => $request->input('birthdate'),
+            'biological_gender' => $request->input('gender')
+        ]);
 
-    $userProfile->save();
+        $userProfile->save();
 
-    // Verificar si 'role' está presente en los datos validados
-    $role = $request->validated()['role'] ?? null;
+        // Verificar si 'role' está presente en los datos validados
+        $role = $request->validated()['role'] ?? null;
 
-    if ($role) {
-        // Actualizar el rol del usuario
-        $user->syncRoles([$role]);
-    }
+        if ($role) {
+            // Actualizar el rol del usuario
+            $user->syncRoles([$role]);
+        }
 
-    // Subir la nueva imagen
-    if ($request->hasFile('avatar')) {
-        // Eliminar la imagen actual
-        $userProfile->clearMediaCollection('users_avatar');
         // Subir la nueva imagen
-        $userProfile->addMediaFromRequest('avatar')->toMediaCollection('users_avatar');
-    } elseif ($request->input('avatar-remove') == 1) {
-        $userProfile->clearMediaCollection('users_avatar');
+        if ($request->hasFile('avatar')) {
+            // Eliminar la imagen actual
+            $userProfile->clearMediaCollection('users_avatar');
+            // Subir la nueva imagen
+            $userProfile->addMediaFromRequest('avatar')->toMediaCollection('users_avatar');
+        } elseif ($request->input('avatar-remove') == 1) {
+            $userProfile->clearMediaCollection('users_avatar');
+        }
+
+        return Redirect::route('listUsers')->with('success', 'Usuario actualizado correctamente');
     }
 
-    return Redirect::route('listUsers')->with('success', 'Usuario actualizado correctamente');
+    public function activateUser(Request $request)
+    {
+        $user = User::withTrashed()->find($request->id);
+        $user->restore();
+
+        return redirect()->route('listUsers');
+    }
+
+    public function disableUser(User $user)
+    {
+        $user->delete();
+
+        return redirect()->route('listUsers');
+    }
+
+    public function deleteUser(User $user)
+{
+    // Obtener todos los cursos del usuario
+    $courses = Course::where('owner_id', $user->id)->get();
+
+    // Obtener id del usuario StudyHub-App
+    $academy = User::where('username', 'StudyHub-App')->first();
+
+    // Modificar el owner_id de cada curso
+    foreach ($courses as $course) {
+        $course->owner_id = $academy->id; // Modificar el owner_id según sea necesario
+        $course->save(); // Guardar el curso con el nuevo owner_id
+    }
+
+    // Eliminar al usuario
+    $user->forceDelete();
+
+    return redirect()->route('listUsers');
 }
 
+    public function activateCourse(Request $request)
+    {
+        $course = Course::withTrashed()->find($request->id);
+        $course->restore();
+
+        return redirect()->route('listCourses');
+    }
+
+    public function disableCourse(Course $course)
+    {
+        $course->delete();
+
+        return redirect()->route('listCourses');
+    }
+
+    public function deleteCourse(Course $course)
+    {
+        $course->forceDelete();
+
+        return redirect()->route('listCourses');
+    }
 }

@@ -28,5 +28,14 @@ class UsersSeeder extends Seeder
         ]);
 
         $userProfileSeeder->createAdminProfile();
+
+        User::factory(1)->create([
+            'username' => 'StudyHub-App',
+            'email' => 'StudyHub-App@admin.com',
+            'password' => bcrypt('1234567890'),
+            'email_verified_at' => now(),
+        ]);
+
+        $userProfileSeeder->createAcademyProfile();
     }
 }

@@ -44,4 +44,23 @@ class UserProfileSeeder extends Seeder
         }
         $admin->assignRole('admin');
     }
+
+        /**
+     * Crear perfil de la Academia
+     */
+    public function createAcademyProfile(): void
+    {
+        $academy = User::where('username', 'StudyHub-App')->first();
+        if ($academy && !$academy->userProfile) {
+            UserProfile::factory()->create([
+                'user_id' => $academy->id,
+                'name' => 'StudyHub-App',
+                'surname' => 'StudyHubSurname',
+                'second_surname' => 'StudyHubSecondSurname',
+                'birthdate' => '2024-01-01',
+                'biological_gender' => 'Masculino',
+            ]);
+        }
+        $academy->assignRole('admin');
+    }
 }

@@ -106,7 +106,7 @@
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $user->profile->birthdate }}
+                                                {{ $user->profile->birthdate ? $user->profile->birthdate->format('d-m-Y') : '' }}
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -142,20 +142,67 @@
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
-                                                <div class="flex items-center mr-4">
-                                                    <a href="editUser/{{ $user->id }}"
-                                                        class="text-blue-500 hover:text-blue-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"
-                                                            class="w-8 h-8 mr-2" />
+                                                <div class="flex items-center">
+                                                    <a href="editUser/{{ $user->id }}" class="text-blue-500 hover:text-blue-700 flex items-center">
+                                                        <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png" class="w-8 h-8 mr-2" />
                                                     </a>
                                                 </div>
-
+                                                @if ($user->deleted_at == null)
+                                                    <div class="flex items-center">
+                                                        <form action="{{ route('users.disable', $user) }}"
+                                                            method="POST" class="inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/dVc5QDHc/desactivar.png"
+                                                                    class="w-8 h-8 mr-2" />
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    @else
+                                                    <div class="flex items-center">
+                                                        <form action="{{ route('users.activate', $user->id) }}"
+                                                            method="POST" class="inline">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/y8F3B855/done.png"
+                                                                    class="w-8 h-8 mr-2" />
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                                 <div class="flex items-center">
-                                                    <a href="admin/deleteUSer/{{ $user->id }}"
-                                                        class="text-red-500 hover:text-red-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/gjvrsmwC/delete-Image.png"
-                                                            class="w-8 h-8 mr-2" />
-                                                    </a>
+                                                    <form id="deleteForm"
+                                                        action="{{ route('users.delete', $user) }}"
+                                                        method="POST" class="inline">
+                                                        @csrf
+                                                        @method('DELETE')
+
+                                                        <div x-data="{ open: false }">
+                                                            <button type="button" @click="open = true"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/gjvrsmwC/delete-Image.png"
+                                                                    class="w-8 h-8 mr-2" />
+                                                            </button>
+
+                                                            <div x-show="open"
+                                                                class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-25">
+                                                                <div class="bg-white p-6 rounded shadow-md">
+                                                                    <p class="mb-4">¿Estás seguro de que deseas eliminar
+                                                                        este usuario?</p>
+                                                                    <div class="flex justify-end">
+                                                                        <button type="button" @click="open = false"
+                                                                            class="px-4 py-2 text-gray-600">Cancelar</button>
+                                                                        <button type="submit"
+                                                                            class="px-4 py-2 ml-2 bg-red-500 text-white">Eliminar</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </td>

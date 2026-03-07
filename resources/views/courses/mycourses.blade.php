@@ -142,31 +142,33 @@
                                                     </form>
                                                 </div>
 
-                                                <div class="flex items-center">
-                                                    <form action="{{ route('courses.destroy', $course) }}"
-                                                        method="POST" class="inline">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            class="text-red-500 hover:text-red-700 flex items-center">
-                                                            <img src="https://i.postimg.cc/dVc5QDHc/desactivar.png"
-                                                                class="w-8 h-8 mr-2" />
-                                                        </button>
-                                                    </form>
-                                                </div>
-
-                                                <div class="flex items-center">
-                                                    <form action="{{ route('courses.activate', $course->id) }}"
-                                                        method="POST" class="inline">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button type="submit"
-                                                            class="text-red-500 hover:text-red-700 flex items-center">
-                                                            <img src="https://i.postimg.cc/y8F3B855/done.png"
-                                                                class="w-8 h-8 mr-2" />
-                                                        </button>
-                                                    </form>
-                                                </div>
+                                                @if ($course->deleted_at == null)
+                                                    <div class="flex items-center">
+                                                        <form action="{{ route('courses.destroy', $course) }}"
+                                                            method="POST" class="inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/dVc5QDHc/desactivar.png"
+                                                                    class="w-8 h-8 mr-2" />
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                    @else
+                                                    <div class="flex items-center">
+                                                        <form action="{{ route('courses.activate', $course->id) }}"
+                                                            method="POST" class="inline">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/y8F3B855/done.png"
+                                                                    class="w-8 h-8 mr-2" />
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>

@@ -77,6 +77,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/storeUser', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('storeUser');
         Route::get('/editUser/{id}', [App\Http\Controllers\AdminController::class, 'editUser'])->name('editUser');
         Route::patch('/updateUser/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('updateUser');
-
+        Route::put('/activateUser/{id}', [App\Http\Controllers\AdminController::class, 'activateUser'])->name('users.activate');
+        Route::delete('/disableUser/{user}', [App\Http\Controllers\AdminController::class, 'disableUser'])->name('users.disable');
+        Route::delete('/deleteUser/{user}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.delete');
+        Route::put('/activateCourse/{id}', [App\Http\Controllers\AdminController::class, 'activateCourse'])->name('courses.activate');
+        Route::delete('/disableCourse/{course}', [App\Http\Controllers\AdminController::class, 'disableCourse'])->name('courses.disable');
+        Route::delete('/deleteCourse/{course}', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('courses.delete');
     });
 });
