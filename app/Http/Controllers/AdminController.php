@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminController\EditCategoryRequest;
+use App\Http\Requests\AdminController\EditRoleRequest;
 use App\Http\Requests\AdminController\StoreCategoryRequest;
 use App\Http\Requests\AdminController\StoreRoleRequest;
 use App\Http\Requests\AdminController\UpdateUserRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\CustomRole;
 use App\Models\User;
 use App\Models\userProfile;
 use Illuminate\Contracts\View\View;
@@ -59,6 +62,8 @@ class AdminController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
         ]);
+
+        $category->delete();
 
         // Se devuelve a listCategories con mensaje de éxito.
         return redirect()->route('listCategories')->with('success', 'Categoría creada correctamente');
@@ -135,6 +140,151 @@ class AdminController extends Controller
         return redirect()->route('listUsers')->with('success', 'Usuario creado correctamente');
     }
 
+    /**
+     * Desactivar una categoría
+     *
+     */
+    public function destroyCategory(CourseCategory $category)
+    {
+        $category->delete();
+
+        return redirect()->route('listCategories')->with('success', 'Categoría eliminada correctamente');
+    }
+
+    /**
+     * Activar una categoría
+     *
+     */
+    public function activateCategory(Request $category)
+    {
+        $category = CourseCategory::withTrashed()->find($category->category);
+
+        $category->restore();
+
+        return redirect()->route('listCategories')->with('success', 'Categoría activada correctamente');
+    }
+
+    /**
+     * Eliminar una categoría
+     *
+     */
+    public function forceDestroyCategory(Request $category)
+    {
+        $category = CourseCategory::withTrashed()->find($category->id);
+
+        $category->forceDelete();
+
+        return redirect()->route('listCategories')->with('success', 'Categoría eliminada permanentemente');
+    }
+
+    /**
+     * Vista para editar una categoría
+     *
+     */
+    public function editCategoryView(Request $category): View
+    {
+        $category = CourseCategory::withTrashed()->find($category->category);
+
+        return view('admin.editCategory', compact('category'));
+    }
+
+    /**
+     * Editar una categoría
+     *
+     */
+    public function editCategory(EditCategoryRequest $request)
+    {
+        $request->safe();
+
+        $category = CourseCategory::withTrashed()->find($request->id);
+
+        $category->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('listCategories')->with('success', 'Categoría editada correctamente');
+    }
+
+    /**
+     * Vista para editar un role
+     *
+     */
+    public function editRoleView(Request $request): View
+    {
+        $id = $request->id;
+
+        $role = CustomRole::withTrashed()->where('id', $id)->first();
+
+        return view('admin.editRole', compact('role'));
+    }
+
+    /**
+     * Editar un role
+     *
+     */
+    public function editRole(EditRoleRequest $request)
+    {
+        $request->safe();
+
+        $id = $request->id;
+
+        $role = CustomRole::withTrashed()->where('id', $id)->first();
+
+        $role->update([
+            'name' => $request->name,
+            'guard_name' => $request->guard_name,
+        ]);
+
+        return redirect()->route('listRoles')->with('success', 'Rol editado correctamente');
+    }
+
+    /**
+     * Activar un role
+     *
+     */
+    public function activateRole(Request $request)
+    {
+        $id = $request->id;
+
+        $role = CustomRole::withTrashed()->where('id', $id)->first();
+
+        $role->restore();
+
+        return redirect()->route('listRoles')->with('success', 'Rol activado correctamente');
+    }
+
+    /**
+     * Desactivar un role
+     *
+     */
+    public function destroyRole(Request $request)
+    {
+        $id = $request->id;
+
+        $role = CustomRole::withTrashed()->where('id', $id)->first();
+
+        $role->delete();
+
+        return redirect()->route('listRoles')->with('success', 'Rol desactivado correctamente');
+    }
+
+    /**
+     * Eliminar un role
+     *
+     */
+    public function forceDestroyRole(Request $request)
+    {
+        $id = $request->id;
+        $guardName = $request->guard_name;
+
+        // si el guard no existe no deja borrarlo, como hago para crear roles con guard_name diferente a web?
+        $role = CustomRole::withTrashed()->where('id', $id)->where('guard_name', $guardName)->first();
+
+        $role->forceDelete();
+
+        return redirect()->route('listRoles')->with('success', 'Rol eliminado permanentemente');
+    }
     public function editUser($id)
     {
         $user = User::withTrashed($id)->first();

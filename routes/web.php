@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-}) ->name('welcome');
+})->name('welcome');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/createCourse', [App\Http\Controllers\CourseController::class, 'create'])->name('createCourse');
     Route::post('/createCourse', [App\Http\Controllers\CourseController::class, 'store'])->name('storeCourse');
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -75,6 +75,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/storeRole', [App\Http\Controllers\AdminController::class, 'storeRole'])->name('storeRole');
         Route::get('/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('createUser');
         Route::post('/storeUser', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('storeUser');
+        Route::delete('/categories-disable/{category}', [App\Http\Controllers\AdminController::class, 'destroyCategory'])->name('category.destroy');
+        Route::put('/categories-activate/{category}', [App\Http\Controllers\AdminController::class, 'activateCategory'])->name('category.activate');
+        Route::delete('/categories-delete/{id}', [App\Http\Controllers\AdminController::class, 'forceDestroyCategory'])->name('category.forceDestroy');
+        Route::get('/categories-edit/{category}', [App\Http\Controllers\AdminController::class, 'editCategoryView'])->name('category.editView');
+        Route::patch('/categories-edit/{id}', [App\Http\Controllers\AdminController::class, 'editCategory'])->name('category.edit');
+        Route::get('/roles-edit/{id}', [App\Http\Controllers\AdminController::class, 'editRoleView'])->name('roles.editView');
+        Route::patch('/roles-edit/{id}', [App\Http\Controllers\AdminController::class, 'editRole'])->name('roles.edit');
+        Route::put('/roles-activate/{id}', [App\Http\Controllers\AdminController::class, 'activateRole'])->name('roles.activate');
+        Route::delete('/roles-disable/{id}', [App\Http\Controllers\AdminController::class, 'destroyRole'])->name('roles.disable');
+        Route::delete('/roles-delete/{id}/{guard_name}', [App\Http\Controllers\AdminController::class, 'forceDestroyRole'])->name('roles.forceDestroy');
         Route::get('/editUser/{id}', [App\Http\Controllers\AdminController::class, 'editUser'])->name('editUser');
         Route::patch('/updateUser/{id}', [App\Http\Controllers\AdminController::class, 'updateUser'])->name('updateUser');
         Route::put('/activateUser/{id}', [App\Http\Controllers\AdminController::class, 'activateUser'])->name('users.activate');

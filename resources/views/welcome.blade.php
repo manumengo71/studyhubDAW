@@ -23,7 +23,7 @@
             <div class="w-full flex items-center justify-between">
                 <a class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
                     href="{{ route('welcome') }}">
-                    <x-application-logo /> <span class="ps-2">StudyHub</span>
+                    <x-application-logo class="w-16 h-16 rounded-full"/> <span class="ps-2">StudyHub</span>
                 </a>
 
                 <div class="flex w-1/2 justify-end content-center">
