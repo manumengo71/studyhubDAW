@@ -144,7 +144,7 @@
 
                                                 @if ($course->deleted_at == null)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('courses.destroy', $course) }}"
+                                                        <form action="{{ route('mycourses.destroy', $course) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -157,7 +157,7 @@
                                                     </div>
                                                     @else
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('courses.activate', $course->id) }}"
+                                                        <form action="{{ route('mycourses.activate', $course->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
