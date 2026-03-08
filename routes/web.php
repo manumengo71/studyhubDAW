@@ -64,8 +64,14 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
             return view('admin.index');
         })->name('admin');
 
+
         /** RUTAS PARA CATEGORIES */
         Route::get('/categories', [App\Http\Controllers\AdminController::class, 'listCategories'])->name('listCategories');
+        Route::get('/roles', [App\Http\Controllers\AdminController::class, 'listRoles'])->name('listRoles');
+
+        Route::get('/createCourse', [App\Http\Controllers\AdminController::class, 'createCourse'])->name('admin.createCourse');
+        Route::post('/storeCourse', [App\Http\Controllers\AdminController::class, 'storeCourse'])->name('admin.storeCourse');
+
         Route::get('/createCategory', [App\Http\Controllers\AdminController::class, 'createCategory'])->name('createCategory');
         Route::post('/storeCategory', [App\Http\Controllers\AdminController::class, 'storeCategory'])->name('storeCategory');
         Route::delete('/categories-disable/{category}', [App\Http\Controllers\AdminController::class, 'destroyCategory'])->name('category.destroy');
@@ -94,6 +100,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::get('/roles', [App\Http\Controllers\AdminController::class, 'listRoles'])->name('listRoles');
         Route::get('/createRole', [App\Http\Controllers\AdminController::class, 'createRole'])->name('createRole');
         Route::post('/storeRole', [App\Http\Controllers\AdminController::class, 'storeRole'])->name('storeRole');
+
         Route::get('/roles-edit/{id}', [App\Http\Controllers\AdminController::class, 'editRoleView'])->name('roles.editView');
         Route::patch('/roles-edit/{id}', [App\Http\Controllers\AdminController::class, 'editRole'])->name('roles.edit');
         Route::put('/roles-activate/{id}', [App\Http\Controllers\AdminController::class, 'activateRole'])->name('roles.activate');

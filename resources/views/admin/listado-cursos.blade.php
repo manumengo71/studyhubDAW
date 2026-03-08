@@ -17,7 +17,9 @@
                     <input class="outline-none ml-1 block " type="text" name="" id=""
                         placeholder="Buscar...">
                     <div class="lg:ml-40 ml-10 space-x-8">
-                        <form action="{{ route('createCourse') }}" method="GET">
+                        <form action="{{ route('admin.createCourse') }}" method="GET">
+                            @method('GET')
+                            @csrf
                             <button
                                 class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Nuevo
                                 Curso</button>

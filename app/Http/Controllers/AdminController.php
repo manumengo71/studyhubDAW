@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminController\EditCategoryRequest;
 use App\Http\Requests\AdminController\EditRoleRequest;
 use App\Http\Requests\AdminController\StoreCategoryRequest;
+use App\Http\Requests\AdminController\StoreCourseRequest;
 use App\Http\Requests\AdminController\StoreRoleRequest;
 use App\Http\Requests\AdminController\UpdateUserRequest;
 use App\Models\Course;
@@ -44,6 +45,40 @@ class AdminController extends Controller
     {
         $roles = Role::all();
         return view('admin.roles', compact('roles'));
+    }
+
+    public function storeCourse(StoreCourseRequest $request)
+    {
+        $request->safe();
+
+        $curso = Course::create([
+            'name' => $request->input('name'),
+            'short_description' => $request->input('short_description'),
+            'description' => $request->input('description'),
+            'language' => $request->input('language'),
+            'owner_id' => $request->input('owner_id'),
+            'courses_categories_id' => $request->input('courses_categories_id'),
+        ]);
+
+        // SoftDelete del curso para que no aparezca en la lista de cursos (Se puede activar después)
+        $curso->delete();
+
+
+        // Si recibe una imagen, se guarda.
+        if ($request->hasFile('imageCourse')) {
+            $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
+        } else {
+            $curso->addMediaFromUrl('https://i.postimg.cc/HkL86Lc1/sinfoto.png')->toMediaCollection('courses_images');
+        }
+
+        return redirect()->route('listCourses');
+    }
+
+    public function createCourse(): View
+    {
+        $users = User::withTrashed()->get();
+        $categories = CourseCategory::all();
+        return view('admin.createCourse', compact('users', 'categories'));
     }
 
     public function createCategory(): View
