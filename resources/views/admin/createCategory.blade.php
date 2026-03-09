@@ -9,7 +9,7 @@
     <x-slot name="slot">
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('storeCategory') }}" method="POST"">
+                <form action="{{ route('storeCategory') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-5">
                         <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
@@ -29,6 +29,18 @@
                             placeholder="Categoría para los cursos que..."
                             class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                         @error('description')
+                            <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="short_description" class="mb-3 block text-base font-medium text-[#07074D]">
+                            Imagen de la categoría
+                        </label>
+                        <input type="file" name="imageCategory" id="imageCategory"
+                            accept="image/png, image/jpeg, image/jpg" class="dropify" data-height="100"
+                            data-default-file="https://i.postimg.cc/HkL86Lc1/sinfoto.png" />
+                        @error('imageCategory')
                             <p class="text-red-500 text-xs italic">{{ $message }}</p>
                         @enderror
                     </div>

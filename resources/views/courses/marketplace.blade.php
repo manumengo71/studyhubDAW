@@ -30,110 +30,73 @@
         </form>
     </div>
 
-
+    <h1 class="text-3xl font-bold text-gray-800 m-10">Últimos 12 cursos:</h1>
     <div class="flex flex-wrap">
         @foreach ($temas as $tema)
             @if ($courses->where('courses_categories_id', $tema->id)->isNotEmpty())
-                <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4">
-                    <h2 class="text-left my-4 ml-4 font-bold text-3xl text-indigo-600 ms-10">{{ $tema->name }}</h2>
-                    <div id="animation-carousel-{{ $tema->id }}" class="relative w-auto mx-4 mt-5 mb-5"
-                        data-carousel="static">
-                        <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                            @foreach ($courses->where('courses_categories_id', $tema->id) as $course)
-                                <div class="hidden duration-200 ease-linear group" data-carousel-item
-                                    data-tema-id="{{ $tema->id }}">
-                                    @if ($course->getMedia('courses_images')->count() > 0)
-                                        <div class="relative flex items-center justify-center">
-                                            <img src="{{ $course->getMedia('courses_images')->last()->getUrl() }}"
-                                                class="block w-48 object-cover h-48 md:w-full md:h-full" alt="...">
-                                            <div
-                                                class="absolute block w-50 -translate-x-1/2 -translate-y-1/2 bottom-5 left-1/2 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                                <h2 class="text-2xl font-bold text-white">{{ $course->name }}</h2>
-                                            </div>
-                                        </div>
-                                    @else
-                                        <div class="relative flex items-center justify-center">
-                                            <img src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
-                                                class="block w-48 object-cover h-48 md:w-full md:h-full" alt="...">
-                                            <div
-                                                class="absolute block w-50 -translate-x-1/2 -translate-y-1/2 bottom-5 left-1/2 bg-black opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                                                <h2 class="text-2xl font-bold text-white">{{ $course->name }}</h2>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div>
-                            @endforeach
+                @foreach ($courses->where('courses_categories_id', $tema->id) as $course)
+                    <div
+                        class="max-w-sm w-96 bg-white px-6 pt-6 pb-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-500 m-4 md:ms-20">
+                        <h3 class="mb-3 text-xl font-bold text-indigo-600">Tema: {{ $tema->name }}</h3>
+                        <div class="relative">
+                            @if ($course->getMedia('courses_images')->count() > 0)
+                                <img class="w-full h-64 object-contain rounded-xl"
+                                    src="{{ $course->getMedia('courses_images')->last()->getUrl() }}"
+                                    alt="{{ $course->name }}">
+                            @else
+                                <img class="w-full h-56 object-contain rounded-xl"
+                                    src="https://i.postimg.cc/HkL86Lc1/sinfoto.png">
+                            @endif
+                            <p
+                                class="absolute top-0 bg-yellow-300 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
+                                PRECIO</p>
                         </div>
-
-                        <!-- Controles del carrusel -->
-                        <!-- Icono para retroceder -->
-                        <button type="button"
-                            class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                            data-carousel-prev>
-                            <span
-                                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-500/30 dark:bg-blue-800/30 group-hover:bg-blue-500/50 dark:group-hover:bg-blue-800/60 group-focus:ring-4 group-focus:ring-blue-500 dark:group-focus:ring-blue-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-blue-500 dark:text-blue-800 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="M5 1 1 5l4 4" />
-                                </svg>
-                                <span class="sr-only">Previous</span>
-                            </span>
-                        </button>
-
-                        <!-- Icono para avanzar -->
-                        <button type="button"
-                            class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-                            data-carousel-next>
-                            <span
-                                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-500/30 dark:bg-blue-800/30 group-hover:bg-blue-500/50 dark:group-hover:bg-blue-800/60 group-focus:ring-4 group-focus:ring-blue-500 dark:group-focus:ring-blue-800/70 group-focus:outline-none">
-                                <svg class="w-4 h-4 text-blue-500 dark:text-blue-800 rtl:rotate-180" aria-hidden="true"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke-width="2" d="m1 9 4-4-4-4" />
-                                </svg>
-                                <span class="sr-only">Next</span>
-                            </span>
-                        </button>
+                        <h1 class="mt-4 text-gray-800 text-2xl font-bold cursor-pointer">{{ $course->name }}</h1>
+                        <div class="my-4">
+                            <div class="flex items-center">
+                                <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/cHpxRHGN/icons8-description-50.png"
+                                    alt="Imagen">
+                                <p class="text-gray-600">{{ $course->short_description }}</p>
+                            </div>
+                            <div class="flex items-center">
+                                <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/XNPFPc4V/icons8-language-50.png"
+                                    alt="Imagen">
+                                <p class="text-gray-600">{{ $course->language }}</p>
+                            </div>
+                            <button
+                                class="mt-4 text-xl w-full text-white bg-indigo-600 py-2 rounded-xl shadow-lg">Comprar
+                                curso</button>
+                        </div>
                     </div>
-                </div>
+                @endforeach
             @endif
         @endforeach
     </div>
 
-    <script>
-        function createCarousel(carouselId) {
-            const carouselElement = document.getElementById(carouselId);
-            const carouselItems = carouselElement.querySelectorAll('[data-carousel-item]');
-            const prevButton = carouselElement.querySelector('[data-carousel-prev]');
-            const nextButton = carouselElement.querySelector('[data-carousel-next]');
-            let currentIndex = 0;
+    <h1 class="text-3xl font-bold text-gray-800 m-10">Categorías principales:</h1>
+    <div class="flex flex-wrap justify-center mb-4">
+        @foreach ($categoriasPopulares as $category)
+            <div
+                class="mr-12 max-w-sm w-64 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-lg transform m-4 hover:scale-105 transition duration-500">
+                <a href="#">
+                    <div class="relative">
+                        @if ($category->getMedia('images_categories')->count() > 0)
+                            <img class="w-full h-full rounded-full"
+                                src="{{ $category->getMedia('images_categories')->last()->getUrl() }}" alt="" />
+                        @else
+                            <img class="w-full h-full rounded-full" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
+                                alt="" />
+                        @endif
+                    </div>
+                    <div class="text-center mt-2">
+                        {{ $category->name }}
+                    </div>
+                </a>
+            </div>
 
-            const showItem = (index) => {
-                carouselItems.forEach((item, i) => {
-                    item.classList.toggle('hidden', i !== index);
-                });
-            };
-
-            const showNextItem = () => {
-                currentIndex = (currentIndex + 1) % carouselItems.length;
-                showItem(currentIndex);
-            };
-
-            const showPrevItem = () => {
-                currentIndex = (currentIndex - 1 + carouselItems.length) % carouselItems.length;
-                showItem(currentIndex);
-            };
-
-            prevButton.addEventListener('click', showPrevItem);
-            nextButton.addEventListener('click', showNextItem);
-
-            showItem(currentIndex);
-        }
-
-        // Inicializar carruseles para cada tema
-        @foreach ($temas as $tema)
-            createCarousel('animation-carousel-' + {{ $tema->id }});
+            @if ($loop->iteration % 4 == 0)
+                <div class="w-full"></div>
+            @endif
         @endforeach
-    </script>
+    </div>
 </x-app-layout>

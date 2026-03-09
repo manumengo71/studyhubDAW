@@ -5,11 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class CourseCategory extends Model
+class CourseCategory extends Model implements HasMedia
 {
     use HasFactory;
     use SoftDeletes;
+    use InteractsWithMedia;
 
     protected $table = 'courses_categories';
     protected $primaryKey = 'id';
@@ -17,5 +20,4 @@ class CourseCategory extends Model
         'name',
         'description',
     ];
-
 }

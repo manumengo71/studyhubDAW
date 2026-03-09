@@ -99,6 +99,10 @@ class AdminController extends Controller
             'description' => $request->input('description'),
         ]);
 
+        if ($request->hasFile('imageCategory')) {
+            $category->addMediaFromRequest('imageCategory')->toMediaCollection('images_categories');
+        }
+
         $category->delete();
 
         // Se devuelve a listCategories con mensaje de éxito.
@@ -384,24 +388,24 @@ class AdminController extends Controller
     }
 
     public function deleteUser(User $user)
-{
-    // Obtener todos los cursos del usuario
-    $courses = Course::where('owner_id', $user->id)->get();
+    {
+        // Obtener todos los cursos del usuario
+        $courses = Course::where('owner_id', $user->id)->get();
 
-    // Obtener id del usuario StudyHub-App
-    $academy = User::where('username', 'StudyHub-App')->first();
+        // Obtener id del usuario StudyHub-App
+        $academy = User::where('username', 'StudyHub-App')->first();
 
-    // Modificar el owner_id de cada curso
-    foreach ($courses as $course) {
-        $course->owner_id = $academy->id; // Modificar el owner_id según sea necesario
-        $course->save(); // Guardar el curso con el nuevo owner_id
+        // Modificar el owner_id de cada curso
+        foreach ($courses as $course) {
+            $course->owner_id = $academy->id; // Modificar el owner_id según sea necesario
+            $course->save(); // Guardar el curso con el nuevo owner_id
+        }
+
+        // Eliminar al usuario
+        $user->forceDelete();
+
+        return redirect()->route('listUsers');
     }
-
-    // Eliminar al usuario
-    $user->forceDelete();
-
-    return redirect()->route('listUsers');
-}
 
     public function activateCourse(Request $request)
     {

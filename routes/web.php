@@ -6,6 +6,8 @@ use App\Models\Course;
 use App\Models\CourseCategory;
 use Illuminate\Support\Facades\Route;
 
+use function Ramsey\Uuid\v1;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,9 +40,18 @@ Route::middleware('auth', 'verified')->group(function () {
 
 /** RUTAS DE MARKETPLACE */
 Route::get('/marketplace', function () {
-    $courses = Course::all();
+    $courses = Course::latest()->take(12)->get();
     $temas = CourseCategory::all();
-    return view('courses.marketplace', compact('courses', 'temas'));
+    $categoriasPopulares = CourseCategory::select('courses_categories.*')
+        ->selectSub(function ($query) {
+            $query->selectRaw('count(*)')
+                ->from('courses')
+                ->whereColumn('courses.courses_categories_id', 'courses_categories.id');
+        }, 'courses_count')
+        ->orderByDesc('courses_count')
+        ->take(8)
+        ->get();
+    return view('courses.marketplace', compact('courses', 'temas', 'categoriasPopulares'));
 })->middleware(['auth', 'verified'])->name('marketplace');
 
 /** RUTAS DE SHOPPING */
@@ -69,7 +80,6 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         /** RUTAS PARA CATEGORIES */
         Route::get('/categories', [App\Http\Controllers\AdminController::class, 'listCategories'])->name('listCategories');
-        Route::get('/roles', [App\Http\Controllers\AdminController::class, 'listRoles'])->name('listRoles');
 
         Route::get('/createCourse', [App\Http\Controllers\AdminController::class, 'createCourse'])->name('admin.createCourse');
         Route::post('/storeCourse', [App\Http\Controllers\AdminController::class, 'storeCourse'])->name('admin.storeCourse');
@@ -109,6 +119,4 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::delete('/roles-disable/{id}', [App\Http\Controllers\AdminController::class, 'destroyRole'])->name('roles.disable');
         Route::delete('/roles-delete/{id}/{guard_name}', [App\Http\Controllers\AdminController::class, 'forceDestroyRole'])->name('roles.forceDestroy');
     });
-
-
 });
