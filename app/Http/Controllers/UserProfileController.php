@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserProfileController\UpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,17 +15,11 @@ class UserProfileController extends Controller
         return view('profile.edit', compact('userProfile'));
     }
 
-    public function update(Request $request)
+    public function update(UpdateRequest $request)
     {
-        $userProfile = auth()->user()->profile;
+        $request->safe();
 
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'second_surname' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'biological_gender' => 'required|string|max:255',
-        ]);
+        $userProfile = auth()->user()->profile;
 
         if ($request->hasFile('avatar')) {
             // Eliminar la imagen actual

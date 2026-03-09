@@ -7,6 +7,7 @@ use App\Http\Requests\AdminController\EditRoleRequest;
 use App\Http\Requests\AdminController\StoreCategoryRequest;
 use App\Http\Requests\AdminController\StoreCourseRequest;
 use App\Http\Requests\AdminController\StoreRoleRequest;
+use App\Http\Requests\AdminController\StoreUserRequest;
 use App\Http\Requests\AdminController\UpdateUserRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
@@ -132,21 +133,9 @@ class AdminController extends Controller
         return view('admin.new-user', compact('roles'));
     }
 
-    public function storeUser(Request $request)
+    public function storeUser(StoreUserRequest $request)
     {
-        // dd($request);
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string',
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'second_surname' => 'required|string|max:255',
-            'birthdate' => 'required|date',
-            'gender' => 'required|string',
-            'role' => 'nullable|string',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+        $request->safe();
 
         $user = User::create([
             'username' => $request->username,

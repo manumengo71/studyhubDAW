@@ -67,23 +67,22 @@
                                 </label>
                                 <select name="language" id="language"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:border-indigo-500">
-                                    <option value="Español">Español</option>
-                                    <option value="Inglés">Inglés</option>
-                                    <option value="Francés">Francés</option>
                                     <option value="Alemán">Alemán</option>
-                                    <option value="Italiano">Italiano</option>
-                                    <option value="Portugués">Portugués</option>
-                                    <option value="Español">Español</option>
-                                    <option value="Chino (Mandarín)">Chino (Mandarín)</option>
-                                    <option value="Hindi">Hindi</option>
                                     <option value="Árabe">Árabe</option>
                                     <option value="Bengalí">Bengalí</option>
-                                    <option value="Ruso">Ruso</option>
+                                    <option value="Chino (Mandarín)">Chino (Mandarín)</option>
+                                    <option value="Coreano">Coreano</option>
+                                    <option value="Español">Español</option>
+                                    <option value="Francés">Francés</option>
+                                    <option value="Hindi">Hindi</option>
+                                    <option value="Inglés">Inglés</option>
+                                    <option value="Italiano">Italiano</option>
                                     <option value="Japonés">Japonés</option>
                                     <option value="Malayo">Malayo</option>
+                                    <option value="Portugués">Portugués</option>
+                                    <option value="Ruso">Ruso</option>
                                     <option value="Telugu">Telugu</option>
                                     <option value="Vietnamita">Vietnamita</option>
-                                    <option value="Coreano">Coreano</option>
                                 </select>
                                 @error('language')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
@@ -95,7 +94,7 @@
                                 </label>
                                 <select name="owner_id" id="owner_id"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:border-indigo-500">
-                                    @foreach ($users as $user)
+                                    @foreach ($users->sortBy('username') as $user)
                                         <option value="{{ $user->id }}">{{ $user->username }}</option>
                                     @endforeach
                                 </select>
@@ -109,7 +108,7 @@
                                 </label>
                                 <select name="courses_categories_id" id="courses_categories_id"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:border-indigo-500">
-                                    @foreach ($categories as $category)
+                                    @foreach ($categories->sortBy('name') as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>

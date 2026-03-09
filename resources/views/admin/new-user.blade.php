@@ -123,7 +123,7 @@
                                 <select name="role" id="role"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:border-indigo-500">
                                     <option value="" disabled selected>Selecciona una opción</option>
-                                    @foreach ($roles as $role)
+                                    @foreach ($roles->sortBy('name') as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
                                     @endforeach
                                 </select>

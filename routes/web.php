@@ -57,6 +57,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/createCourse', [App\Http\Controllers\CourseController::class, 'store'])->name('mycourses.storeCourse');
 });
 
+require __DIR__ . '/auth.php';
+
 /** RUTAS DE ADMIN */
 Route::middleware(['auth', 'verified', 'admin'])->group(function () {
     Route::prefix('admin')->group(function () {
@@ -108,5 +110,5 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::delete('/roles-delete/{id}/{guard_name}', [App\Http\Controllers\AdminController::class, 'forceDestroyRole'])->name('roles.forceDestroy');
     });
 
-    require __DIR__ . '/auth.php';
+
 });
