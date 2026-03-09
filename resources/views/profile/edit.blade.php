@@ -27,7 +27,12 @@
 
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div>
-                    @include('profile.partials.delete-user-form')
+                    @include('profile.partials.soft-delete-user-form')
+                </div>
+            </div>
+            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+                <div>
+                    @include('profile.partials.hard-delete-user-form')
                 </div>
             </div>
         </div>

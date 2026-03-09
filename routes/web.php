@@ -36,6 +36,7 @@ Route::middleware('auth', 'verified')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/userprofile', [UserProfileController::class, 'edit'])->name('userprofile.edit');
     Route::patch('/userprofile', [UserProfileController::class, 'update'])->name('userprofile.update');
+    Route::delete('/userprofile', [ProfileController::class, 'forceDelete'])->name('userprofile.destroy');
 });
 
 /** RUTAS DE MARKETPLACE */
