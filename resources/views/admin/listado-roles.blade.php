@@ -1,24 +1,23 @@
-@extends('admin.categorias')
+@extends('admin.roles')
 
+@section('contentRoles')
 
-@section('contentCategorias')
-
-    <div id="listadoCategorias" class="">
+    <div id="listadoRoles" class="">
         <div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                    @if($categories->isNotEmpty())
+                    @if($roles->isNotEmpty())
 
                         <table class="min-w-full leading-normal">
                             <thead>
                                 <tr>
                                     <th
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Nombre de la categoría
+                                        Nombre del rol
                                     </th>
                                     <th
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Descripción
+                                        guard_name
                                     </th>
                                     <th
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
@@ -32,21 +31,20 @@
                             </thead>
                             <tbody>
                             <tbody>
-                                @foreach ($categories as $category)
+                                @foreach ($roles as $role)
                                     <tr>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $category->name }}
+                                                {{ $role->name }}
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $category->description }}
+                                                {{ $role->guard_name }}
                                             </p>
                                         </td>
-
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            @if ($category->deleted_at == null)
+                                            @if ($role->deleted_at == null)
                                                 <span
                                                     class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                     <span aria-hidden
@@ -62,12 +60,11 @@
                                                 </span>
                                             @endif
                                         </td>
-
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="flex items-center">
-                                                    <form action="{{ route('category.editView', $category) }}"
-                                                        method="POST" class="inline">
+                                                    <form action="{{ route('roles.editView', $role) }}" method="POST"
+                                                        class="inline">
                                                         @csrf
                                                         @method('GET')
                                                         <button type="submit"
@@ -78,9 +75,9 @@
                                                     </form>
                                                 </div>
 
-                                                @if (!$category->deleted_at == null)
+                                                @if (!$role->deleted_at == null)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('category.activate', $category) }}"
+                                                        <form action="{{ route('roles.activate', $role->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
@@ -93,7 +90,7 @@
                                                     </div>
                                                 @else
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('category.destroy', $category) }}"
+                                                        <form action="{{ route('roles.disable', $role->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -108,7 +105,7 @@
 
                                                 <div class="flex items-center">
                                                     <form id="deleteForm"
-                                                        action="{{ route('category.forceDestroy', $category->id) }}"
+                                                        action="{{ route('roles.forceDestroy', ['id' => $role->id, 'guard_name' => $role->guard_name]) }}"
                                                         method="POST" class="inline">
                                                         @csrf
                                                         @method('DELETE')
@@ -151,9 +148,6 @@
                     @endif
                 </div>
             </div>
-        </div>
-        <div class="mt-4">
-            {{ $categories->links() }}
         </div>
     </div>
 

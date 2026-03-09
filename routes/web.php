@@ -81,7 +81,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         /** RUTAS PARA CATEGORIES */
         Route::get('/categories', [App\Http\Controllers\AdminController::class, 'listCategories'])->name('listCategories');
-
+        Route::get('/categories/busqueda', [App\Http\Controllers\AdminController::class, 'searchCategories'])->name('categories.search');
         Route::get('/createCourse', [App\Http\Controllers\AdminController::class, 'createCourse'])->name('admin.createCourse');
         Route::post('/storeCourse', [App\Http\Controllers\AdminController::class, 'storeCourse'])->name('admin.storeCourse');
 
@@ -95,12 +95,14 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         /** RUTAS PARA COURSES */
         Route::get('/courses', [App\Http\Controllers\AdminController::class, 'listCourses'])->name('listCourses');
+        Route::get('/courses/busqueda', [App\Http\Controllers\AdminController::class, 'searchCourses'])->name('courses.search');
         Route::put('/activateCourse/{id}', [App\Http\Controllers\AdminController::class, 'activateCourse'])->name('courses.activate');
         Route::delete('/disableCourse/{course}', [App\Http\Controllers\AdminController::class, 'disableCourse'])->name('courses.disable');
         Route::delete('/deleteCourse/{course}', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('courses.delete');
 
         /** RUTAS PARA USERS */
         Route::get('/users', [App\Http\Controllers\AdminController::class, 'listUsers'])->name('listUsers');
+        Route::get('/users/busqueda', [App\Http\Controllers\AdminController::class, 'searchUsers'])->name('users.search');
         Route::get('/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('createUser');
         Route::post('/storeUser', [App\Http\Controllers\AdminController::class, 'storeUser'])->name('storeUser');
         Route::get('/editUser/{id}', [App\Http\Controllers\AdminController::class, 'editUser'])->name('editUser');
@@ -111,6 +113,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
 
         /** RUTAS PARA ROLES */
         Route::get('/roles', [App\Http\Controllers\AdminController::class, 'listRoles'])->name('listRoles');
+        Route::get('/roles/busqueda', [App\Http\Controllers\AdminController::class, 'searchRole'])->name('roles.search');
         Route::get('/createRole', [App\Http\Controllers\AdminController::class, 'createRole'])->name('createRole');
         Route::post('/storeRole', [App\Http\Controllers\AdminController::class, 'storeRole'])->name('storeRole');
 

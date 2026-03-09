@@ -1,58 +1,13 @@
-@extends('admin.index')
+@extends('admin.cursos')
 
-@section('content')
-    <div class="bg-white p-8 rounded-md w-full">
+@section('contentCourses')
 
+    <div id="listadoCursos" class="">
         <div>
-            <h2 class="text-gray-600 font-semibold">LISTADO DE CURSOS</h2>
-        </div>
+            <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                    @if($courses->isNotEmpty())
 
-        <div class="flex justify-between items-center md:ms-10 md:me-10">
-            <form class="flex-1 m-4">
-                <div class="flex rounded borde bg-white" x-data="{ search: '' }">
-                    <input type="search" name="search"
-                        class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
-                        placeholder="🔎 | Buscar..." x-model="search" />
-
-                    <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100"
-                        :class="(search) ? 'bg-blue-500' : 'bg-gray-500 cursor-not-allowed'"
-                        :disabled="!search">Buscar</button>
-                </div>
-                <div class="flex flex-wrap mt-4">
-                    <p class="text-gray-600 font-semibold mt-2">Filtrar por:</p>
-                    <x-checkbox-filter id="nombre" label="Nombre" />
-                    <x-checkbox-filter id="breve_descripcion" label="Breve Descripción" />
-                    <x-checkbox-filter id="descripcion" label="Descripción" />
-                    <x-checkbox-filter id="status" label="Status" />
-                    <label class="flex items-center ml-4">
-                        <select name="orden" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">">
-                            <option value="asc">Ascendente</option>
-                            <option value="desc">Descendente</option>
-                        </select>
-                    </label>
-                    <label class="flex items-center ml-4">
-                        <select name="orden" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">">
-                            @foreach ($languages as $language)
-
-                                <option value="{{ $language }}">{{ $language }}</option>
-
-                            @endforeach
-                        </select>
-                    </label>
-                </div>
-            </form>
-
-            <form action="{{ route('admin.createCourse') }}" class="-mt-16" method="GET">
-                <x-success-button class="">
-                    {{ __('Nuevo Curso') }}
-                </x-success-button>
-            </form>
-        </div>
-
-        <div id="cursos-creados" class="">
-            <div>
-                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                         <table class="min-w-full leading-normal">
                             <thead>
                                 <tr>
@@ -195,12 +150,19 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
+                        @else
+                        <div class="flex flex-col items-center justify-center m-10">
+                            <img class="w-64 h-64 mb-8" src="https://i.postimg.cc/sfq3rQXM/trsite-removebg-preview.png" alt="No results">
+                            <h2 class="text-gray-600 text-2xl font-semibold">Ningún resultado</h2>
+                            <p class="text-gray-500">No pudimos encontrar ningún resultado que coincida con tu búsqueda.</p>
+                        </div>
+                    @endif
                 </div>
             </div>
-            <div class="mt-4">
-                {{ $courses->links() }}
-            </div>
+        </div>
+        <div class="mt-4">
+            {{ $courses->links() }}
         </div>
     </div>
+
 @endsection

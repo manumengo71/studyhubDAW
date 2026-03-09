@@ -1,15 +1,14 @@
 @extends('admin.index')
 
 @section('content')
-{{-- @dd($input) --}}
     <div class="bg-white p-8 rounded-md w-full">
 
         <div>
-            <h2 class="text-gray-600 font-semibold">LISTADO DE ROLES</h2>
+            <h2 class="text-gray-600 font-semibold">LISTADO DE CATEGORIAS</h2>
         </div>
 
         <div class="flex justify-between items-center md:ms-10 md:me-10">
-            <form action="{{ route('roles.search') }}" class="flex-1 m-4">
+            <form action="{{ route('categories.search') }}" class="flex-1 m-4">
                 <div class="flex rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
                     <input type="search" name="search"
                         class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
@@ -20,9 +19,9 @@
                         :disabled="!search">Buscar</button>
                 </div>
                 <div class="flex flex-wrap mt-4">
-                    <p class="text-gray-600 font-semibold mt-2 mr-2">Filtrar por: </p>
+                    <p class="text-gray-600 font-semibold mt-2 mr-2">Filtrar por:</p>
                     <x-checkbox-filter id="nombre" name="nombre" label="Nombre" :value="$input['nombre'] ?? false ? 'checked' : '' "/>
-                    <x-checkbox-filter id="guard_name" name="guard_name" label="Guard Name" :value="$input['guard_name'] ?? false ? 'checked' : '' " />
+                    <x-checkbox-filter id="descripcion" name="descripcion" label="Descripción" :value="$input['descripcion'] ?? false ? 'checked' : '' "/>
                     <label class="flex items-center ml-4">
                         <select name="status" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">">
                             <option value="todos" {{ isset($input['status']) && $input['status'] == 'todos' ? 'selected' : '' }}>Todos</option>
@@ -39,15 +38,15 @@
                 </div>
             </form>
 
-            <form action="{{ route('createRole') }}" class="-mt-16" method="GET">
+            <form action="{{ route('createCategory') }}" class="-mt-16" method="GET">
                 <x-success-button class="">
-                    {{ __('Nuevo Rol') }}
+                    {{ __('Nueva Categoría') }}
                 </x-success-button>
             </form>
         </div>
 
         <section>
-            @yield('contentRoles') {{-- Contenido dinámico --}}
+            @yield('contentCategorias') {{-- Contenido dinámico --}}
         </section>
     </div>
 @endsection
