@@ -25,15 +25,18 @@ class AdminController extends Controller
 {
     public function listUsers()
     {
+        $roles = Role::whereHas('users')->get();
         $users = User::withTrashed()->paginate(5);
 
-        return view('admin.listado-usuario', compact('users'));
+        return view('admin.listado-usuario', compact('users', 'roles'));
     }
 
     public function listCourses()
     {
+
+        $languages = Course::select('language')->distinct()->pluck('language');
         $courses = Course::withTrashed()->paginate(5);
-        return view('admin.listado-cursos', compact('courses'));
+        return view('admin.listado-cursos', compact('courses', 'languages'));
     }
 
     public function listCategories()

@@ -8,6 +8,8 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    {{-- Styles --}}
+    <link rel="stylesheet" href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" />
 
     {{-- DROPIFY --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

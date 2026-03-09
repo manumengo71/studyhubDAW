@@ -2,30 +2,86 @@
 
 @section('content')
     <div class="bg-white p-8 rounded-md w-full">
-        <div class=" flex items-center justify-between pb-6">
-            <div>
-                <h2 class="text-gray-600 font-semibold">LISTADO DE USUARIOS</h2>
-            </div>
-            <div class="flex items-center justify-between">
-                <div class="flex items-center p-2 rounded-md">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
-                        fill="currentColor">
-                        <path fill-rule="evenodd"
-                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <input class="outline-none ml-1 block " type="text" name="" id=""
-                        placeholder="Buscar...">
-                    <div class="lg:ml-40 ml-10 space-x-8">
-                        <form action="{{ route('createUser') }}" method="GET">
-                            <button
-                                class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Nuevo
-                                Usuario</button>
-                        </form>
-                    </div>
+
+        <div>
+            <h2 class="text-gray-600 font-semibold">LISTADO DE USUARIOS</h2>
+        </div>
+
+        <div class="flex justify-between items-center md:ms-10 md:me-10">
+            <form class="flex-1 m-4">
+                <div class="flex rounded borde bg-white" x-data="{ search: '' }">
+                    <input type="search" name="search"
+                        class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
+                        placeholder="🔎 | Buscar..." x-model="search" />
+
+                    <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100"
+                        :class="(search) ? 'bg-blue-500' : 'bg-gray-500 cursor-not-allowed'"
+                        :disabled="!search">Buscar</button>
+                </div>
+                <div class="flex flex-wrap mt-4">
+                    <p class="text-gray-600 font-semibold mt-2">Filtrar por:</p>
+                    <x-checkbox-filter id="username" label="Username" />
+                    <x-checkbox-filter id="email" label="Email" />
+                    <x-checkbox-filter id="nombre" label="Nombre" />
+                    <x-checkbox-filter id="apellido1" label="Primer Apellido" />
+                    <x-checkbox-filter id="apellido2" label="Segundo Apellido" />
+                    <x-checkbox-filter id="status" label="Status" />
+                    <label class="flex items-center ml-4">
+                        <input type="date" name=fecha_nacimiento id="fecha_nacimiento"
+                            class="w-full rounded-md border border-gray-300 py-2 px-4 focus:outline-none focus:border-indigo-500">
+                    </label>
+                    <label class="flex items-center ml-4">
+                        <select name="biological_gender" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">">
+                            <option value="masc">Masculino</option>
+                            <option value="fem">Femenino</option>
+                            <option value="otro">Otro</option>
+                        </select>
+                    </label>
+                    <label class="flex items-center ml-4">
+                        <select name="role" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">">
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="flex items-center ml-4">
+                        <select name="orden" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">">
+                            <option value="asc">Ascendente</option>
+                            <option value="desc">Descendente</option>
+                        </select>
+                    </label>
+
+                </div>
+            </form>
+
+            <form action="{{ route('admin.createCourse') }}" class="-mt-16" method="GET">
+                <x-success-button class="">
+                    {{ __('Nuevo Curso') }}
+                </x-success-button>
+            </form>
+        </div>
+
+        {{-- <div class="flex items-center justify-between">
+            <div class="flex items-center p-2 rounded-md">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                        clip-rule="evenodd" />
+                </svg>
+                <input class="outline-none ml-1 block " type="text" name="" id=""
+                    placeholder="Buscar...">
+                <div class="lg:ml-40 ml-10 space-x-8">
+                    <form action="{{ route('createUser') }}" method="GET">
+                        <button
+                            class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Nuevo
+                            Usuario</button>
+                    </form>
                 </div>
             </div>
-        </div>
+        </div> --}}
+
         <div id="cursos-creados" class="">
             <div>
                 <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
