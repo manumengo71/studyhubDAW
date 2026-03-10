@@ -3,7 +3,7 @@
 @section('content')
     <!-- Últimos 12 cursos -->
     <h1 class="text-3xl font-bold text-gray-800 m-10">| Últimos cursos |</h1>
-    <div class="flex flex-wrap">
+    <div class="flex flex-wrap md:space-x-20">
         @foreach ($temas as $tema)
             @if ($courses->where('courses_categories_id', $tema->id)->isNotEmpty())
                 @foreach ($courses->where('courses_categories_id', $tema->id) as $course)
@@ -37,8 +37,10 @@
                                     alt="Imagen">
                                 <p class="text-gray-600">{{ $course->language }}</p>
                             </div>
-                            <button class="mt-4 text-xl w-full text-white bg-indigo-600 py-2 rounded-xl shadow-lg">Comprar
-                                curso</button>
+                            <a href="{{ route('mycourses.createDetail', $course->id) }}">
+                                <button
+                                    class="mt-4 text-xl w-full text-white bg-indigo-600 py-2 rounded-xl shadow-lg">Mas detalles</button>
+                            </a>
                         </div>
                     </div>
                 @endforeach

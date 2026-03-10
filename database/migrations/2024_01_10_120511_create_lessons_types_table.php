@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('lessons_types', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->longText('descriptions');
+            $table->longText('description');
             $table->timestamps();
             $table->softDeletes();
         });

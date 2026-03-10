@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseController\CreateDetailRequest;
 use App\Http\Requests\CourseController\StoreRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -33,6 +34,22 @@ class CourseController extends Controller
         return view('courses.createCourse', [
             'user' => $user,
             'categories' => $categories,
+        ]);
+    }
+
+    public function createDetail(CreateDetailRequest $request)
+    {
+        $request->safe();
+
+        $request->id;
+        $user = auth()->user();
+        $temas = CourseCategory::all();
+        $courses = Course::inRandomOrder()->limit(4)->get();
+        return view('courses.course-detail', [
+            'course' => Course::withTrashed()->find($request->id),
+            'user' => $user,
+            'temas' => $temas,
+            'courses' => $courses,
         ]);
     }
 
@@ -113,5 +130,11 @@ class CourseController extends Controller
         $course->delete();
 
         return redirect()->route('mycourses');
+    }
+
+    public function comprarCurso(Request $request)
+    {
+        $user = auth()->user();
+
     }
 }
