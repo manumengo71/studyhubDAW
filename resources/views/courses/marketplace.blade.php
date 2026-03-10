@@ -5,98 +5,180 @@
         </h2>
     </x-slot>
 
-    <div class="flex justify-between items-center">
-        <form class="flex-1 m-4">
-            <label for="default-search" class="sr-only">Buscar</label>
-            <div class="relative">
-                <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </div>
-                <input type="search" id="default-search"
-                    class="block w-full p-4 pl-10 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Buscar cursos..." required>
-                <button type="submit"
-                    class="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">Buscar</button>
+    <div class="flex justify-between items-center md:ms-10 md:me-10">
+        <form action="{{ route('marketplace.search') }}" class="flex-1 m-4">
+            <div class="flex rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
+                <input type="search" name="search"
+                    class="w-full border-gray-400 bg-transparent px-4 py-1 text-gray-900 focus:outline-none"
+                    placeholder="🔎 | Buscar..." x-model="search" />
+
+                <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100"
+                    :class="(search) ? 'bg-blue-500' : 'bg-blue-500'">
+                    Buscar</button>
+            </div>
+            <div class="flex flex-wrap mt-4">
+                <p class="me-4 flex items-center">Filtros: </p>
+                <label class="flex items-center mr-4">
+                    <input type="checkbox" name="solocursos" class="form-checkbox"
+                        {{ $input['solocursos'] ?? false ? 'checked' : '' }}>
+                    <span class="ml-2">Solo cursos</span>
+                </label>
+                <label class="flex items-center mr-4">
+                    <input type="checkbox" name="solocategorias" class="form-checkbox"
+                        {{ $input['solocategorias'] ?? false ? 'checked' : '' }}>
+                    <span class="ml-2">Solo categorías</span>
+                </label>
+                <label class="flex items-center mr-4">
+                    <input type="checkbox" name="nombre" class="form-checkbox"
+                        {{ $input['nombre'] ?? false ? 'checked' : '' }}>
+                    <span class="ml-2">Nombre</span>
+                </label>
+                <label class="flex items-center mr-4">
+                    <input type="checkbox" name="descripcion" class="form-checkbox"
+                        {{ $input['descripcion'] ?? false ? 'checked' : '' }}>
+                    <span class="ml-2">Descripción</span>
+                </label>
+                <label class="flex items-center mr-4">
+                    <select name="idioma" class="form-select block w-full mt-1">
+                        <option value="0">Ninguna idioma</option>
+                        @foreach ($languages as $language)
+                            <option value="{{ $language }}"
+                                {{ isset($input['idioma']) && $input['idioma'] == $language ? 'selected' : '' }}>
+                                {{ $language }}
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
+                <label class="flex items-center mr-4">
+                    <select name="categoria" class="form-select block w-full mt-1">
+                        <option value="0">Ninguna categoría</option>
+                        @foreach ($temas as $category)
+                            <option value="{{ $category->id }}"
+                                {{ isset($input['categoria']) && $input['categoria'] == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </label>
+                <label class="flex items-center mr-4">
+                    <select name="orden" class="form-select block w-full mt-1">
+                        <option value="asc"
+                            {{ isset($input['orden']) && $input['orden'] == 'asc' ? 'selected' : '' }}>Ascendente
+                        </option>
+                        <option value="desc"
+                            {{ isset($input['orden']) && $input['orden'] == 'desc' ? 'selected' : '' }}>Descendente
+                        </option>
+                    </select>
+                </label>
             </div>
         </form>
-        <form action="{{ route('mycourses.createCourse') }}" method="GET">
+        <form action="{{ route('mycourses.createCourse') }}" class="-mt-16" method="GET">
             <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded mr-4">
                 Añadir nuevo curso
             </button>
         </form>
     </div>
 
-    <h1 class="text-3xl font-bold text-gray-800 m-10">Últimos 12 cursos:</h1>
-    <div class="flex flex-wrap">
-        @foreach ($temas as $tema)
-            @if ($courses->where('courses_categories_id', $tema->id)->isNotEmpty())
-                @foreach ($courses->where('courses_categories_id', $tema->id) as $course)
-                    <div
-                        class="max-w-sm w-96 bg-white px-6 pt-6 pb-4 rounded-xl shadow-lg transform hover:scale-105 transition duration-500 m-4 md:ms-20">
-                        <h3 class="mb-3 text-xl font-bold text-indigo-600">Tema: {{ $tema->name }}</h3>
-                        <div class="relative">
-                            @if ($course->getMedia('courses_images')->count() > 0)
-                                <img class="w-full h-64 object-contain rounded-xl"
-                                    src="{{ $course->getMedia('courses_images')->last()->getUrl() }}"
-                                    alt="{{ $course->name }}">
-                            @else
-                                <img class="w-full h-56 object-contain rounded-xl"
-                                    src="https://i.postimg.cc/HkL86Lc1/sinfoto.png">
-                            @endif
-                            <p
-                                class="absolute top-0 bg-yellow-300 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
-                                PRECIO</p>
-                        </div>
-                        <h1 class="mt-4 text-gray-800 text-2xl font-bold cursor-pointer">{{ $course->name }}</h1>
-                        <div class="my-4">
-                            <div class="flex items-center">
-                                <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/cHpxRHGN/icons8-description-50.png"
-                                    alt="Imagen">
-                                <p class="text-gray-600">{{ $course->short_description }}</p>
-                            </div>
-                            <div class="flex items-center">
-                                <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/XNPFPc4V/icons8-language-50.png"
-                                    alt="Imagen">
-                                <p class="text-gray-600">{{ $course->language }}</p>
-                            </div>
-                            <button
-                                class="mt-4 text-xl w-full text-white bg-indigo-600 py-2 rounded-xl shadow-lg">Comprar
-                                curso</button>
-                        </div>
-                    </div>
-                @endforeach
-            @endif
-        @endforeach
-    </div>
+    <section>
+        @yield('content')
+    </section>
 
-    <h1 class="text-3xl font-bold text-gray-800 m-10">Categorías principales:</h1>
-    <div class="flex flex-wrap justify-center mb-4">
-        @foreach ($categoriasPopulares as $category)
-            <div
-                class="mr-12 max-w-sm w-64 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-lg transform m-4 hover:scale-105 transition duration-500">
-                <a href="#">
-                    <div class="relative">
-                        @if ($category->getMedia('images_categories')->count() > 0)
-                            <img class="w-full h-full rounded-full"
-                                src="{{ $category->getMedia('images_categories')->last()->getUrl() }}" alt="" />
-                        @else
-                            <img class="w-full h-full rounded-full" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
-                                alt="" />
-                        @endif
-                    </div>
-                    <div class="text-center mt-2">
-                        {{ $category->name }}
-                    </div>
-                </a>
-            </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const soloCursosCheckbox = document.querySelector('input[name="solocursos"]');
+            const soloCategoriasCheckbox = document.querySelector('input[name="solocategorias"]');
+            const nombreCheckbox = document.querySelector('input[name="nombre"]');
+            const descripcionCheckbox = document.querySelector('input[name="descripcion"]');
+            const idiomaSelect = document.querySelector('select[name="idioma"]');
+            const categoriaSelect = document.querySelector('select[name="categoria"]');
+            const ordenSelect = document.querySelector('select[name="orden"]');
 
-            @if ($loop->iteration % 4 == 0)
-                <div class="w-full"></div>
-            @endif
-        @endforeach
-    </div>
+
+
+            soloCursosCheckbox.addEventListener('change', function() {
+                if (soloCursosCheckbox.checked) {
+                    soloCategoriasCheckbox.checked = false;
+
+                    nombreCheckbox.checked = false;
+                    descripcionCheckbox.checked = false;
+                    idiomaSelect.value = '0';
+                    categoriaSelect.value = '0';
+                    ordenSelect.value = 'asc';
+
+                    idiomaSelect.disabled = false;
+                    idiomaSelect.classList.remove('disabled');
+
+                    categoriaSelect.disabled = false;
+                    categoriaSelect.classList.remove('disabled');
+
+                    ordenSelect.disabled = false;
+                    ordenSelect.classList.remove('disabled');
+
+                    descripcionCheckbox.disabled = false;
+                    descripcionCheckbox.classList.remove('disabled');
+
+                    nombreCheckbox.disabled = false;
+                    nombreCheckbox.classList.remove('disabled');
+                }
+
+                if (soloCursosCheckbox.checked == false) {
+                    nombreCheckbox.checked = false;
+                    descripcionCheckbox.checked = false;
+                    idiomaSelect.value = '0';
+                    categoriaSelect.value = '0';
+                    ordenSelect.value = 'asc';
+                    disableAll();
+                }
+            });
+
+            soloCategoriasCheckbox.addEventListener('change', function() {
+                if (soloCategoriasCheckbox.checked) {
+                    soloCursosCheckbox.checked = false;
+
+                    nombreCheckbox.checked = false;
+                    descripcionCheckbox.checked = false;
+                    idiomaSelect.value = '0';
+                    categoriaSelect.value = '0';
+                    ordenSelect.value = 'asc';
+
+                    idiomaSelect.disabled = true;
+                    idiomaSelect.classList.add('disabled');
+                    idiomaSelect.value = '0';
+
+                    categoriaSelect.disabled = true;
+                    categoriaSelect.classList.add('disabled');
+                    categoriaSelect.value = '0';
+
+                    ordenSelect.disabled = true;
+                    ordenSelect.classList.add('disabled');
+                    ordenSelect.value = 'asc';
+
+                    descripcionCheckbox.disabled = true;
+                    descripcionCheckbox.classList.add('disabled');
+                    descripcionCheckbox.checked = false;
+
+                    nombreCheckbox.disabled = false;
+                    nombreCheckbox.classList.remove('disabled');
+                }
+
+                if (soloCategoriasCheckbox.checked == false) {
+                    nombreCheckbox.checked = false;
+                    disableAll();
+                }
+            });
+
+            function disableAll() {
+                nombreCheckbox.disabled = true;
+                descripcionCheckbox.disabled = true;
+                idiomaSelect.disabled = true;
+                categoriaSelect.disabled = true;
+                ordenSelect.disabled = true;
+            }
+
+            if (!soloCursosCheckbox.checked && !soloCategoriasCheckbox.checked) {
+                disableAll();
+            }
+        });
+    </script>
+
 </x-app-layout>
