@@ -28,4 +28,9 @@ class Course extends Model implements HasMedia
         'owner_id',
         'courses_categories_id',
     ];
+
+    public function courseCategory()
+    {
+        return $this->belongsTo(CourseCategory::class, 'courses_categories_id');
+    }
 }

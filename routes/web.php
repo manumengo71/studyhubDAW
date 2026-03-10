@@ -40,20 +40,27 @@ Route::middleware('auth', 'verified')->group(function () {
 });
 
 /** RUTAS DE MARKETPLACE */
-Route::get('/marketplace', function () {
-    $courses = Course::latest()->take(12)->get();
-    $temas = CourseCategory::all();
-    $categoriasPopulares = CourseCategory::select('courses_categories.*')
-        ->selectSub(function ($query) {
-            $query->selectRaw('count(*)')
-                ->from('courses')
-                ->whereColumn('courses.courses_categories_id', 'courses_categories.id');
-        }, 'courses_count')
-        ->orderByDesc('courses_count')
-        ->take(8)
-        ->get();
-    return view('courses.marketplace', compact('courses', 'temas', 'categoriasPopulares'));
-})->middleware(['auth', 'verified'])->name('marketplace');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/marketplace', function () {
+        $input = [];
+        $courses = Course::latest()->take(11)->get();
+        $languages = Course::distinct()->pluck('language');
+        $temas = CourseCategory::all();
+        $categoriasPopulares = CourseCategory::select('courses_categories.*')
+            ->selectSub(function ($query) {
+                $query->selectRaw('count(*)')
+                    ->from('courses')
+                    ->whereColumn('courses.courses_categories_id', 'courses_categories.id');
+            }, 'courses_count')
+            ->orderByDesc('courses_count')
+            ->take(7)
+            ->get();
+        return view('courses.marketplace-principal', compact('courses', 'temas', 'categoriasPopulares', 'languages', 'input'));
+    })->name('marketplace');
+
+    Route::get('/marketplace/allcoursesAndCategories', [App\Http\Controllers\MarketplaceController::class, 'createAllCoursesAndCategories'])->name('marketplace.allCoursesAndCategories');
+    Route::get('/marketplace/busqueda', [App\Http\Controllers\MarketplaceController::class, 'search'])->name('marketplace.search');
+});
 
 /** RUTAS DE SHOPPING */
 Route::get('/billinginfo', function () {

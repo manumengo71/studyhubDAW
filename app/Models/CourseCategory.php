@@ -20,4 +20,9 @@ class CourseCategory extends Model implements HasMedia
         'name',
         'description',
     ];
+
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'courses_categories_id');
+    }
 }
