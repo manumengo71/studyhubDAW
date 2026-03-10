@@ -24,7 +24,7 @@
                     <x-checkbox-filter id="breve_descripcion" name="breve_descripcion" label="Breve Descripción" />
                     <x-checkbox-filter id="descripcion" name="descripcion" label="Descripción" />
                     <label class="flex items-center ml-4">
-                        <select name="language" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">">
+                        <select name="language" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
 
                             <option value="todos" {{ isset($input['language']) && $input['language'] == 'todos' ? 'selected' : '' }}>Todos</option>
 

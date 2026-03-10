@@ -103,7 +103,7 @@
                 <img class="w-64 h-64 mb-8" src="https://i.postimg.cc/sfq3rQXM/trsite-removebg-preview.png"
                     alt="No results">
                 <h2 class="text-gray-600 text-2xl font-semibold">Ningún resultado</h2>
-                <p class="text-gray-500">No pudimos encontrar ningún curso que coincida con tu búsqueda.</p>
+                <p class="text-gray-500">No pudimos encontrar ninguna categoría que coincida con tu búsqueda.</p>
             </div>
     @endif
 

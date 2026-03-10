@@ -9,7 +9,7 @@
         <form action="{{ route('marketplace.search') }}" class="flex-1 m-4">
             <div class="flex rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
                 <input type="search" name="search"
-                    class="w-full border-gray-400 bg-transparent px-4 py-1 text-gray-900 focus:outline-none"
+                class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
                     placeholder="🔎 | Buscar..." x-model="search" />
 
                 <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100"
@@ -17,29 +17,34 @@
                     Buscar</button>
             </div>
             <div class="flex flex-wrap mt-4">
-                <p class="me-4 flex items-center">Filtros: </p>
-                <label class="flex items-center mr-4">
+                <p class="text-gray-600 font-semibold me-4 flex items-center">Filtrar por: </p>
+                <x-checkbox-filter id="solocursos" name="solocursos" label="Solo Cursos" :value="$input['solocursos'] ?? false ? 'checked' : '' "/>
+                {{-- <label class="flex items-center mr-4">
                     <input type="checkbox" name="solocursos" class="form-checkbox"
                         {{ $input['solocursos'] ?? false ? 'checked' : '' }}>
                     <span class="ml-2">Solo cursos</span>
-                </label>
-                <label class="flex items-center mr-4">
+                </label> --}}
+                <x-checkbox-filter id="solocategorias" name="solocategorias" label="Solo Categorias" :value="$input['solocategorias'] ?? false ? 'checked' : '' "/>
+                {{-- <label class="flex items-center mr-4">
                     <input type="checkbox" name="solocategorias" class="form-checkbox"
                         {{ $input['solocategorias'] ?? false ? 'checked' : '' }}>
                     <span class="ml-2">Solo categorías</span>
-                </label>
-                <label class="flex items-center mr-4">
+                </label> --}}
+                <x-checkbox-filter id="nombre" name="nombre" label="Nombre" :value="$input['nombre'] ?? false ? 'checked' : '' "/>
+                {{-- <label class="flex items-center mr-4">
                     <input type="checkbox" name="nombre" class="form-checkbox"
                         {{ $input['nombre'] ?? false ? 'checked' : '' }}>
                     <span class="ml-2">Nombre</span>
-                </label>
-                <label class="flex items-center mr-4">
+                </label> --}}
+                <x-checkbox-filter id="descripcion" name="descripcion" label="Descripción" :value="$input['descripcion'] ?? false ? 'checked' : '' "/>
+                {{-- <label class="flex items-center mr-4">
                     <input type="checkbox" name="descripcion" class="form-checkbox"
                         {{ $input['descripcion'] ?? false ? 'checked' : '' }}>
                     <span class="ml-2">Descripción</span>
-                </label>
-                <label class="flex items-center mr-4">
-                    <select name="idioma" class="form-select block w-full mt-1">
+                </label> --}}
+
+                <label class="flex items-center mr-4 ">
+                    <select name="idioma" class="form-select block w-full mt-1 rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
                         <option value="0">Ninguna idioma</option>
                         @foreach ($languages as $language)
                             <option value="{{ $language }}"
@@ -50,7 +55,7 @@
                     </select>
                 </label>
                 <label class="flex items-center mr-4">
-                    <select name="categoria" class="form-select block w-full mt-1">
+                    <select name="categoria" class="form-select block w-full mt-1 rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
                         <option value="0">Ninguna categoría</option>
                         @foreach ($temas as $category)
                             <option value="{{ $category->id }}"
@@ -61,7 +66,7 @@
                     </select>
                 </label>
                 <label class="flex items-center mr-4">
-                    <select name="orden" class="form-select block w-full mt-1">
+                    <select name="orden" class="form-select block w-full mt-1 rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
                         <option value="asc"
                             {{ isset($input['orden']) && $input['orden'] == 'asc' ? 'selected' : '' }}>Ascendente
                         </option>
@@ -73,9 +78,9 @@
             </div>
         </form>
         <form action="{{ route('mycourses.createCourse') }}" class="-mt-16" method="GET">
-            <button class="bg-blue-500 text-white font-bold py-2 px-4 rounded mr-4">
-                Añadir nuevo curso
-            </button>
+            <x-success-button class="">
+                {{ __('Nuevo Curso') }}
+            </x-success-button>
         </form>
     </div>
 
