@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
 use App\Models\CourseCategory;
+use App\Models\User_course_status;
 
 class CourseController extends Controller
 {
@@ -19,8 +20,12 @@ class CourseController extends Controller
     {
         $user = auth()->user();
         $courses = Course::withTrashed()->where('owner_id', $user->id)->paginate(5);
+        $usersCourses = $user->usersCourses()->get();  // En VisualStudio da error, pero funciona bien.
+        $coursesIds = $usersCourses->pluck('courses_id')->toArray();
+        $coursesUsers = Course::whereIn('id', $coursesIds)->get();
         $temas = CourseCategory::all();
-        return view('courses.mycourses', compact('courses', 'temas', 'user'));
+        $status = User_course_status::all();
+        return view('courses.mycourses', compact('courses', 'temas', 'user', 'usersCourses', 'coursesUsers', 'status'));
     }
 
     /**
@@ -135,6 +140,5 @@ class CourseController extends Controller
     public function comprarCurso(Request $request)
     {
         $user = auth()->user();
-
     }
 }

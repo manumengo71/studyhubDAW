@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/marketplace/allcoursesAndCategories', [App\Http\Controllers\MarketplaceController::class, 'createAllCoursesAndCategories'])->name('marketplace.allCoursesAndCategories');
     Route::get('/marketplace/busqueda', [App\Http\Controllers\MarketplaceController::class, 'search'])->name('marketplace.search');
+    Route::post('/marketplace/comprarCurso/{id}', [App\Http\Controllers\MarketplaceController::class, 'comprarCurso'])->name('marketplace.comprarCurso');
 });
 
 /** RUTAS DE SHOPPING */

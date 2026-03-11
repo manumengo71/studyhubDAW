@@ -17,8 +17,8 @@ class User_course extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'course_id',
+        'users_id',
+        'courses_id',
         'users_courses_statuses_id',
     ];
 }

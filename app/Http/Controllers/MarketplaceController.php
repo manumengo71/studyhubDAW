@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MarketplaceController\SearchRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\User_course;
+use App\Models\User_course_status;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -17,6 +19,20 @@ class MarketplaceController extends Controller
         $languages = Course::distinct()->pluck('language');
         $input = [];
         return view('courses.marketplace-allCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
+    }
+
+    public function comprarCurso(Request $request)
+    {
+        $user = auth()->user();
+        $course = Course::find($request->id);
+
+        $user_course = User_course::create([
+            'users_id' => $user->id,
+            'courses_id' => $course->id,
+            'users_courses_statuses_id' => User_course_status::where('name', '¡Estréname!')->first()->id,
+        ]);
+
+        return redirect()->route('mycourses.createDetail', ['id' => $course->id]);
     }
 
     public function search(SearchRequest $request): View
