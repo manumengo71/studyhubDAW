@@ -7,9 +7,9 @@
             <h2 class="text-gray-600 font-semibold">LISTADO DE CURSOS</h2>
         </div>
 
-        <div class="flex justify-between items-center md:ms-10 md:me-10">
+        <div class="flex flex-col md:flex-row justify-between items-center md:ms-10 md:me-10">
             <form action="{{ route('courses.search') }}" class="flex-1 m-4">
-                <div class="flex rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
+                <div class="flex flex-col md:flex-row rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
                     <input type="search" name="search"
                         class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
                         placeholder="🔎 | Buscar..." x-model="search" />
@@ -18,7 +18,7 @@
                         :class="(search) ? 'bg-blue-500' : 'bg-gray-500 cursor-not-allowed'"
                         :disabled="!search">Buscar</button>
                 </div>
-                <div class="flex flex-wrap mt-4">
+                <div class="flex flex-col md:flex-row flex-wrap mt-4">
                     <p class="text-gray-600 font-semibold mt-2 mr-2">Filtrar por:</p>
                     <x-checkbox-filter id="nombre" name="nombre" label="Nombre" :value="$input['nombre'] ?? false ? 'checked' : '' "/>
                     <x-checkbox-filter id="breve_descripcion" name="breve_descripcion" label="Breve Descripción" />
@@ -51,7 +51,7 @@
                 </div>
             </form>
 
-            <form action="{{ route('admin.createCourse') }}" class="-mt-16" method="GET">
+            <form action="{{ route('admin.createCourse') }}" class="mt-4 md:-mt-16" method="GET">
                 <x-success-button class="">
                     {{ __('Nuevo Curso') }}
                 </x-success-button>
