@@ -23,7 +23,7 @@
                                 PRECIO</p>
                         </div>
                         <h1
-                            class="mt-4 text-gray-800 text-2xl font-bold cursor-pointer whitespace-nowrap overflow-ellipsis">
+                            class="mt-4 text-gray-800 text-2xl font-bold overflow-hidden whitespace-nowrap overflow-ellipsis">
                             {{ $course->name }}</h1>
                         <div class="my-4">
                             <div class="flex items-center">

@@ -21,7 +21,7 @@ class CourseFactory extends Factory
         $languages = ['Español', 'Inglés', 'Francés', 'Alemán', 'Italiano', 'Portugués', 'Chino (Mandarín)', 'Hindi', 'Árabe', 'Bengalí', 'Ruso', 'Japonés', 'Malayo', 'Telugu', 'Vietnamita', 'Coreano'];
 
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->sentence,
             'short_description' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
             'language' => $this->faker->randomElement($languages),
