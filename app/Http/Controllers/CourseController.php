@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseController\CreateDetailRequest;
+use App\Http\Requests\CourseController\CreatePlayRequest;
 use App\Http\Requests\CourseController\StoreRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
@@ -56,6 +57,14 @@ class CourseController extends Controller
             'user' => $user,
             'temas' => $temas,
             'courses' => $courses,
+        ]);
+    }
+
+    public function createPlay(CreatePlayRequest $request): View
+    {
+        $course = Course::withTrashed()->find($request->id);
+        return view('courses.course-play', [
+            'course' => $course,
         ]);
     }
 

@@ -252,29 +252,48 @@
                                                 </td>
                                                 <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm">
                                                     @if ($status->where('id', $userCourse->users_courses_statuses_id)->first()->name == '¡Estréname!')
-                                                        <button
-                                                            class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white">
-                                                            EMPEZAR
-                                                            <div
-                                                                class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                            </div>
-                                                        </button>
+                                                        <form
+                                                            action="{{ route('mycourses.createPlay', $courseUser->id) }}"
+                                                            method="GET">
+                                                            @method('GET')
+                                                            @csrf
+                                                            <button
+                                                                class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white"
+                                                                type="submit">
+                                                                EMPEZAR
+                                                                <div
+                                                                    class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
+                                                                </div>
+                                                            </button>
+                                                        </form>
                                                     @elseif ($status->where('id', $userCourse->users_courses_statuses_id)->first()->name == 'En progreso')
-                                                        <button
-                                                            class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white">
-                                                            CONTINUAR
-                                                            <div
-                                                                class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                            </div>
-                                                        </button>
+                                                        <form
+                                                            action="{{ route('mycourses.createPlay', $courseUser->id) }}"
+                                                            method="GET">
+                                                            @method('GET')
+                                                            @csrf
+                                                            <button
+                                                                class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white">
+                                                                CONTINUAR
+                                                                <div
+                                                                    class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
+                                                                </div>
+                                                            </button>
+                                                        </form>
                                                     @elseif ($status->where('id', $userCourse->users_courses_statuses_id)->first()->name == 'Completado')
-                                                        <button
-                                                            class="group relative h-12 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white">
-                                                            EMPEZAR DE NUEVO
-                                                            <div
-                                                                class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                            </div>
-                                                        </button>
+                                                        <form
+                                                            action="{{ route('mycourses.createPlay', $courseUser->id) }}"
+                                                            method="GET">
+                                                            @method('GET')
+                                                            @csrf
+                                                            <button
+                                                                class="group relative h-12 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white">
+                                                                EMPEZAR DE NUEVO
+                                                                <div
+                                                                    class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
+                                                                </div>
+                                                            </button>
+                                                        </form>
                                                     @endif
                                                 </td>
                                             </tr>

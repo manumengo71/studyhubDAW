@@ -1,8 +1,19 @@
 @extends('courses.marketplace')
 
 @section('content')
+    <!-- Estilos -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+
     <!-- Últimos 12 cursos -->
-    <h1 class="text-3xl font-bold text-gray-800 m-10">| Últimos cursos |</h1>
+    <div class="flex items-center">
+        <h1 class="text-3xl font-bold text-gray-800 m-10" id="cursos">| Últimos cursos |</h1>
+        <a href="#categorias" class="hover:text-cyan-700 -ms-6">Ir a categorías</a>
+    </div>
+
     <div class="flex flex-wrap md:space-x-20">
         @foreach ($temas as $tema)
             @if ($courses->where('courses_categories_id', $tema->id)->isNotEmpty())
@@ -38,8 +49,8 @@
                                 <p class="text-gray-600">{{ $course->language }}</p>
                             </div>
                             <a href="{{ route('mycourses.createDetail', $course->id) }}">
-                                <button
-                                    class="mt-4 text-xl w-full text-white bg-indigo-600 py-2 rounded-xl shadow-lg">Mas detalles</button>
+                                <button class="mt-4 text-xl w-full text-white bg-indigo-600 py-2 rounded-xl shadow-lg">Mas
+                                    detalles</button>
                             </a>
                         </div>
                     </div>
@@ -65,7 +76,12 @@
         </div>
     </div>
 
-    <h1 class="text-3xl font-bold text-gray-800 m-10">| Categorías principales |</h1>
+
+    <div class="flex items-center">
+        <h1 class="text-3xl font-bold text-gray-800 m-10" id="categorias">| Categorías principales |</h1>
+        <a href="#cursos" class="hover:text-cyan-700 -ms-6">Ir a cursos</a>
+    </div>
+
     <div class="flex flex-wrap justify-center mb-4">
         @foreach ($categoriasPopulares as $category)
             <div
