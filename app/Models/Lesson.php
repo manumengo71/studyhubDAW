@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Lesson extends Model
+class Lesson extends Model implements HasMedia
 {
     use HasFactory;
-
+    use InteractsWithMedia;
 
     protected $table = 'lessons';
 
@@ -18,7 +20,10 @@ class Lesson extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'courses_id',
+        'lessons_types_id',
         'title',
         'subtitle',
+        'content',
     ];
 }

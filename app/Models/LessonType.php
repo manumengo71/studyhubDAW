@@ -19,6 +19,6 @@ class LessonType extends Model
      */
     protected $fillable = [
         'name',
-        'description',
+        'descriptions',
     ];
 }

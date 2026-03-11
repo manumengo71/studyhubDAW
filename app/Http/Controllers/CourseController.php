@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
 use App\Models\CourseCategory;
+use App\Models\Lesson;
 use App\Models\User_course_status;
 
 class CourseController extends Controller
@@ -87,12 +88,7 @@ class CourseController extends Controller
             $curso->addMediaFromUrl('https://i.postimg.cc/HkL86Lc1/sinfoto.png')->toMediaCollection('courses_images');
         }
 
-        // Se redirige a la página anterior.
-        if (url()->previous() === route('listCourses')) {
-            return redirect()->route('listCourses');
-        } else {
-            return redirect()->route('marketplace');
-        }
+        return redirect()->route('createLesson', ['id' => $curso]);
     }
 
     /**

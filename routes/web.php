@@ -109,6 +109,10 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::delete('/disableCourse/{course}', [App\Http\Controllers\AdminController::class, 'disableCourse'])->name('courses.disable');
         Route::delete('/deleteCourse/{course}', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('courses.delete');
 
+        /** RUTAS PARA LECCIONES */
+        Route::get('/createLesson/{id}', [App\Http\Controllers\LessonController::class, 'createLesson'])->name('createLesson');
+        Route::post('/storeLesson/{id}', [App\Http\Controllers\LessonController::class, 'storeLesson'])->name('storeLesson');
+
         /** RUTAS PARA USERS */
         Route::get('/users', [App\Http\Controllers\AdminController::class, 'listUsers'])->name('listUsers');
         Route::get('/users/busqueda', [App\Http\Controllers\AdminController::class, 'searchUsers'])->name('users.search');
