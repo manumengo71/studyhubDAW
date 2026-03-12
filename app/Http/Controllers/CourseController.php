@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CourseController\CreateDetailRequest;
 use App\Http\Requests\CourseController\CreatePlayRequest;
 use App\Http\Requests\CourseController\StoreRequest;
+use App\Http\Requests\CourseController\UpdateRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -127,19 +128,46 @@ class CourseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified resource in storage.
      */
-    public function edit(Course $course)
+    public function update(UpdateRequest $request)
     {
-        //
+        $request->safe();
+
+        $curso = Course::withTrashed()->find($request->id);
+        $curso->name = $request->name;
+        $curso->short_description = $request->short_description;
+        $curso->description = $request->description;
+        $curso->language = $request->language;
+        $curso->owner_id = $request->owner_id;
+        $curso->courses_categories_id = $request->courses_categories_id;
+        $curso->save();
+
+        if ($request->hasFile('imageCourse')) {
+            $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
+        }
+
+        return redirect()->route('mycourses');
     }
 
     /**
-     * Update the specified resource in storage.
+     * Show the form for editing the specified resource.
      */
-    public function update(Request $request, Course $course)
+    public function edit(Request $request, Course $course)
     {
-        //
+        $user = auth()->user();
+        $categories = CourseCategory::all();
+        $lessons = Lesson::where('courses_id', $request->id)->get();
+        $courseInfo = Course::withTrashed()->find($request->id);
+        $lessons = Lesson::where('courses_id', $request->id)->get();
+
+        return view('courses.updateCourse', [
+            'user' => $user,
+            'categories' => $categories,
+            'lessons' => $lessons,
+            'courseInfo' => $courseInfo,
+            'lessons' => $lessons,
+        ]);
     }
 
     public function activate(Request $request)

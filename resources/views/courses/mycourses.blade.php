@@ -131,9 +131,9 @@
                                         <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="items-center">
-                                                    <form action="" method="POST" class="inline">
+                                                    <form action="{{route('mycourses.editCourse', $course->id)}}" method="GET" class="inline">
                                                         @csrf
-                                                        @method('PATCH')
+                                                        @method('GET')
                                                         <button type="submit"
                                                             class="text-red-500 hover:text-red-700 flex items-center">
                                                             <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"

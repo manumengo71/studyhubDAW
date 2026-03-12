@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LessonController\StoreRequest;
+use App\Http\Requests\LessonController\UpdateRequest;
 use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Contracts\View\View;
@@ -54,6 +55,38 @@ class LessonController extends Controller
 
         return redirect()->route('createLesson', ['id' => $courseId])->with(compact('hasLessons'));
 
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function editLesson(Request $request)
+    {
+        $lesson = Lesson::where('id', $request->id)->first();
+
+        return view('lesson.updateLesson', [
+            'lesson' => $lesson,
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function updateLesson(UpdateRequest $request)
+    {
+        $request->safe();
+
+        $lesson = Lesson::find($request->id);
+        $lesson->title = $request->title;
+        $lesson->subtitle = $request->subtitle;
+        $lesson->lessons_types_id = $request->content_type;
+        $lesson->save();
+
+        if ($request->hasFile('content')) {
+            $lesson->addMediaFromRequest('content')->toMediaCollection('lesson_content');
+        }
+
+        return redirect()->route('mycourses');
     }
 
 }

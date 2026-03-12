@@ -80,13 +80,18 @@
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
-                                                <div class="flex items-center">
-                                                    <a href=""
-                                                        class="text-blue-500 hover:text-blue-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"
-                                                            class="w-8 h-8 mr-2" />
-                                                    </a>
-                                                </div>
+                                                <form action="{{ route('mycourses.editCourse', $course) }}"
+                                                            method="GET" class="inline">
+                                                            @csrf
+                                                            @method('GET')
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"
+                                                                    class="w-8 h-8 mr-2" />
+                                                            </button>
+                                                        </form>
+
+
                                                 @if ($course->deleted_at == null)
                                                     <div class="flex items-center">
                                                         <form action="{{ route('courses.disable', $course) }}"
