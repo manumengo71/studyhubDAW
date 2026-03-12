@@ -25,7 +25,7 @@ class LessonFactory extends Factory
         return [
             'courses_id' => $this->faker->randomElement($coursesId),
             'lessons_types_id' => $this->faker->randomElement($lessonsTypesIds),
-            'title' => $this->faker->sentence,
+            'title' => implode(' ', $this->faker->words(2)),
             'subtitle' => $this->faker->sentence,
         ];
     }

@@ -76,8 +76,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/createCourse', [App\Http\Controllers\CourseController::class, 'create'])->name('mycourses.createCourse');
     Route::post('/createCourse', [App\Http\Controllers\CourseController::class, 'store'])->name('mycourses.storeCourse');
     Route::get('/course-detail/{id}', [App\Http\Controllers\CourseController::class, 'createDetail'])->name('mycourses.createDetail');
-    Route::get('/course-play/{id}', [App\Http\Controllers\CourseController::class, 'createPlay'])->name('mycourses.createPlay');
+    Route::get('/course-play/{id}/{idlesson?}', [App\Http\Controllers\CourseController::class, 'createPlay'])->name('mycourses.createPlay');
 });
+
+/** RUTAS PARA LECCIONES */
+Route::get('/createLesson/{id}', [App\Http\Controllers\LessonController::class, 'createLesson'])->name('createLesson');
+Route::post('/storeLesson/{id}', [App\Http\Controllers\LessonController::class, 'storeLesson'])->name('storeLesson');
 
 require __DIR__ . '/auth.php';
 
@@ -109,10 +113,6 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::put('/activateCourse/{id}', [App\Http\Controllers\AdminController::class, 'activateCourse'])->name('courses.activate');
         Route::delete('/disableCourse/{course}', [App\Http\Controllers\AdminController::class, 'disableCourse'])->name('courses.disable');
         Route::delete('/deleteCourse/{course}', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('courses.delete');
-
-        /** RUTAS PARA LECCIONES */
-        Route::get('/createLesson/{id}', [App\Http\Controllers\LessonController::class, 'createLesson'])->name('createLesson');
-        Route::post('/storeLesson/{id}', [App\Http\Controllers\LessonController::class, 'storeLesson'])->name('storeLesson');
 
         /** RUTAS PARA USERS */
         Route::get('/users', [App\Http\Controllers\AdminController::class, 'listUsers'])->name('listUsers');

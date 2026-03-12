@@ -68,9 +68,22 @@ class CourseController extends Controller
     public function createPlay(CreatePlayRequest $request): View
     {
         $course = Course::withTrashed()->find($request->id);
+        $lessons = Lesson::where('courses_id', $course->id)->get();
+
+        $lesson = null;
+
+        if (!$request->input('leccion') == null) {
+            $lesson = Lesson::find($request->input('leccion'));
+            $request->session()->put('leccion', $lesson->id);
+        }else{
+            $request->session()->put('leccion', 0);
+        }
+
         return view('courses.course-play', [
             'course' => $course,
-        ]);
+            'lessons' => $lessons,
+            'lesson' => $lesson,
+        ])->with('lesson', $lesson);
     }
 
     /**
