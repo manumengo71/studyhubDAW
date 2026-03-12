@@ -43,6 +43,15 @@
                                         {{ $course->language }}</p>
                                 </div>
                             </div>
+                            <div class="mt-0">
+                                <div class="flex items-center mt-1">
+                                    <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/xXzCyLYD/icons8-libro-25.png"
+                                        alt="Imagen">
+                                        <p class="text-gray-600 text-lg font-bold mr-2 focus:outline-none">
+                                            Nº lecciones: {{ $Nlessons }}
+                                        </p>
+                                </div>
+                            </div>
                             <div class="mt-3">
                                 <label class="text-gray-700 text-sm" for="count">Descripción:</label>
                                 <div class="flex items-center mt-1">
@@ -110,7 +119,26 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div x-data="accordion(1)" class=" mt-4 relative transition-all duration-700 border-2  rounded-xl hover:shadow-2xl">
+                        <div @click="handleClick()" class="w-full p-4 text-left cursor-pointer">
+                        <div class="flex items-center justify-between">
+                            <span class="tracking-wide">Lecciones</span>
+                            <span :class="handleRotate()" class="transition-transform duration-500 transform fill-current ">
+                            <svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
+                            </span>
+                        </div>
+                        </div>
 
+                        <div x-ref="tab" :style="handleToggle()" class="relative overflow-hidden transition-all duration-700 max-h-0">
+                        <div class="px-6 pb-4 text-gray-600">
+                            @foreach ($lessons as $lesson)
+                                - {{ $lesson->title}} <br>
+                            @endforeach
+                        </div>
                         </div>
                     </div>
                     <div class="mt-16">
@@ -157,5 +185,34 @@
                 document.getElementById('modal').classList.add('hidden');
             }
         </script>
+        <script>
+            // Faq
+            document.addEventListener("alpine:init", () => {
+            Alpine.store("accordion", {
+                tab: 0
+            });
+
+            Alpine.data("accordion", (idx) => ({
+                init() {
+                this.idx = idx;
+                },
+                idx: -1,
+                handleClick() {
+                this.$store.accordion.tab =
+                    this.$store.accordion.tab === this.idx ? 0 : this.idx;
+                },
+                handleRotate() {
+                return this.$store.accordion.tab === this.idx ? "-rotate-180" : "";
+                },
+                handleToggle() {
+                return this.$store.accordion.tab === this.idx
+                    ? `max-height: ${this.$refs.tab.scrollHeight}px`
+                    : "";
+                }
+            }));
+            });
+            //  end faq
+
+            </script>
     </x-slot>
 </x-app-layout>

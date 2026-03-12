@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\CourseCategory;
 use App\Models\Lesson;
 use App\Models\User_course_status;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -52,11 +53,15 @@ class CourseController extends Controller
         $user = auth()->user();
         $temas = CourseCategory::all();
         $courses = Course::inRandomOrder()->limit(4)->get();
+        $Nlessons = DB::table('lessons')->where('courses_id', $request->id)->count();
+        $lessons = Lesson::where('courses_id', $request->id)->get();
         return view('courses.course-detail', [
             'course' => Course::withTrashed()->find($request->id),
             'user' => $user,
             'temas' => $temas,
             'courses' => $courses,
+            'Nlessons' => $Nlessons,
+            'lessons' => $lessons,
         ]);
     }
 
