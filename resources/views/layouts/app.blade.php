@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" />
     <link rel="stylesheet" href="{{ asset('css/credit-card.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+
     {{-- DROPIFY --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://jeremyfagis.github.io/dropify/dist/js/dropify.min.js"></script>
@@ -77,15 +79,23 @@
                 <p class="font-semibold text-gray-800 dark:text-white">Links rápidos</p>
 
                 <div class="flex flex-col items-start mt-5 space-y-2">
-                    <p
-                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
-                        Dashboard</p>
-                    <p
-                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
-                        Marketplace</p>
-                    <p
-                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
-                        Mis cursos</p>
+                    <a href="{{ route('dashboard') }}">
+                        <p
+                            class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
+                            Dashboard</p>
+                    </a>
+
+                    <a href="{{ route('marketplace') }}">
+                        <p
+                            class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
+                            Marketplace</p>
+                    </a>
+
+                    <a href="{{ route('mycourses') }}">
+                        <p
+                            class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
+                            Mis cursos</p>
+                    </a>
                 </div>
             </div>
 

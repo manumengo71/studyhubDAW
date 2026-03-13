@@ -1,4 +1,6 @@
 <x-app-layout>
+    <link rel="stylesheet" href="{{ asset('css/mycourses.css') }}">
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Cursos') }}
@@ -11,7 +13,7 @@
                 <h2 class="text-gray-600 font-semibold">CURSOS CREADOS</h2>
             </div>
             <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-8">
-                <div class="flex items-center p-2 rounded-md">
+                {{-- <div class="flex items-center p-2 rounded-md">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20"
                         fill="currentColor">
                         <path fill-rule="evenodd"
@@ -20,13 +22,13 @@
                     </svg>
                     <input class="bg-gray-50 outline-none ml-1 block " type="text" name="" id=""
                         placeholder="Buscar...">
-                </div>
+                </div> --}}
                 <div class="mt-4 sm:mt-0 space-y-4 sm:space-y-0 sm:ml-10">
                     <button onclick="abrirComprados()"
-                        class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
+                        class="button bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
                         comprados</button>
                     <button onclick="abrirCreados()"
-                        class="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
+                        class="button bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
                         creados</button>
                 </div>
             </div>

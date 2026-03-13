@@ -17,43 +17,43 @@
 
             <a href="/courses" class="group">
                 <div
-                    class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-white xl:aspect-h-8 xl:aspect-w-7 flex items-center justify-center">
+                    class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
                     <img src="https://i.postimg.cc/Gh1RfMk7/dos.png"
-                        class="h-80 w-80 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Mis Cursos</p>
             </a>
             <a href="/marketplace" class="group">
                 <div
-                    class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-white xl:aspect-h-8 xl:aspect-w-7 flex items-center justify-center">
+                    class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
                     <img src="https://i.postimg.cc/0QMvTFW3/tres.png"
-                        class="h-80 w-80 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Marketplace</p>
             </a>
             <a href="/billinginfo" class="group">
                 <div
-                    class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-white xl:aspect-h-8 xl:aspect-w-7 flex items-center justify-center">
+                    class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
                     <img src="https://i.postimg.cc/RhwBFfzL/uno.png"
-                        class="h-80 w-80 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Información de Pago
                 </p>
             </a>
             <a href="/profile" class="group">
                 <div
-                    class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-white xl:aspect-h-8 xl:aspect-w-7 flex items-center justify-center">
+                    class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
                     <img src="https://i.postimg.cc/G2WRdK6p/cuatro.png"
-                        class="h-80 w-80 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Mi Perfil</p>
             </a>
             @can('admin')
                 <a href="/admin" class="group">
                     <div
-                        class="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-white xl:aspect-h-8 xl:aspect-w-7 flex items-center justify-center">
+                        class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
                         <img src="https://i.postimg.cc/mkHb1Jmt/admin.png"
-                            class="h-80 w-80 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                            class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
                     </div>
                     <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Acceso Admin</p>
                 </a>
