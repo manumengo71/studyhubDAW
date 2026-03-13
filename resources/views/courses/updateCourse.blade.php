@@ -2,7 +2,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Crear curso') }}
+            {{ __('Actualizar curso') }}
         </h2>
     </x-slot>
 
@@ -129,7 +129,7 @@
                     <div class="flex justify-center">
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
-                            Editar
+                            Editar Curso
                         </button>
                     </div>
                 </form>
@@ -171,12 +171,22 @@
                         </div>
 
                     </div>
+                    <div class="flex justify-center mt-3">
+                        <form action="{{route('createLesson', $courseInfo->id)}}" method="GET">
+                            @csrf
+                            @method('GET')
+                            <button type="submit"
+                                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                                Crear Lección
+                            </button>
+                        </form>
+                    </div>
+
                 </div>
 
             </div>
         </div>
         <script>
-            // Faq
             document.addEventListener("alpine:init", () => {
             Alpine.store("accordion", {
                 tab: 0
@@ -201,7 +211,6 @@
                 }
             }));
             });
-            //  end faq
 
         </script>
     </x-slot>

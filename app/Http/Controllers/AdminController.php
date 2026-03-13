@@ -132,6 +132,7 @@ class AdminController extends Controller
             });
         }
 
+        // Aplicar orden
         if ($orden) {
             if ($orden === 'asc' || $orden === 'desc') {
                 // Si se ha seleccionado algún filtro específico
@@ -150,198 +151,208 @@ class AdminController extends Controller
             }
         }
 
+        // Paginar los resultados
         $categories = $query->paginate(5);
 
+        // Devolver la vista con los resultados
         return view('admin.listado-categorias', compact('categories', 'input'));
     }
 
-    public function searchCourses(Request $request)
-    {
-        // Barra de búsqueda
-        $keywords = $request->input('search');
+    /**
+     * Buscar cursos
+     */
+    // public function searchCourses(Request $request)
+    // {
+    //     // Barra de búsqueda
+    //     $keywords = $request->input('search');
 
-        // Filtros
-        $name = $request->input('nombre');
-        $breve_descripcion = $request->input('breve_descripcion');
-        $descripcion = $request->input('descripcion');
-        $language = $request->input('language');
-        $status = $request->input('status');
-        $orden = $request->input('orden');
+    //     // Filtros
+    //     $name = $request->input('nombre');
+    //     $breve_descripcion = $request->input('breve_descripcion');
+    //     $descripcion = $request->input('descripcion');
+    //     $language = $request->input('language');
+    //     $status = $request->input('status');
+    //     $orden = $request->input('orden');
 
-        // inputs
-        $input = $request->all();
+    //     // inputs
+    //     $input = $request->all();
 
-        // Crear query de cursos con todos los cursos existentes en la base de datos (incluso los eliminados) para poder filtrarlos correctamente en la vista listado-cursos
-        $query = Course::query();
+    //     // Crear query de cursos con todos los cursos existentes en la base de datos (incluso los eliminados) para poder filtrarlos correctamente en la vista listado-cursos
+    //     $query = Course::query();
 
-        // Aplicar filtros
-        if ($name) {
-            $query->where('name', 'LIKE', "%$name%");
-        }
+    //     // Aplicar filtros
+    //     if ($name) {
+    //         $query->where('name', 'LIKE', "%$name%");
+    //     }
 
-        if ($breve_descripcion) {
-            $query->where('short_description', 'LIKE', "%$breve_descripcion%");
-        }
+    //     if ($breve_descripcion) {
+    //         $query->where('short_description', 'LIKE', "%$breve_descripcion%");
+    //     }
 
-        if ($descripcion) {
-            $query->where('description', 'LIKE', "%$descripcion%");
-        }
+    //     if ($descripcion) {
+    //         $query->where('description', 'LIKE', "%$descripcion%");
+    //     }
 
-        if ($language) {
-            $query->where('language', 'LIKE', "%$language%");
-        }
+    //     if ($language) {
+    //         $query->where('language', 'LIKE', "%$language%");
+    //     }
 
-        if ($status === 'todos') {
-            $query->whereNotNull('deleted_at')->orWhereNull('deleted_at');
-        }else if ($status === 'activo') {
-            $query->whereNull('deleted_at');
-        }else if ($status === 'inactivo') {
-            $query->whereNotNull('deleted_at');
-        }
+    //     if ($status === 'todos') {
+    //         $query->whereNotNull('deleted_at')->orWhereNull('deleted_at');
+    //     }else if ($status === 'activo') {
+    //         $query->whereNull('deleted_at');
+    //     }else if ($status === 'inactivo') {
+    //         $query->whereNotNull('deleted_at');
+    //     }
 
-        // Aplicar búsqueda global
-        if ($keywords) {
-            $query->where(function ($q) use ($keywords) {
-                $q->where('name', 'LIKE', "%$keywords%")
-                ->orWhere('description', 'LIKE', "%$keywords%");
-            });
-        }
+    //     // Aplicar búsqueda global
+    //     if ($keywords) {
+    //         $query->where(function ($q) use ($keywords) {
+    //             $q->where('name', 'LIKE', "%$keywords%")
+    //             ->orWhere('description', 'LIKE', "%$keywords%");
+    //         });
+    //     }
 
-        if ($orden) {
-            if ($orden === 'asc' || $orden === 'desc') {
-                // Si se ha seleccionado algún filtro específico
-                if ($name && !$descripcion) {
-                    $query->orderBy($name, $orden);
-                } elseif (!$name && $descripcion) {
-                    $query->orderBy('description', $orden);
-                } elseif ($name && $descripcion) {
-                    $query->orderBy($name, $orden)
-                          ->orderBy('description', $orden);
-                } else {
-                    // Si no se ha seleccionado ningún filtro específico
-                    $query->orderBy('name', $orden)
-                          ->orderBy('description', $orden);
-                }
-            }
-        }
+    //     if ($orden) {
+    //         if ($orden === 'asc' || $orden === 'desc') {
+    //             // Si se ha seleccionado algún filtro específico
+    //             if ($name && !$descripcion) {
+    //                 $query->orderBy($name, $orden);
+    //             } elseif (!$name && $descripcion) {
+    //                 $query->orderBy('description', $orden);
+    //             } elseif ($name && $descripcion) {
+    //                 $query->orderBy($name, $orden)
+    //                       ->orderBy('description', $orden);
+    //             } else {
+    //                 // Si no se ha seleccionado ningún filtro específico
+    //                 $query->orderBy('name', $orden)
+    //                       ->orderBy('description', $orden);
+    //             }
+    //         }
+    //     }
 
-        $courses = $query->paginate(5);
-        $languages = Course::select('language')->distinct()->pluck('language');
+    //     $courses = $query->paginate(5);
+    //     $languages = Course::select('language')->distinct()->pluck('language');
 
-        return view('admin.listado-cursos', compact('courses', 'input', 'languages'));
-    }
-
-
+    //     return view('admin.listado-cursos', compact('courses', 'input', 'languages'));
+    // }
 
 
-    public function searchUsers(Request $request)
-    {
-        // Barra de búsqueda
-        $keywords = $request->input('search');
+    /**
+     * Buscar usuarios
+     */
 
-        // Filtros
-        $username = $request->input('username');
-        $email = $request->input('email');
-        $name = $request->input('nombre');
-        $apellido1 = $request->input('apellido1');
-        $apellido2 = $request->input('apellido2');
-        $fecha_nacimiento = $request->input('fecha_nacimiento');
-        $genero = $request->input('biological_gender');
-        $role = $request->input('role');
-        $status = $request->input('status');
-        $orden = $request->input('orden');
+    // public function searchUsers(Request $request)
+    // {
+    //     // Barra de búsqueda
+    //     $keywords = $request->input('search');
 
-        // inputs
-        $input = $request->all();
+    //     // Filtros
+    //     $username = $request->input('username');
+    //     $email = $request->input('email');
+    //     $name = $request->input('nombre');
+    //     $apellido1 = $request->input('apellido1');
+    //     $apellido2 = $request->input('apellido2');
+    //     $fecha_nacimiento = $request->input('fecha_nacimiento');
+    //     $genero = $request->input('biological_gender');
+    //     $role = $request->input('role');
+    //     $status = $request->input('status');
+    //     $orden = $request->input('orden');
 
-        // Crear query de usuarios con todos los usuarios existentes en la base de datos (incluso los eliminados) para poder filtrarlos correctamente en la vista listado-usuarios
-        $userQuery = User::query();
+    //     // inputs
+    //     $input = $request->all();
 
-        // Crear query de perfiles de usuario con todos los perfiles existentes en la base de datos (incluso los eliminados) para poder filtrarlos correctamente en la vista listado-usuarios
-        $profileQuery = UserProfile::query();
+    //     // Crear query de usuarios con todos los usuarios existentes en la base de datos (incluso los eliminados) para poder filtrarlos correctamente en la vista listado-usuarios
+    //     $userQuery = User::query();
 
-        // Aplicar filtros
-        if ($username) {
-            $userQuery->where('username', 'LIKE', "%$username%");
-        }
+    //     // Crear query de perfiles de usuario con todos los perfiles existentes en la base de datos (incluso los eliminados) para poder filtrarlos correctamente en la vista listado-usuarios
+    //     $profileQuery = UserProfile::query();
 
-        if ($email) {
-            $userQuery->where('email', 'LIKE', "%$email%");
-        }
+    //     // Aplicar filtros
+    //     if ($username) {
+    //         $userQuery->where('username', 'LIKE', "%$username%");
+    //     }
 
-        if ($name) {
-            $profileQuery->where('name', 'LIKE', "%$name%");
-        }
+    //     if ($email) {
+    //         $userQuery->where('email', 'LIKE', "%$email%");
+    //     }
 
-        if ($apellido1) {
-            $profileQuery->where('surname', 'LIKE', "%$apellido1%");
-        }
+    //     if ($name) {
+    //         $profileQuery->where('name', 'LIKE', "%$name%");
+    //     }
 
-        if ($apellido2) {
-            $profileQuery->where('second_surname', 'LIKE', "%$apellido2%");
-        }
+    //     if ($apellido1) {
+    //         $profileQuery->where('surname', 'LIKE', "%$apellido1%");
+    //     }
 
-        if ($fecha_nacimiento) {
-            $profileQuery->where('birthdate', 'LIKE', "%$fecha_nacimiento%");
-        }
+    //     if ($apellido2) {
+    //         $profileQuery->where('second_surname', 'LIKE', "%$apellido2%");
+    //     }
 
-        if ($genero) {
-            $profileQuery->where('biological_gender', 'LIKE', "%$genero%");
-        }
+    //     if ($fecha_nacimiento) {
+    //         $profileQuery->where('birthdate', 'LIKE', "%$fecha_nacimiento%");
+    //     }
 
-        if ($role) {
-            $userQuery->whereHas('roles', function ($q) use ($role) {
-                $q->where('id', 'LIKE', "%$role%");
-            });
-        }
+    //     if ($genero) {
+    //         $profileQuery->where('biological_gender', 'LIKE', "%$genero%");
+    //     }
 
-        if ($status === 'todos') {
-            $userQuery->whereNotNull('deleted_at')->orWhereNull('deleted_at');
-        }else if ($status === 'activo') {
-            $userQuery->whereNull('deleted_at');
-        }else if ($status === 'inactivo') {
-            $userQuery->whereNotNull('deleted_at');
-        }
+    //     if ($role) {
+    //         $userQuery->whereHas('roles', function ($q) use ($role) {
+    //             $q->where('id', 'LIKE', "%$role%");
+    //         });
+    //     }
 
-        // Aplicar búsqueda global
-        if ($keywords) {
-            $userQuery->where(function ($q) use ($keywords) {
-                $q->where('name', 'LIKE', "%$keywords%")
-                ->orWhere('description', 'LIKE', "%$keywords%");
-            });
-        }
+    //     if ($status === 'todos') {
+    //         $userQuery->whereNotNull('deleted_at')->orWhereNull('deleted_at');
+    //     }else if ($status === 'activo') {
+    //         $userQuery->whereNull('deleted_at');
+    //     }else if ($status === 'inactivo') {
+    //         $userQuery->whereNotNull('deleted_at');
+    //     }
 
-        if ($keywords) {
-            $profileQuery->where(function ($q) use ($keywords) {
-                $q->where('name', 'LIKE', "%$keywords%")
-                ->orWhere('description', 'LIKE', "%$keywords%");
-            });
-        }
+    //     // Aplicar búsqueda global
+    //     if ($keywords) {
+    //         $userQuery->where(function ($q) use ($keywords) {
+    //             $q->where('name', 'LIKE', "%$keywords%")
+    //             ->orWhere('description', 'LIKE', "%$keywords%");
+    //         });
+    //     }
 
-        // if ($orden) {
-        //     if ($orden === 'asc' || $orden === 'desc') {
-        //         // Si se ha seleccionado algún filtro específico
-        //         if ($name && !$descripcion) {
-        //             $query->orderBy($name, $orden);
-        //         } elseif (!$name && $descripcion) {
-        //             $query->orderBy('description', $orden);
-        //         } elseif ($name && $descripcion) {
-        //             $query->orderBy($name, $orden)
-        //                   ->orderBy('description', $orden);
-        //         } else {
-        //             // Si no se ha seleccionado ningún filtro específico
-        //             $query->orderBy('name', $orden)
-        //                   ->orderBy('description', $orden);
-        //         }
-        //     }
-        // }
+    //     if ($keywords) {
+    //         $profileQuery->where(function ($q) use ($keywords) {
+    //             $q->where('name', 'LIKE', "%$keywords%")
+    //             ->orWhere('description', 'LIKE', "%$keywords%");
+    //         });
+    //     }
 
-        // $users =
-        $roles = Role::whereHas('users')->get();
+    //     // if ($orden) {
+    //     //     if ($orden === 'asc' || $orden === 'desc') {
+    //     //         // Si se ha seleccionado algún filtro específico
+    //     //         if ($name && !$descripcion) {
+    //     //             $query->orderBy($name, $orden);
+    //     //         } elseif (!$name && $descripcion) {
+    //     //             $query->orderBy('description', $orden);
+    //     //         } elseif ($name && $descripcion) {
+    //     //             $query->orderBy($name, $orden)
+    //     //                   ->orderBy('description', $orden);
+    //     //         } else {
+    //     //             // Si no se ha seleccionado ningún filtro específico
+    //     //             $query->orderBy('name', $orden)
+    //     //                   ->orderBy('description', $orden);
+    //     //         }
+    //     //     }
+    //     // }
 
-        return view('admin.listado-usuario', compact('users', 'input', 'roles' ));
-    }
+    //     // $users =
+    //     $roles = Role::whereHas('users')->get();
 
+    //     return view('admin.listado-usuario', compact('users', 'input', 'roles' ));
+    // }
+
+    /**
+     * Listar usuarios
+     */
     public function listUsers()
     {
         $roles = Role::whereHas('users')->get();
@@ -350,6 +361,9 @@ class AdminController extends Controller
         return view('admin.listado-usuario', compact('users', 'roles', 'input'));
     }
 
+    /**
+     * Listar cursos
+     */
     public function listCourses()
     {
 
@@ -359,6 +373,9 @@ class AdminController extends Controller
         return view('admin.listado-cursos', compact('courses', 'languages', 'input'));
     }
 
+    /**
+     * Listar categorías
+     */
     public function listCategories()
     {
         $categories = CourseCategory::withTrashed()->paginate(5);
@@ -366,6 +383,9 @@ class AdminController extends Controller
         return view('admin.listado-categorias', compact('categories', 'input'));
     }
 
+    /**
+     * Listar roles
+     */
     public function listRoles()
     {
         $roles = Role::all();
@@ -373,6 +393,9 @@ class AdminController extends Controller
         return view('admin.listado-roles', compact('roles', 'input'));
     }
 
+    /**
+     * Crear un curso
+     */
     public function storeCourse(StoreCourseRequest $request)
     {
         $request->safe();
@@ -400,6 +423,9 @@ class AdminController extends Controller
         return redirect()->route('listCourses');
     }
 
+    /**
+     * Redirigir a la vista para crear un curso
+     */
     public function createCourse(): View
     {
         $users = User::withTrashed()->get();
@@ -407,11 +433,17 @@ class AdminController extends Controller
         return view('admin.createCourse', compact('users', 'categories'));
     }
 
+    /**
+     * Redirigir a la vista para crear una categoría
+     */
     public function createCategory(): View
     {
         return view('admin.createCategory');
     }
 
+    /**
+     * Crear una categoría
+     */
     public function storeCategory(StoreCategoryRequest $request)
     {
         $request->safe();
@@ -434,11 +466,17 @@ class AdminController extends Controller
         return redirect()->route('listCategories')->with('success', 'Categoría creada correctamente');
     }
 
+    /**
+     * Redirigir a la vista para crear un rol
+     */
     public function createRole(): View
     {
         return view('admin.createRole');
     }
 
+    /**
+     * Crear un rol
+     */
     public function storeRole(StoreRoleRequest $request)
     {
         $request->safe();
@@ -455,6 +493,9 @@ class AdminController extends Controller
         return redirect()->route('listRoles')->with('success', 'Rol creado correctamente');
     }
 
+    /**
+     * Redirigir a la vista para crear un usuario
+     */
     public function createUser(): View
     {
         $roles = Role::all();
@@ -462,6 +503,9 @@ class AdminController extends Controller
         return view('admin.new-user', compact('roles'));
     }
 
+    /**
+     * Crear un usuario
+     */
     public function storeUser(StoreUserRequest $request)
     {
         $request->safe();
@@ -531,7 +575,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Vista para editar una categoría
+     * Redirigir a la vista para editar una categoría
      *
      */
     public function editCategoryView(Request $category): View
@@ -560,7 +604,7 @@ class AdminController extends Controller
     }
 
     /**
-     * Vista para editar un role
+     * Redirigir a la vista para editar un curso
      *
      */
     public function editRoleView(Request $request): View
@@ -638,6 +682,11 @@ class AdminController extends Controller
 
         return redirect()->route('listRoles')->with('success', 'Rol eliminado permanentemente');
     }
+
+    /**
+     * Redirigir a la vista para editar un curso
+     *
+     */
     public function editUser($id)
     {
         $user = User::withTrashed($id)->first();
@@ -648,6 +697,10 @@ class AdminController extends Controller
         return view('admin.editUser', compact('user', 'roles', 'userProfile'));
     }
 
+    /**
+     * Editar un usuario
+     *
+     */
     public function updateUser(UpdateUserRequest $request): RedirectResponse
     {
         $request->safe();
@@ -697,6 +750,10 @@ class AdminController extends Controller
         return Redirect::route('listUsers')->with('success', 'Usuario actualizado correctamente');
     }
 
+    /**
+     * Activar un usuario
+     *
+     */
     public function activateUser(Request $request)
     {
         $user = User::withTrashed()->find($request->id);
@@ -705,6 +762,10 @@ class AdminController extends Controller
         return redirect()->route('listUsers');
     }
 
+    /**
+     * Desactivar un usuario
+     *
+     */
     public function disableUser(User $user)
     {
         $user->delete();
@@ -712,6 +773,10 @@ class AdminController extends Controller
         return redirect()->route('listUsers');
     }
 
+    /**
+     * Eliminar un usuario
+     *
+     */
     public function deleteUser(User $user)
     {
         // Obtener todos los cursos del usuario
@@ -732,6 +797,10 @@ class AdminController extends Controller
         return redirect()->route('listUsers');
     }
 
+    /**
+     * Activar un curso
+     *
+     */
     public function activateCourse(Request $request)
     {
         $course = Course::withTrashed()->find($request->id);
@@ -740,6 +809,10 @@ class AdminController extends Controller
         return redirect()->route('listCourses');
     }
 
+    /**
+     * Desactivar un curso
+     *
+     */
     public function disableCourse(Course $course)
     {
         $course->delete();
@@ -747,6 +820,10 @@ class AdminController extends Controller
         return redirect()->route('listCourses');
     }
 
+    /**
+     * Eliminar un curso
+     *
+     */
     public function deleteCourse(Course $course)
     {
         $course->forceDelete();
