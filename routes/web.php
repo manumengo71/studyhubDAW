@@ -17,6 +17,8 @@ use function Ramsey\Uuid\v1;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
+| Rutas organizadas por secciones:
+|
 */
 
 /** RUTA PRINCIPAL */

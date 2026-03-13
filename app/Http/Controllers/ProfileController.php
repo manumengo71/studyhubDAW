@@ -17,7 +17,7 @@ use Illuminate\View\View;
 class ProfileController extends Controller
 {
     /**
-     * Display the user's profile form.
+     * Mostrar el formulario para editar el perfil del usuario.
      */
     public function edit(Request $request): View
 {

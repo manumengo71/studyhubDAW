@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\DB;
 class CourseController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Mostrar la lista de cursos del usuario.
      */
     public function index(): View
     {
@@ -33,7 +33,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Mostrar el formulario para crear un nuevo curso.
      */
     public function create(): View
     {
@@ -45,6 +45,10 @@ class CourseController extends Controller
             'categories' => $categories,
         ]);
     }
+
+    /**
+     * Mostrar la vista del detalle del curso.
+     */
 
     public function createDetail(CreateDetailRequest $request)
     {
@@ -66,13 +70,23 @@ class CourseController extends Controller
         ]);
     }
 
+    /**
+     * Mostrar la vista del reproductor del curso.
+     */
+
     public function createPlay(CreatePlayRequest $request): View
     {
         $course = Course::withTrashed()->find($request->id);
         $lessons = Lesson::where('courses_id', $course->id)->get();
 
+        /**
+         * Inicializa la variable $lesson en null.
+         */
         $lesson = null;
 
+        /**
+         * Si el request trae una lección, se guarda en la sesión.
+         */
         if (!$request->input('leccion') == null) {
             $lesson = Lesson::find($request->input('leccion'));
             $request->session()->put('leccion', $lesson->id);
@@ -80,6 +94,9 @@ class CourseController extends Controller
             $request->session()->put('leccion', 0);
         }
 
+        /**
+         * Enviamos la vista con el curso, las lecciones y la lección actual.
+         */
         return view('courses.course-play', [
             'course' => $course,
             'lessons' => $lessons,
@@ -88,7 +105,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar un nuevo curso en la base de datos.
      */
     public function store(StoreRequest $request)
     {
@@ -116,19 +133,12 @@ class CourseController extends Controller
             $curso->addMediaFromUrl('https://i.postimg.cc/HkL86Lc1/sinfoto.png')->toMediaCollection('courses_images');
         }
 
+        // Se redirige a la vista de crear lección para seguir con el proceso.
         return redirect()->route('createLesson', ['id' => $curso]);
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Course $course)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Actualizar un curso en la base de datos.
      */
     public function update(UpdateRequest $request)
     {
@@ -151,7 +161,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostrar el formulario para editar un curso.
      */
     public function edit(Request $request, Course $course)
     {
@@ -170,6 +180,9 @@ class CourseController extends Controller
         ]);
     }
 
+    /**
+     * Activar un curso. **Aparece en marketplace**
+     */
     public function activate(Request $request)
     {
         $curso = Course::withTrashed()->find($request->id);
@@ -179,7 +192,7 @@ class CourseController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Desactivar un curso. **Desaparece del marketplace**
      */
     public function destroy(Course $course)
     {
@@ -188,6 +201,9 @@ class CourseController extends Controller
         return redirect()->route('mycourses');
     }
 
+    /**
+     * Comprar un curso.
+     */
     public function comprarCurso(Request $request)
     {
         $user = auth()->user();

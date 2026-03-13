@@ -12,16 +12,8 @@ use Illuminate\Http\Request;
 class LessonController extends Controller
 {
     /**
-     * Show the form for creating a new resource.
+     * Mostrar el formulario para crear una nueva lección.
      */
-    // public function createLesson(Request $id): View
-    // {
-    //     $IdCurso = $id->id;
-    //     $curso = Course::withTrashed()->find($IdCurso);
-
-    //     return view('lesson.createLesson', compact('curso'));
-    // }
-
 
     public function createLesson($id): View
     {
@@ -34,7 +26,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guardar una nueva lección en la base de datos.
      */
     public function storeLesson(StoreRequest $request, $id){
 
@@ -58,7 +50,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Mostrar el formulario para editar una lección.
      */
     public function editLesson(Request $request)
     {
@@ -70,7 +62,7 @@ class LessonController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizar una lección en la base de datos.
      */
     public function updateLesson(UpdateRequest $request)
     {

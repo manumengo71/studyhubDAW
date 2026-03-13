@@ -12,6 +12,10 @@ use Illuminate\View\View;
 
 class MarketplaceController extends Controller
 {
+    /**
+     * Muestra el listado de todos los cursos y categorías.
+     */
+
     public function createAllCoursesAndCategories(): View
     {
         $courses = Course::all();
@@ -21,11 +25,15 @@ class MarketplaceController extends Controller
         return view('courses.marketplace-allCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
     }
 
+    /**
+     * Comprar un curso.
+     */
     public function comprarCurso(Request $request)
     {
         $user = auth()->user();
         $course = Course::find($request->id);
 
+        // Crea ese curso en la tabla de cursos del usuario.
         $user_course = User_course::create([
             'users_id' => $user->id,
             'courses_id' => $course->id,
@@ -35,6 +43,9 @@ class MarketplaceController extends Controller
         return redirect()->route('mycourses.createDetail', ['id' => $course->id]);
     }
 
+    /**
+     * Función para buscar cursos y categorías.
+     */
     public function search(SearchRequest $request): View
     {
         $request->safe();
