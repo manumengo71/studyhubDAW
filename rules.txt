@@ -1,0 +1,12 @@
+Todo en ingles
+En variables, cammelCase
+En variables de base de datos, snake_case
+En clases, PascalCase (Y singular)
+En funciones y métodos, camelCase
+En constantes, UPPERCASE
+En archivos, snake_case
+En modelos, Pascal (Y singular) // Preguntar
+En controladores, Pascal (Y singular)
+En rutas, cammelCase
+En vistas, camelCase
+Los componentes en camelCase

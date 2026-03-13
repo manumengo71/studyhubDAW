@@ -12,11 +12,7 @@ class StoreCategoryRequest extends FormRequest
     public function authorize(): bool
     {
         // IMPORTANTE: En visualStudioCode salta un error al acceder a hasRole, pero funciona correctamente. (Dejo mensaje por posibles errores a futuro).
-        if (auth()->user()->hasRole('admin')) {
-            return true;
-        } else {
-            return false;
-        }
+        return auth()->user()->hasRole('admin');
     }
 
     /**

@@ -13,6 +13,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     {{-- Styles --}}
     <link rel="stylesheet" href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" />
+    <link rel="stylesheet" href="{{ asset('css/credit-card.css') }}">
 
     {{-- DROPIFY --}}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
