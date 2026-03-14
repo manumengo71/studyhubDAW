@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BillingInformationController\StoreCardRequest;
 use App\Models\BillingInformation;
 use App\Models\CreditCardType;
 use Illuminate\Http\Request;
@@ -45,11 +46,31 @@ class BillingInformationController extends Controller
                 $style = 'w-20 h-16';
             } elseif ($type->type == '3') {
                 $imgUrl = 'https://i.postimg.cc/4xSXsHVg/americanexpress.png';
+                $style = 'w-20 h-13';
             } elseif ($type->type == '0') {
                 $imgUrl = 'https://i.postimg.cc/pVnKRTPJ/logo.jpg';
                 $style = "w-16 h-16 rounded-full";
             }
             return view('shopping.billinginfo', compact('creditCard', 'imgUrl', 'style'));
         }
+    }
+
+    public function storeCreditCard(StoreCardRequest $request)
+    {
+        $request->safe();
+
+        BillingInformation::updateOrCreate(
+            ['user_id' => auth()->id()],
+            [
+                'owner_name' => $request->input('name'),
+                'owner_surname' => $request->input('surname'),
+                'owner_second_surname' => $request->input('second-surname'),
+                'credit_card_number' => $request->input('input-number-card'),
+                'expiration_date' => $request->input('input-expire-date-card'),
+                'cvv' => $request->input('input-cvv-card'),
+            ]
+        );
+
+        return redirect()->route('shopping.billinginfo');
     }
 }
