@@ -14,11 +14,13 @@ class UsersSeeder extends Seeder
     public function run(): void
     {
         $userProfileSeeder = new UserProfileSeeder();
+        $billingInformationSeeder = new BillingInformationSeeder();
 
         User::factory(5)->create();
         User::factory(5)->unverified()->create();
 
         $userProfileSeeder->run();
+        $billingInformationSeeder->run();
 
         User::factory(1)->create([
             'username' => 'admin',
