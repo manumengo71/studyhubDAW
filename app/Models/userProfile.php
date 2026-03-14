@@ -41,4 +41,9 @@ class userProfile extends Model implements HasMedia
     protected $casts = [
         'birthdate' => 'datetime',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

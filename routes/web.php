@@ -69,6 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/billinginfo', function () {
     return view('shopping.billinginfo');
 })->middleware(['auth', 'verified'])->name('billinginfo');
+Route::get('/billinginfo', [App\Http\Controllers\BillingInformationController::class, 'getInfo'])->name('billinginfo');
 
 /** RUTAS DE COURSES */
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -146,5 +147,6 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::put('/roles-activate/{id}', [App\Http\Controllers\AdminController::class, 'activateRole'])->name('roles.activate');
         Route::delete('/roles-disable/{id}', [App\Http\Controllers\AdminController::class, 'destroyRole'])->name('roles.disable');
         Route::delete('/roles-delete/{id}/{guard_name}', [App\Http\Controllers\AdminController::class, 'forceDestroyRole'])->name('roles.forceDestroy');
+
     });
 });

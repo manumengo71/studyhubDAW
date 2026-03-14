@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\MarketplaceController\SearchRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\User;
 use App\Models\User_course;
 use App\Models\User_course_status;
 use Illuminate\Http\Request;
@@ -30,17 +31,21 @@ class MarketplaceController extends Controller
      */
     public function comprarCurso(Request $request)
     {
-        $user = auth()->user();
+        $userAuth = auth()->user()->id;
+        $user = User::find($userAuth);
         $course = Course::find($request->id);
 
-        // Crea ese curso en la tabla de cursos del usuario.
-        $user_course = User_course::create([
-            'users_id' => $user->id,
-            'courses_id' => $course->id,
-            'users_courses_statuses_id' => User_course_status::where('name', '¡Estréname!')->first()->id,
-        ]);
+        if ($user->billingInformation()->count() == 0) {
+            return redirect()->route('billinginfo', ['id' => $course->id])->with('errorCreditCard', 'Debes tener una tarjeta de crédito asociada a tu cuenta para poder comprar un curso.');
+        } else {
+            $user_course = User_course::create([
+                'users_id' => $user->id,
+                'courses_id' => $course->id,
+                'users_courses_statuses_id' => User_course_status::where('name', '¡Estréname!')->first()->id,
+            ]);
 
-        return redirect()->route('mycourses.createDetail', ['id' => $course->id]);
+            return redirect()->route('mycourses.createDetail', ['id' => $course->id]);
+        }
     }
 
     /**

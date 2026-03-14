@@ -24,15 +24,17 @@
                         <div class="relative">
                             <div class="w-full h-64 overflow-hidden rounded-xl">
                                 @if ($course->getMedia('courses_images')->count() > 0)
-                                    <img class="w-full h-full object-cover" src="{{ $course->getMedia('courses_images')->last()->getUrl() }}"
+                                    <img class="w-full h-full object-cover"
+                                        src="{{ $course->getMedia('courses_images')->last()->getUrl() }}"
                                         alt="{{ $course->title }}">
                                 @else
-                                    <img class="w-full h-full object-cover" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png" alt="Imagen por defecto">
+                                    <img class="w-full h-full object-cover" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
+                                        alt="Imagen por defecto">
                                 @endif
                             </div>
-                            <div class="absolute top-0 bg-yellow-300 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
+                            {{-- <div class="absolute top-0 bg-yellow-300 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
                                 PRECIO
-                            </div>
+                            </div> --}}
                         </div>
                         <h1
                             class="mt-4 text-gray-800 text-2xl font-bold overflow-hidden whitespace-nowrap overflow-ellipsis">
