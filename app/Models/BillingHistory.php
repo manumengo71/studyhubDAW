@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 
-class BillingHistory extends Model
+class BillingHistory extends Model implements HasMedia
 {
     use HasFactory;
+    use \Spatie\MediaLibrary\InteractsWithMedia;
 
-    protected $table = 'billing_history';
+    protected $table = 'billing_histories';
     /**
      * The attributes that are mass assignable.
      *
@@ -25,7 +27,7 @@ class BillingHistory extends Model
 
     public function buyer()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'buyer_id');
     }
 
     public function billing()

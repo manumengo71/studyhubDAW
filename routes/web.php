@@ -66,13 +66,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 /** RUTAS DE SHOPPING */
-Route::get('/billinginfo', function () {
-    return view('shopping.billinginfo');
-})->middleware(['auth', 'verified'])->name('billinginfo');
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Route::get('/billinginfo', function () {
+    //     $coursesHistory = "p";
+    //     return view('shopping.billinginfo', compact('coursesHistory'));
+    // })->name('billinginfo');
 
-Route::get('/billinginfo', [App\Http\Controllers\BillingInformationController::class, 'getInfo'])->name('billinginfo');
+    Route::get('/billinginfo', [App\Http\Controllers\BillingInformationController::class, 'getInfo'])->name('billinginfo');
 
-Route::post('storeCreditCard', [App\Http\Controllers\BillingInformationController::class, 'storeCreditCard'])->name('storeCreditCard');
+    Route::post('storeCreditCard', [App\Http\Controllers\BillingInformationController::class, 'storeCreditCard'])->name('storeCreditCard');
+});
 
 /** RUTAS DE COURSES */
 Route::middleware(['auth', 'verified'])->group(function () {

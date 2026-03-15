@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\BillingInformationController\StoreCardRequest;
+use App\Models\BillingHistory;
 use App\Models\BillingInformation;
+use App\Models\Course;
 use App\Models\CreditCardType;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use function PHPSTORM_META\type;
 
@@ -21,6 +25,8 @@ class BillingInformationController extends Controller
         //         'credit_card_number' => '0000000000000000',
         //     ]);
         // }
+
+        $coursesHistory = auth()->user()->billingHistories()->latest()->with(['course.owner', 'billing', 'buyer'])->paginate(5);
 
         if (!BillingInformation::where('user_id', auth()->id())->first()) {
             $imgUrl = 'https://i.postimg.cc/pVnKRTPJ/logo.jpg';
@@ -51,7 +57,18 @@ class BillingInformationController extends Controller
                 $imgUrl = 'https://i.postimg.cc/pVnKRTPJ/logo.jpg';
                 $style = "w-16 h-16 rounded-full";
             }
-            return view('shopping.billinginfo', compact('creditCard', 'imgUrl', 'style'));
+
+            if ($coursesHistory->isEmpty()) {
+                return view('shopping.billinginfo', compact('creditCard', 'imgUrl', 'style'));
+            } else {
+                // $coursesHistory = Course::join('users_courses', 'courses.id', '=', 'users_courses.courses_id')
+                //     ->join('users', 'courses.owner_id', '=', 'users.id')
+                //     ->where('users_courses.users_id', auth()->id())
+                //     ->select('courses.*', 'users.username as owner_name')
+                //     ->paginate(5);
+
+                return view('shopping.billinginfo', compact('creditCard', 'imgUrl', 'style', 'coursesHistory'));
+            }
         }
     }
 

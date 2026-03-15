@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MarketplaceController\SearchRequest;
+use App\Models\BillingHistory;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\User;
@@ -42,6 +43,13 @@ class MarketplaceController extends Controller
                 'users_id' => $user->id,
                 'courses_id' => $course->id,
                 'users_courses_statuses_id' => User_course_status::where('name', '¡Estréname!')->first()->id,
+            ]);
+
+            $billing_histories = BillingHistory::create([
+                'buyer_id' => $user->id,
+                'billing_id' => $user->billingInformation()->first()->id,
+                'course_id' => $course->id,
+                'purchase_date' => now(),
             ]);
 
             return redirect()->route('mycourses.createDetail', ['id' => $course->id]);

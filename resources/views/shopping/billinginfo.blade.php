@@ -141,12 +141,12 @@
                         type="text" value="{{ old('name') }}" required />
                 </div>
 
-                <div class="flex justify-center">
+                <div class="flex flex-col md:flex-row justify-center">
                     <input placeholder="Apellido del titular" name="surname" id="surname"
-                        class="me-2 bg-[#292929] border-2 border-[#3e3e3e] rounded-lg text-white px-3 py-1 text-sm hover:border-[#fff] cursor-pointer transition"
+                        class="mb-2 md:mb-0 md:me-2 w-full bg-[#292929] border-2 border-[#3e3e3e] rounded-lg text-white px-3 py-1 text-sm hover:border-[#fff] cursor-pointer transition"
                         type="text" value="{{ old('surname') }}" required />
                     <input placeholder="2º Apellido del titular" name="second-surname" id="second_surname"
-                        class="bg-[#292929] border-2 border-[#3e3e3e] rounded-lg text-white px-3 py-1 text-sm hover:border-[#fff] cursor-pointer transition"
+                        class="w-full bg-[#292929] border-2 border-[#3e3e3e] rounded-lg text-white px-3 py-1 text-sm hover:border-[#fff] cursor-pointer transition"
                         type="text" value="{{ old('second-surname') }}" required />
                 </div>
 
@@ -238,9 +238,75 @@
         </div>
 
 
-        <div class="flex-col w-full m-8 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/4">
-            <P>Listado de compras</p>
+        <div class="w-full m-10 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/4 ml-12">
+            <p class="text-black bg-green-100 rounded-lg p-2">Listado de compras:</p>
 
+            <div
+                class="rounded-[10px] border-[1px] border-gray-200 p-4 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+                <div class="flex items-center justify-between rounded-t-3xl p-3 w-full">
+                    <div class="text-lg font-bold text-navy-700 dark:text-black">
+                        Historial
+                    </div>
+                    <button
+                        class="linear rounded-[20px] bg-lightPrimary px-4 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-gray-100 active:bg-gray-200 dark:bg-white/5 dark:text-black dark:hover:bg-white/10 dark:active:bg-white/20">
+                        Ver todo
+                    </button>
+                </div>
+                @if (isset($coursesHistory))
+                    @foreach ($coursesHistory as $courseHistory)
+                        <div
+                            class="flex flex-col md:flex-row h-full w-full items-start justify-between rounded-md border-[1px] border-[transparent] dark:hover:border-white/20 bg-white px-3 py-[20px] transition-all duration-150 hover:border-gray-200 dark:!bg-navy-800 dark:hover:!bg-navy-700">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-16 w-16 items-center justify-center">
+                                    @if ($courseHistory->course->getMedia('courses_images')->count() > 0)
+                                        <img class="h-full w-full rounded-xl"
+                                            src="{{ $courseHistory->course->getMedia('courses_images')->last()->getUrl() }}"
+                                            alt="" />
+                                    @else
+                                        <img class="h-full w-full rounded-xl"
+                                            src="https://i.postimg.cc/HkL86Lc1/sinfoto.png" alt="" />
+                                    @endif
+                                </div>
+                                <div class="flex flex-col">
+                                    <h5 class="text-base font-bold text-navy-700 dark:text-black">
+                                        {{ $courseHistory->course->name }}
+                                    </h5>
+                                    <p class="mt-1 text-sm font-normal text-gray-600">
+                                        Creado por: <span
+                                            class="font-bold">{{ $courseHistory->course->owner->username }}</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="mt-1 flex items-center justify-center text-navy-700 text-gray-600">
+                                {{-- <div>
+                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 320 512"
+                                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z">
+                                </path>
+                            </svg>
+                        </div> --}}
+                                <div class="ml-1 flex items-center text-sm font-bold text-navy-700 text-gray-600">
+                                    <p>| PRECIO: </p>
+                                    <p class="ml-1"> GRATIS |</p>
+                                </div>
+                                <div class="ml-2 flex items-center text-sm font-normal text-gray-600">
+                                    <p>Fecha de compra: </p>
+                                    <p class="ml-1">
+                                        {{ \Carbon\Carbon::parse($courseHistory->created_at)->format('d/m/Y') }} | </p>
+                                </div>
+                                <div class="ml-2 flex items-center text-sm font-normal dark:text-black">
+                                    <a href="#" class="text-blue-500 underline"> DESCARGAR |</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    {{ $coursesHistory->links() }}
+                @else
+                    <p class="text-black italic">No hay historial de compras.</p>
+                @endif
+
+            </div>
         </div>
     </div>
 
