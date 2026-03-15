@@ -296,7 +296,7 @@
                                         {{ \Carbon\Carbon::parse($courseHistory->created_at)->format('d/m/Y') }} | </p>
                                 </div>
                                 <div class="ml-2 flex items-center text-sm font-normal dark:text-black">
-                                    <a href="#" class="text-blue-500 underline"> DESCARGAR |</a>
+                                    <a href="{{route('downloadPdf', ['id' => $courseHistory])}}" class="text-blue-500 underline"> DESCARGAR |</a>
                                 </div>
                             </div>
                         </div>

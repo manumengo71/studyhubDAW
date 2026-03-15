@@ -7,12 +7,13 @@ use App\Models\BillingHistory;
 use App\Models\BillingInformation;
 use App\Models\Course;
 use App\Models\CreditCardType;
-use Barryvdh\DomPDF\PDF;
+use Barryvdh\DomPDF\Facade;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 use function PHPSTORM_META\type;
-
+use PDF;
 class BillingInformationController extends Controller
 {
     public function getInfo()
@@ -100,5 +101,16 @@ class BillingInformationController extends Controller
         );
 
         return redirect()->route('billinginfo');
+    }
+
+    public function downloadPdf($id)
+    {
+        $billingHistory = BillingHistory::with(['course.owner', 'course.lesson', 'course.courseCategory', 'billing', 'buyer'])->find($id);
+        $lessonCount = $billingHistory->course->lesson->count();
+
+        $pdf = FacadePdf::loadView('shopping.billingPdf', compact('billingHistory', 'lessonCount'));
+        return $pdf->download('factura.pdf');
+
+        // return view('shopping.billingPdf', compact('billingHistory', 'lessonCount'));
     }
 }

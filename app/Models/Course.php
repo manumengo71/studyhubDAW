@@ -36,7 +36,7 @@ class Course extends Model implements HasMedia
 
     public function lesson()
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class, 'courses_id');
     }
 
     public function billingHistory()

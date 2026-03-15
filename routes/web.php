@@ -75,6 +75,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/billinginfo', [App\Http\Controllers\BillingInformationController::class, 'getInfo'])->name('billinginfo');
 
     Route::post('storeCreditCard', [App\Http\Controllers\BillingInformationController::class, 'storeCreditCard'])->name('storeCreditCard');
+
+    Route::get('/billingpdf/{id}', [App\Http\Controllers\BillingInformationController::class, 'downloadPdf'])->name('downloadPdf');
 });
 
 /** RUTAS DE COURSES */
