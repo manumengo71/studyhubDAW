@@ -59,6 +59,16 @@ class BillingInformationController extends Controller
     {
         $request->safe();
 
+        $primerDigito = substr($request->input('input-number-card'), 0, 1);
+
+
+
+        if ($primerDigito != '4' && $primerDigito != '5' && $primerDigito != '3') {
+            $type_id = 0;
+        } else {
+            $type_id = CreditCardType::where('type', $primerDigito)->first()->id;
+        }
+
         BillingInformation::updateOrCreate(
             ['user_id' => auth()->id()],
             [
@@ -68,9 +78,10 @@ class BillingInformationController extends Controller
                 'credit_card_number' => $request->input('input-number-card'),
                 'expiration_date' => $request->input('input-expire-date-card'),
                 'cvv' => $request->input('input-cvv-card'),
+                'type_id' => $type_id,
             ]
         );
 
-        return redirect()->route('shopping.billinginfo');
+        return redirect()->route('billinginfo');
     }
 }

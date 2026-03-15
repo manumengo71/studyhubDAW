@@ -17,6 +17,7 @@ class BillingInformation extends Model
      */
 
     protected $fillable = [
+        'user_id',
         'owner_name',
         'owner_surname',
         'owner_second_surname',
