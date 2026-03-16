@@ -122,7 +122,7 @@
                                                 <div class="flex items-center">
                                                     <a href="editUser/{{ $user->id }}"
                                                         class="text-blue-500 hover:text-blue-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png"
+                                                        <img src="https://i.postimg.cc/d3nq626Q/edit.png"
                                                             class="w-8 h-8 mr-2" />
                                                     </a>
                                                 </div>
@@ -134,7 +134,7 @@
                                                             @method('DELETE')
                                                             <button type="submit"
                                                                 class="text-red-500 hover:text-red-700 flex items-center">
-                                                                <img src="https://i.postimg.cc/dVc5QDHc/desactivar.png"
+                                                                <img src="https://i.postimg.cc/fRq1K2hg/cross.png"
                                                                     class="w-8 h-8 mr-2" />
                                                             </button>
                                                         </form>
@@ -147,7 +147,7 @@
                                                             @method('PUT')
                                                             <button type="submit"
                                                                 class="text-red-500 hover:text-red-700 flex items-center">
-                                                                <img src="https://i.postimg.cc/y8F3B855/done.png"
+                                                                <img src="https://i.postimg.cc/tg1wm3qR/check.png"
                                                                     class="w-8 h-8 mr-2" />
                                                             </button>
                                                         </form>
@@ -162,8 +162,8 @@
                                                         <div x-data="{ open: false }">
                                                             <button type="button" @click="open = true"
                                                                 class="delete-buttontext-red-500 hover:text-red-700 flex items-center">
-                                                                <img src="https://i.postimg.cc/gjvrsmwC/delete-Image.png"
-                                                                    class="w-8 h-8 mr-2" />
+                                                                <img src="https://i.postimg.cc/s2tqFMxY/trash.png"
+                                                                    class="w-6 h-8 mr-2" />
                                                             </button>
 
                                                             <div x-show="open"

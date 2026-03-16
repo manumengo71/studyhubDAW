@@ -160,7 +160,7 @@
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit" class="flex items-center">
-                                                    <img src="https://i.postimg.cc/1zjSN2zD/editar-Image.png" class="w-8 h-8 mr-2" />
+                                                    <img src="https://i.postimg.cc/d3nq626Q/edit.png" class="w-8 h-8 mr-2" />
                                                 </button>
                                             </form>
                                         </div>
