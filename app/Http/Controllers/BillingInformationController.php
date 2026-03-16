@@ -27,7 +27,7 @@ class BillingInformationController extends Controller
         //     ]);
         // }
 
-        $coursesHistory = auth()->user()->billingHistories()->latest()->with(['course.owner', 'billing', 'buyer'])->paginate(5);
+        $coursesHistory = auth()->user()->billingHistories()->latest()->with(['course.owner', 'buyer'])->paginate(5);
 
         if (!BillingInformation::where('user_id', auth()->id())->first()) {
             $imgUrl = 'https://i.postimg.cc/pVnKRTPJ/logo.jpg';
@@ -108,8 +108,14 @@ class BillingInformationController extends Controller
         $billingHistory = BillingHistory::with(['course.owner', 'course.lesson', 'course.courseCategory', 'billing', 'buyer'])->find($id);
         $lessonCount = $billingHistory->course->lesson->count();
 
+
+        // dd($billingHistory);
+
         $pdf = FacadePdf::loadView('shopping.billingPdf', compact('billingHistory', 'lessonCount'));
-        return $pdf->download('factura.pdf');
+        // return $pdf->download('factura.pdf');
+        $invoiceId = str_pad($id, 5, '0', STR_PAD_LEFT);
+        return $pdf->download("factura{$invoiceId}.pdf");
+
 
         // return view('shopping.billingPdf', compact('billingHistory', 'lessonCount'));
     }

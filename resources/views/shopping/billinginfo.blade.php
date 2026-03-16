@@ -253,6 +253,7 @@
                     </button>
                 </div>
                 @if (isset($coursesHistory))
+
                     @foreach ($coursesHistory as $courseHistory)
                         <div
                             class="flex flex-col md:flex-row h-full w-full items-start justify-between rounded-md border-[1px] border-[transparent] dark:hover:border-white/20 bg-white px-3 py-[20px] transition-all duration-150 hover:border-gray-200 dark:!bg-navy-800 dark:hover:!bg-navy-700">
@@ -296,7 +297,7 @@
                                         {{ \Carbon\Carbon::parse($courseHistory->created_at)->format('d/m/Y') }} | </p>
                                 </div>
                                 <div class="ml-2 flex items-center text-sm font-normal dark:text-black">
-                                    <a href="{{route('downloadPdf', ['id' => $courseHistory])}}" class="text-blue-500 underline"> DESCARGAR |</a>
+                                    <a href="{{route('downloadPdf', ['id' => $courseHistory])}}"><button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" id="printButton">DESCARGAR</button></a>
                                 </div>
                             </div>
                         </div>

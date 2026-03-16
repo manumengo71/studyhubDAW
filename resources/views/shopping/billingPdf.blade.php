@@ -3,79 +3,78 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> StudyHub-App </title>
-
+    <title>StudyHub-App</title>
     <!-- favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico" />
-
-    <style>
-        {{ file_get_contents(public_path('pdf.css')) }}
-    </style>
+    <link rel="shortcut icon" href="public\favicon.ico" />
 </head>
 
-<body class="bg-gray-100">
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
 
-    <div class="fluid-container h-screen min-h-screen">
-        <div class="bg-white md:p-16 p-10">
-            <div class="flex flex-wrap items-center justify-between gap-6 mt-10">
-                <div>
-                    <h3 class="text-lg font-bold">Datos del cliente:</h3>
-                    <p class="text-sm font-medium tracking-widest my-1">{{$billingHistory->billing->owner_surname . " " . $billingHistory->billing->owner_second_surname . ", " . $billingHistory->billing->owner_name}}</p>
-                    <p class="text-sm font-medium tracking-widest my-1">{{$billingHistory->buyer->email}}</p>
-                    <p class="text-sm font-medium tracking-widest my-1">Método de pago: •••• {{ substr($billingHistory->billing->credit_card_number, -4) }}</p>
-                </div>
-                <div class="border-s border-gray-900 ps-8">
-                    <div class="m-auto flex flex-col items-center justify-center">
-                        <x-application-logo class="w-20 h-20 rounded-full" />
-                        <h3 class="text-lg font-bold">StudyHub-App</h3>
+    <div style="background-color: #fff;">
+
+        <div style="max-width: 21cm; margin: 0 auto;">
+
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; margin-top: 1rem;">
+                <div >
+                    <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;">
+                        <img src="https://i.postimg.cc/4yKH00Nd/9f3469e4-2cf4-44e0-bf77-bc28b015f363.jpg" alt="Logo de StudyHub-App" style="width: 100px; height: auto; border-radius: 50%;">
                     </div>
+                    {{-- <h3 style="font-size: 1.125rem; font-weight: bold; text-align: center; margin: 0;">StudyHub-App</h3> --}}
                 </div>
-            </div>
-
-            <div class="flex items-center justify-between my-10">
-                <h4 class="text-5xl font-semibold uppercase tracking-widest">Factura</h4>
                 <div>
-                    <p class="text-base font-semibold">Nº Factura: <span class="ps-10 text-sm">{{ str_pad($billingHistory->id, 5, '0', STR_PAD_LEFT) }}</span></p>
-                    <p class="text-base font-semibold">Fecha: <span class="ps-10 text-sm">{{$billingHistory->purchase_date}}</span></p>
+                    <h3 style="font-size: 1.125rem; font-weight: bold; margin: 0;">Datos del cliente:</h3>
+                    <p style="font-size: 0.875rem; font-weight: medium; margin: 0.5rem 0;">{{$billingHistory->billing->owner_surname . " " . $billingHistory->billing->owner_second_surname . ", " . $billingHistory->billing->owner_name}}</p>
+                    <p style="font-size: 0.875rem; font-weight: medium; margin: 0.5rem 0;">{{$billingHistory->buyer->email}}</p>
+                    <p style="font-size: 0.875rem; font-weight: medium; margin: 0.5rem 0;">Método de pago: •••• {{ substr($billingHistory->billing->credit_card_number, -4) }}</p>
                 </div>
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="border-collapse table-auto w-full text-sm mt-10 whitespace-pre">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+                <h4 style="font-size: 2rem; font-weight: bold; text-transform: uppercase; letter-spacing: 0.25rem; margin: 0;">Factura</h4>
+                <div>
+                    <p style="font-size: 1.125rem; font-weight: bold; margin: 0;">Nº Factura: <span style="font-size: 0.875rem; padding-left: 1rem;">{{ str_pad($billingHistory->id, 5, '0', STR_PAD_LEFT) }}</span></p>
+                    <p style="font-size: 1.125rem; font-weight: bold; margin: 0; padding-top: 0.5rem;">Fecha: <span style="font-size: 0.875rem; padding-left: 1rem;">{{$billingHistory->purchase_date}}</span></p>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto; margin-top: 2rem;">
+                <table style="border-collapse: collapse; width: 100%; font-size: 0.875rem; margin-bottom: 2rem;">
                     <thead>
-                        <tr class="bg-gray-100">
-                            <th class="p-4 border border-e-0 uppercase text-lg font-medium text-start">Curso</th>
-                            <th class="p-4 border-y uppercase text-lg font-medium ">Precio</th>
+                        <tr style="background-color: #f3f4f6;">
+                            <th style="padding: 1rem; border: 1px solid #333; border-right: 0; text-align: left; text-transform: uppercase; font-weight: bold;">Curso</th>
+                            <th style="padding: 1rem; border: 1px solid #333; text-align: left; text-transform: uppercase; font-weight: bold;">Precio</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white">
+                    <tbody>
                         <tr>
-                            <td class="p-5 text-base font-medium border">{{$billingHistory->course->name}}</td>
-                            <td class="p-5 text-base font-medium border text-center overflow-hidden">Gratis</td>
+                            <td style="padding: 1rem; border: 1px solid #333;">{{ ucfirst($billingHistory->course->name) }}</td>
+                            <td style="padding: 1rem; border: 1px solid #333; text-align: center; overflow: hidden;">Gratis</td>
                         </tr>
-                        <tr class="bg-gray-100">
-                            <td colspan="4" class="p-1 ps-5 text-base font-medium border overflow-hidden">Información relativa al curso</td>
+                        <tr style="background-color: #f3f4f6;">
+                            <td colspan="2" style="padding: 1rem; border: 1px solid #333; text-align: left; text-transform: uppercase; font-weight: bold;">Información relativa al curso</td>
                         </tr>
                         <tr>
-                            <td colspan="2" rowspan="1"
-                                class="p-5 text-sm font-medium border border-e-1 overflow-hidden">
-                                <ul class="-my-20">
-                                    <li class="word-wrap: break-word;"><b>Descripción:</b> {{$billingHistory->course->short_description}}</li>
-                                    <li class="word-wrap: break-word;"><b>Idioma:</b> {{$billingHistory->course->language}} </li>
-                                    <li class="word-wrap: break-word;"><b>Tema:</b> {{$billingHistory->course->courseCategory->name}} </li>
-                                    <li class="word-wrap: break-word;"><b>Nº de lecciones:</b> {{$lessonCount}} </li>
-                                    <li class="word-wrap: break-word;"><b>Fecha de creación:</b> {{$billingHistory->course->created_at}} </li>
-                                    <li class="word-wrap: break-word;"><b>Creador:</b> {{$billingHistory->course->owner->username}} </li>
+                            <td colspan="2" style="padding: 1rem; border: 1px solid #333; overflow: hidden;">
+                                <ul style="list-style-type: none; padding-left: 0;">
+                                    <li style="word-wrap: break-word;"><b>Descripción:</b> {{$billingHistory->course->short_description}}</li>
+                                    <li style="word-wrap: break-word;"><b>Idioma:</b> {{$billingHistory->course->language}}</li>
+                                    <li style="word-wrap: break-word;"><b>Tema:</b> {{$billingHistory->course->courseCategory->name}}</li>
+                                    <li style="word-wrap: break-word;"><b>Nº de lecciones:</b> {{$lessonCount}}</li>
+                                    <li style="word-wrap: break-word;"><b>Fecha de creación:</b> {{$billingHistory->course->created_at}}</li>
+                                    <li style="word-wrap: break-word;"><b>Creador:</b> {{$billingHistory->course->owner->username}}</li>
                                 </ul>
                             </td>
                         </tr>
-
                     </tbody>
                 </table>
             </div>
+
         </div>
-        <div class="bg-teal-600 p-1"></div>
-        <div class="bg-black p-7"></div>
+    </div>
+
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%;">
+        <div style="background-color: #4dc0b5; padding: 0.25rem;"></div>
+        <div style="background-color: #000; padding: 0.875rem;"></div>
     </div>
 
 </body>
