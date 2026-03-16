@@ -18,24 +18,24 @@
             <a href="/courses" class="group">
                 <div
                     class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
-                    <img src="https://i.postimg.cc/Gh1RfMk7/dos.png"
-                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                    <img src="https://i.postimg.cc/6qHZ6dh7/open-book-diary-white-paper-600nw-2133316243-removebg-preview.png"
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Mis Cursos</p>
             </a>
             <a href="/marketplace" class="group">
                 <div
                     class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
-                    <img src="https://i.postimg.cc/0QMvTFW3/tres.png"
-                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                    <img src="https://i.postimg.cc/yxbMVprg/tablet-screen-online-shop-shopping-600nw-2122527749-removebg-preview.png"
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Marketplace</p>
             </a>
             <a href="/billinginfo" class="group">
                 <div
                     class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
-                    <img src="https://i.postimg.cc/RhwBFfzL/uno.png"
-                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                    <img src="https://i.postimg.cc/BZV95RYd/3d-credit-card-money-financial-600nw-2106982007-removebg-preview.png"
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Información de Pago
                 </p>
@@ -43,8 +43,8 @@
             <a href="/profile" class="group">
                 <div
                     class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
-                    <img src="https://i.postimg.cc/G2WRdK6p/cuatro.png"
-                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                    <img src="https://i.postimg.cc/jqHvtFmG/3d-realistic-user-cartoon-vector-600nw-2217542595-removebg-preview.png"
+                        class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center">
                 </div>
                 <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Mi Perfil</p>
             </a>
@@ -52,8 +52,8 @@
                 <a href="/admin" class="group">
                     <div
                         class="m-2 aspect-h-1 aspect-w-1 w-52 xs:w-full md:w-full lg:w-full xl:w-full overflow-hidden flex items-center justify-center xl:aspect-h-8 xl:aspect-w-7 opcionesDashboard mx-auto">
-                        <img src="https://i.postimg.cc/mkHb1Jmt/admin.png"
-                            class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center group-hover:opacity-50">
+                        <img src="https://i.postimg.cc/Y2zVb0rG/cogwheel-gear-setting-symbol-repair-600nw-2124261797-removebg-preview.png"
+                            class="h-48 w-48 p-2 md:w-full md:h-full object-cover object-center">
                     </div>
                     <p class="mt-1 text-lg font-medium text-gray-900 flex items-center justify-center">Acceso Admin</p>
                 </a>

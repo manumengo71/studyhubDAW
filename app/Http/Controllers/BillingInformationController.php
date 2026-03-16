@@ -30,7 +30,7 @@ class BillingInformationController extends Controller
         $coursesHistory = auth()->user()->billingHistories()->latest()->with(['course.owner', 'buyer'])->paginate(5);
 
         if (!BillingInformation::where('user_id', auth()->id())->first()) {
-            $imgUrl = 'https://i.postimg.cc/pVnKRTPJ/logo.jpg';
+            $imgUrl = 'https://i.postimg.cc/4yKH00Nd/9f3469e4-2cf4-44e0-bf77-bc28b015f363.jpg';
             $style = "w-16 h-16 rounded-full";
             return view('shopping.billinginfo', compact('imgUrl', 'style'));
         } else {
