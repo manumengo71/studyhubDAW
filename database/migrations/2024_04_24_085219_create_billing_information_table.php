@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('billing_information', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('owner_name');
             $table->string('owner_surname');
             $table->string('owner_second_surname');

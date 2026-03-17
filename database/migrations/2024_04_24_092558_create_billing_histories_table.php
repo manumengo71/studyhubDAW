@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('billing_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('buyer_id')->constrained('users');
+            $table->foreignId('buyer_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('billing_id')->constrained('billing_information');
             $table->foreignId('course_id')->constrained('courses');
             $table->date('purchase_date');

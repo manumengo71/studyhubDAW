@@ -14,9 +14,7 @@
                         class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
                         placeholder="🔎 | Buscar..." x-model="search" />
 
-                    <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100"
-                        :class="(search) ? 'bg-blue-500' : 'bg-gray-500 cursor-not-allowed'"
-                        :disabled="!search">Buscar</button>
+                    <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100 bg-blue-500">Buscar</button>
                 </div>
                 <div class="flex flex-col md:flex-row flex-wrap mt-4">
                     <p class="text-gray-600 font-semibold mt-2 mr-2">Filtrar por:</p>
@@ -44,6 +42,18 @@
                 </x-success-button>
             </form>
         </div>
+
+        <script>
+
+            document.getElementById('nombre').addEventListener('change', function() {
+                document.getElementById('descripcion').checked = false;
+            });
+
+            document.getElementById('descripcion').addEventListener('change', function() {
+                document.getElementById('nombre').checked = false;
+            });
+
+        </script>
 
         <section>
             @yield('contentCategorias') {{-- Contenido dinámico --}}
