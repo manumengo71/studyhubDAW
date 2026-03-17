@@ -10,7 +10,7 @@
     <div class="p-8 rounded-md w-full">
         <div class="flex flex-col items-center justify-center pb-6 sm:flex-row sm:justify-between">
             <div class="mb-4 sm:mb-0">
-                <h2 class="text-gray-600 font-semibold">CURSOS CREADOS</h2>
+                <h2 class="text-gray-600 font-semibold" id="titulo"></h2>
             </div>
             <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-8">
                 {{-- <div class="flex items-center p-2 rounded-md">
@@ -133,7 +133,8 @@
                                         <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="items-center">
-                                                    <form action="{{route('mycourses.editCourse', $course->id)}}" method="GET" class="inline">
+                                                    <form action="{{ route('mycourses.editCourse', $course->id) }}"
+                                                        method="GET" class="inline">
                                                         @csrf
                                                         @method('GET')
                                                         <button type="submit"
@@ -185,130 +186,54 @@
             </div>
         </div>
 
-        <div id="cursos-comprados" onclick="abrirComprados()" class="grid grid-cols-2 gap-4">
-            <div>
-                <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                    <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                        <table class="min-w-full leading-normal">
-                            <thead>
-                                <tr>
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Nombre
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Pequeña descripción
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Idioma
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        Status
-                                    </th>
-                                    <th
-                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                        OPCIONES
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($usersCourses as $userCourse)
-                                    @foreach ($coursesUsers as $courseUser)
-                                        @if ($userCourse->courses_id == $courseUser->id)
-                                            <tr>
-                                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                    <div class="flex items-center">
-                                                        <div class="flex-shrink-0 w-10 h-10">
-                                                            @if ($courseUser->getMedia('courses_images')->count() > 0)
-                                                                <img class="w-full h-full rounded-full"
-                                                                    src="{{ $courseUser->getMedia('courses_images')->last()->getUrl() }}"
-                                                                    alt="" />
-                                                            @else
-                                                                <img class="w-full h-full rounded-full"
-                                                                    src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
-                                                                    alt="" />
-                                                            @endif
-                                                        </div>
-                                                        <div class="ml-3">
-                                                            <p class="text-gray-900 whitespace-no-wrap">
-                                                                {{ $courseUser->name }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{ $courseUser->short_description }}
-                                                    </p>
-                                                </td>
-                                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                    <p class="text-gray-900 whitespace-no-wrap">
-                                                        {{ $courseUser->language }}
-                                                    </p>
-                                                </td>
-                                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                    {{ $status->where('id', $userCourse->users_courses_statuses_id)->first()->name }}
-                                                </td>
-                                                <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm">
-                                                    @if ($status->where('id', $userCourse->users_courses_statuses_id)->first()->name == '¡Estréname!')
-                                                        <form
-                                                            action="{{ route('mycourses.createPlay', $courseUser->id) }}"
-                                                            method="GET">
-                                                            @method('GET')
-                                                            @csrf
-                                                            <button
-                                                                class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white"
-                                                                type="submit">
-                                                                EMPEZAR
-                                                                <div
-                                                                    class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                                </div>
-                                                            </button>
-                                                        </form>
-                                                    @elseif ($status->where('id', $userCourse->users_courses_statuses_id)->first()->name == 'En progreso')
-                                                        <form
-                                                            action="{{ route('mycourses.createPlay', $courseUser->id) }}"
-                                                            method="GET">
-                                                            @method('GET')
-                                                            @csrf
-                                                            <button
-                                                                class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white">
-                                                                CONTINUAR
-                                                                <div
-                                                                    class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                                </div>
-                                                            </button>
-                                                        </form>
-                                                    @elseif ($status->where('id', $userCourse->users_courses_statuses_id)->first()->name == 'Completado')
-                                                        <form
-                                                            action="{{ route('mycourses.createPlay', $courseUser->id) }}"
-                                                            method="GET">
-                                                            @method('GET')
-                                                            @csrf
-                                                            <button
-                                                                class="group relative h-12 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white">
-                                                                EMPEZAR DE NUEVO
-                                                                <div
-                                                                    class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                                </div>
-                                                            </button>
-                                                        </form>
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                @endforeach
-                            </tbody>
-                        </table>
+        <div id="cursos-comprados" onclick="abrirComprados()">
+            <div class="flex flex-wrap">
+            @foreach ($usersCourses as $userCourse)
+                @php
+                    $courseUser = $coursesUsers->firstWhere('id', $userCourse->courses_id);
+                    $courseStatus = $status->where('id', $userCourse->users_courses_statuses_id)->first()->name;
+                @endphp
+
+                @if ($courseUser)
+                    <div class="course-card max-w-sm w-72 2xl:w-96 mx-auto">
+                        <div>
+                            <p class="text head oculto mb-4">{{ $courseUser->name }}</p>
+                        </div>
+
+                        @if ($courseUser->getMedia('courses_images')->count() > 0)
+                            <img class="w-44 h-44 rounded-full img mt-10" src="{{ $courseUser->getMedia('courses_images')->last()->getUrl() }}" alt="" />
+                        @else
+                            <img class="w-40 h-40 img" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png" alt="" />
+                        @endif
+
+                        <div class="textBox">
+
+                            <span>{{ $courseStatus }}</span>
+                            <span class="px-0 py-5 mb-16 text-sm">
+                                <form action="{{ route('mycourses.createPlay', $courseUser->id) }}" method="GET">
+                                    @csrf
+                                    @if ($courseStatus == '¡Estréname!')
+                                        <button class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white" type="submit">
+                                            EMPEZAR
+                                            <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
+                                        </button>
+                                    @elseif ($courseStatus == 'En progreso')
+                                        <button class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white" type="submit">
+                                            CONTINUAR
+                                            <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
+                                        </button>
+                                    @elseif ($courseStatus == 'Completado')
+                                        <button class="group relative h-12 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white" type="submit">
+                                            EMPEZAR DE NUEVO
+                                            <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
+                                        </button>
+                                    @endif
+                                </form>
+                            </span>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="mt-4">
-                {{ $courses->links() }}
+                @endif
+            @endforeach
             </div>
         </div>
 
@@ -317,6 +242,7 @@
     <script>
         const cursosCreados = document.getElementById('cursos-creados');
         const cursosComprados = document.getElementById('cursos-comprados');
+        const titulo = document.getElementById('titulo');
 
         cursosCreados.style.display = 'none';
         cursosComprados.style.display = 'none';
@@ -324,11 +250,13 @@
         function abrirCreados() {
             cursosCreados.style.display = 'block';
             cursosComprados.style.display = 'none';
+            titulo.innerHTML = 'CURSOS CREADOS';
         }
 
         function abrirComprados() {
             cursosCreados.style.display = 'none';
             cursosComprados.style.display = 'block';
+            titulo.innerHTML = 'CURSOS COMPRADOS';
         }
     </script>
 </x-app-layout>

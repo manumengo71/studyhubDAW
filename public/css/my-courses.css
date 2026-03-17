@@ -1,0 +1,86 @@
+.course-card {
+    width: 195px;
+    height: 285px;
+    background: #cbd5e1;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s ease-in-out;
+    margin-bottom: 15px;
+}
+
+.img {
+    height: 30%;
+    position: absolute;
+    transition: 0.2s ease-in-out;
+    /* z-index: 1; */
+}
+
+.textBox {
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    transition: 0.2s ease-in-out;
+    z-index: 2;
+}
+
+.text {
+    font-weight: bold;
+}
+
+.head {
+    font-size: 20px;
+}
+
+.textBox > .price {
+    font-size: 17px;
+}
+
+.textBox > span {
+    font-size: 12px;
+    color: lightgrey;
+}
+
+.course-card:hover > .textBox {
+    opacity: 1;
+}
+
+.course-card:hover > .img {
+    height: 65%;
+    filter: blur(7px);
+    animation: anim 3s infinite;
+}
+
+.oculto {
+    transition: opacity 1s ease-in-out;
+}
+
+.course-card:hover .oculto {
+    visibility: hidden;
+    opacity: 0;
+}
+
+@keyframes anim {
+    0% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.course-card:hover {
+    transform: scale(1.1) rotate(-3deg);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}

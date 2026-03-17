@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://unpkg.com/@material-tailwind/html@latest/styles/material-tailwind.css" />
     <link rel="stylesheet" href="{{ asset('css/credit-card.css') }}">
     <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/my-courses.css') }}">
     <link rel="stylesheet" href="{{ asset('css/course-detail.css') }}">
 
     {{-- DROPIFY --}}
