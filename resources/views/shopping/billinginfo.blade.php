@@ -94,8 +94,8 @@
                             </p>
                         </div>
                         <div class="flex justify-end">
-                            <div class="credit-card-band w-20 h-10 me-2">
-                                <p class="text-right text-black">
+                            <div class="credit-card-band-small w-20 h-10 me-2 rounded-md">
+                                <p class="text-center text-black">
                                     @isset($creditCard)
                                         {{ $creditCard->cvv }}
                                     @else
