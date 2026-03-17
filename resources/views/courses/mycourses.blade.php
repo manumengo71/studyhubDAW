@@ -7,7 +7,7 @@
         </h2>
     </x-slot>
 
-    <div class="bg-white p-8 rounded-md w-full">
+    <div class="p-8 rounded-md w-full">
         <div class="flex flex-col items-center justify-center pb-6 sm:flex-row sm:justify-between">
             <div class="mb-4 sm:mb-0">
                 <h2 class="text-gray-600 font-semibold">CURSOS CREADOS</h2>

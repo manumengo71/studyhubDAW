@@ -15,14 +15,29 @@
 </head>
 
 <body class="leading-normal tracking-normal text-gray-900" style="font-family: 'Source Sans Pro', sans-serif;">
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
 
-    <div class="h-screen pb-14 bg-right bg-cover ps-5"
-        style="background-image:url('https://i.postimg.cc/QtFYrpgm/bg.png');">
+
+    <div class="h-screen pb-14 bg-right bg-cover ps-5 content-above">
+        {{-- style="background-image:url('https://i.postimg.cc/QtFYrpgm/bg.png');"> --}}
         <!--Nav-->
         <div class="w-full container mx-auto p-6">
 
             <div class="w-full flex items-center justify-between">
-                <a class="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+                <a class="flex items-center text-indigo-200 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
                     href="{{ route('welcome') }}">
                     <x-application-logo class="w-16 h-16 rounded-full" />
                     <span class="ps-2">StudyHub-App</span>
@@ -52,12 +67,12 @@
 
             <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
                 <h1
-                    class="my-4 text-3xl md:text-5xl text-purple-800 font-bold leading-tight text-center md:text-left slide-in-bottom-h1">
+                    class="my-4 text-3xl md:text-5xl text-white font-bold leading-tight text-center md:text-left slide-in-bottom-h1">
                     Tu aplicación de cursos 100% gratuita.</h1>
                 <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left slide-in-bottom-subtitle">
                     ¡Regístrate y empieza a disfrutar gratis!</p>
 
-                <p class="text-blue-400 font-bold pb-8 lg:pb-6 text-center md:text-left fade-in">Regístrate o inicia
+                <p class="text-indigo-200 font-bold pb-8 lg:pb-6 text-center md:text-left fade-in">Regístrate o inicia
                     sesión:</p>
                 <div class="flex w-full justify-center md:justify-start pb-24 lg:pb-0 fade-in">
                     <a href="{{ route('register') }}" class="mr-4">
@@ -76,7 +91,7 @@
 
             <!--Footer-->
             <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
-                <a class="text-gray-500 no-underline hover:no-underline" href="#">&copy; 2023-2024</a>
+                <a class="text-black no-underline hover:no-underline" href="#">&copy; 2023-2024</a>
             </div>
 
         </div>

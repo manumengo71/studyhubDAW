@@ -73,6 +73,10 @@
                                 </div>
                             @endif
 
+
+
+
+
                             <!-- Modal -->
                             <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto hidden"
                                 aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modal">
@@ -102,10 +106,10 @@
                                         </div>
                                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                             <form action="{{ route('marketplace.comprarCurso', $course->id) }}"
-                                                method="POST">
+                                                method="POST" id="form-compra">
                                                 @csrf
                                                 @method('POST')
-                                                <button type="submit"
+                                                <button type="submit" id="boton-confirmar-compra"
                                                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
                                                     Confirmar
                                                 </button>
@@ -119,6 +123,54 @@
                                     </div>
                                 </div>
                             </div>
+
+
+                            <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto hidden"
+                                aria-labelledby="modal-title" role="dialog" aria-modal="true" id="modal-confirmation">
+                                <div
+                                    class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                                    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+                                        aria-hidden="true"></div>
+                                    <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                                        aria-hidden="true">&#8203;</span>
+                                    <div
+                                        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                            <div class="sm:flex sm:items-start">
+                                                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                                    <div class="container-confirmation">
+                                                        <div class="left-side me-10">
+                                                            <div class="card">
+                                                                <div class="card-line"></div>
+                                                                <div class="buttons"></div>
+                                                            </div>
+                                                            <div class="post">
+                                                                <div class="post-line"></div>
+                                                                <div class="screen">
+                                                                    <div class="dollar">$</div>
+                                                                </div>
+                                                                <div class="numbers"></div>
+                                                                <div class="numbers-line2"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="new right-side">
+                                                                <p class="">
+                                                                    Compra Realizada</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
                         </div>
                     </div>
                     <div x-data="accordion(1)"
@@ -151,11 +203,11 @@
                         <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
                             @foreach ($courses as $course)
                                 <div class="w-full max-w-sm mx-auto rounded-md shadow-md overflow-hidden">
-                                    <div class="flex items-end justify-end h-56 w-full bg-cover"
-                                        style="background-image:  @if ($course->getMedia('courses_images')->count() > 0) url('{{ $course->getMedia('courses_images')->last()->getUrl() }}')
-                                    @else
-                                        url('https://i.postimg.cc/HkL86Lc1/sinfoto.png') @endif">
-                                        <a href="{{ route('mycourses.createDetail', $course->id) }}">
+                                    <a href="{{ route('mycourses.createDetail', $course->id) }}">
+                                        <div class="flex items-end justify-end h-56 w-full bg-cover"
+                                            style="background-image:  @if ($course->getMedia('courses_images')->count() > 0) url('{{ $course->getMedia('courses_images')->last()->getUrl() }}')
+                                        @else
+                                            url('https://i.postimg.cc/HkL86Lc1/sinfoto.png') @endif">
                                             <button
                                                 class="p-2 rounded-full bg-blue-600 text-white mx-5 -mb-4 hover:bg-blue-500 focus:outline-none focus:bg-blue-500">
                                                 <svg class="h-5 w-5" fill="none" stroke-linecap="round"
@@ -166,8 +218,8 @@
                                                     </path>
                                                 </svg>
                                             </button>
-                                        </a>
-                                    </div>
+                                        </div>
+                                    </a>
                                     <div class="px-5 py-3">
                                         <h3 class="text-gray-700 uppercase">{{ $course->name }}</h3>
                                         <span class="text-gray-500 mt-2">{{ $course->short_description }}</span>
@@ -217,6 +269,24 @@
                 }));
             });
             //  end faq
+        </script>
+        <script>
+            let botonComprar = document.getElementById('boton-confirmar-compra');
+            let formCompra = document.getElementById('form-compra');
+            botonComprar.addEventListener('click', function(event) {
+                event.preventDefault();
+                document.getElementById('modal').classList.remove('block');
+                document.getElementById('modal').classList.add('hidden');
+                document.getElementById('modal-confirmation').classList.remove('hidden');
+                document.getElementById('modal-confirmation').classList.add('block');
+
+                document.querySelector('.container-confirmation').classList.add('animate-confirmation');
+
+
+                setTimeout(() => {
+                    formCompra.submit();
+                }, 2000);
+            });
         </script>
     </x-slot>
 </x-app-layout>
