@@ -48,4 +48,9 @@ class Course extends Model implements HasMedia
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function userCourseProgresses()
+    {
+        return $this->hasMany(User_course_progress::class, 'course_id');
+    }
 }

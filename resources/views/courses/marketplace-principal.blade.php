@@ -14,11 +14,11 @@
         <a href="#categorias" class="hover:text-cyan-700 -ms-6">Ir a categorías</a>
     </div>
 
-    <div class="flex flex-wrap md:space-x-20">
+    <div class="flex flex-wrap">
         @foreach ($temas as $tema)
             @if ($courses->where('courses_categories_id', $tema->id)->isNotEmpty())
                 @foreach ($courses->where('courses_categories_id', $tema->id) as $course)
-                    <div class="max-w-sm w-96 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 m-4 md:ms-20"
+                    <div class="max-w-sm w-96 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 m-4 2xl:w-96 mx-auto"
                         style="box-shadow: 7px 20px 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -2px rgba(0, 0, 0, 0.05);">
                         <h3 class="mb-3 text-xl font-bold text-indigo-600">Tema: {{ $tema->name }}</h3>
                         <div class="relative">
@@ -62,7 +62,7 @@
         @endforeach
 
         <!-- Todos los cursos -->
-        <div class="max-w-sm w-96 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 m-4 md:ms-20 text-center flex flex-col justify-center"
+        <div class="max-w-sm w-96 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 m-4 2xl:w-96 mx-auto text-center flex flex-col justify-center"
             style="box-shadow: 7px 20px 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -2px rgba(0, 0, 0, 0.05);">
             <h3 class="mb-3 text-xl font-bold text-indigo-600">Tema: <a href="#">Todos los temas</a></h3>
             <div class="relative mt-12">
@@ -89,7 +89,7 @@
         @foreach ($categoriasPopulares as $category)
             <div
                 class="mr-12 max-w-sm w-64 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-lg transform m-4 hover:scale-105 transition duration-500">
-                <a href="#">
+                <a href="{{ route('marketplace.cursosPorCategoria', ['id' => $category->id]) }}">
                     <div class="relative">
                         @if ($category->getMedia('images_categories')->count() > 0)
                             <img class="w-full h-full rounded-full"

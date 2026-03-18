@@ -26,4 +26,9 @@ class Lesson extends Model implements HasMedia
         'subtitle',
         'content',
     ];
+
+    public function userCourseProgresses()
+    {
+        return $this->hasMany(User_course_progress::class, 'lesson_id');
+    }
 }

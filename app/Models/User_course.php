@@ -19,6 +19,6 @@ class User_course extends Model
     protected $fillable = [
         'users_id',
         'courses_id',
-        'users_courses_statuses_id',
+        'user_course_progresses_id',
     ];
 }

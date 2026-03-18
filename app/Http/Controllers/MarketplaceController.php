@@ -288,4 +288,17 @@ class MarketplaceController extends Controller
 
         return view('courses.marketplace-search', compact('coursesSearch', 'temasSearch', 'temas', 'languages', 'input'), ['alert' => $alert]);
     }
+
+    /**
+     * Click en categoría te lleva a todos los cursos con esa categoría.
+     */
+
+    public function cursosPorCategoria($id): View
+    {
+        $courses = Course::where('courses_categories_id', $id)->get();
+        $temas = CourseCategory::all();
+        $languages = Course::distinct()->pluck('language');
+        $input = [];
+        return view('courses.marketplace-allCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
+    }
 }

@@ -191,7 +191,7 @@
             @foreach ($usersCourses as $userCourse)
                 @php
                     $courseUser = $coursesUsers->firstWhere('id', $userCourse->courses_id);
-                    $courseStatus = $status->where('id', $userCourse->users_courses_statuses_id)->first()->name;
+                    // $courseStatus = $status->where('id', $userCourse->users_courses_statuses_id)->first()->name;
                 @endphp
 
                 @if ($courseUser)
@@ -208,16 +208,16 @@
 
                         <div class="textBox">
 
-                            <span>{{ $courseStatus }}</span>
+                            {{-- <span>{{ $courseStatus }}</span> --}}
                             <span class="px-0 py-5 mb-16 text-sm">
                                 <form action="{{ route('mycourses.createPlay', $courseUser->id) }}" method="GET">
                                     @csrf
-                                    @if ($courseStatus == '¡Estréname!')
+                                    {{-- @if ($courseStatus == '¡Estréname!') --}}
                                         <button class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white" type="submit">
                                             EMPEZAR
                                             <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
                                         </button>
-                                    @elseif ($courseStatus == 'En progreso')
+                                    {{-- @elseif ($courseStatus == 'En progreso')
                                         <button class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white" type="submit">
                                             CONTINUAR
                                             <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
@@ -227,7 +227,7 @@
                                             EMPEZAR DE NUEVO
                                             <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
                                         </button>
-                                    @endif
+                                    @endif --}}
                                 </form>
                             </span>
                         </div>
