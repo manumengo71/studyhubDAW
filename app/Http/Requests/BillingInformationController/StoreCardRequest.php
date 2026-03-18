@@ -22,9 +22,9 @@ class StoreCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'surname' => 'required|string',
-            'second-surname' => 'required|string',
+            'name' => 'required|string|max:25',
+            'surname' => 'required|string|max:25',
+            'second-surname' => 'required|string|max:25',
             'input-number-card' => 'required|numeric|digits:16',
             'input-expire-date-card' => 'required|date_format:m/y',
             'input-cvv-card' => 'required|numeric|digits:3',
@@ -41,10 +41,13 @@ class StoreCardRequest extends FormRequest
         return [
             'name.required' => 'El nombre es obligatorio.',
             'name.string' => 'El nombre debe ser una cadena de texto.',
+            'name.max' => 'El nombre no puede tener más de 25 caracteres.',
             'surname.required' => 'El apellido es obligatorio.',
             'surname.string' => 'El apellido debe ser una cadena de texto.',
+            'surname.max' => 'El apellido no puede tener más de 25 caracteres.',
             'second-surname.required' => 'El segundo apellido es obligatorio.',
             'second-surname.string' => 'El segundo apellido debe ser una cadena de texto.',
+            'second-surname.max' => 'El segundo apellido no puede tener más de 25 caracteres.',
             'input-number-card.required' => 'El número de la tarjeta es obligatorio.',
             'input-number-card.numeric' => 'El número de la tarjeta debe ser un número.',
             'input-number-card.digits' => 'El número de la tarjeta debe tener 16 dígitos.',

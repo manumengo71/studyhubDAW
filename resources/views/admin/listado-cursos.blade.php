@@ -29,6 +29,10 @@
                                     </th>
                                     <th
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Precio
+                                    </th>
+                                    <th
+                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Status
                                     </th>
                                     <th
@@ -46,19 +50,24 @@
                                                 {{ $course->name }}
                                             </p>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $course->short_description }}
+                                                {{ Str::limit($course->short_description, 50) }}
                                             </p>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $course->description }}
+                                                {{ Str::limit($course->description, 50) }}
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 {{ $course->language }}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                {{ $course->price == 0 ? 'Gratis' : number_format($course->price, 2) . '€' }}
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -80,7 +89,7 @@
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
-                                                <form action="{{ route('mycourses.editCourse', $course) }}"
+                                                <form action="{{ route('admin.editCourse', $course) }}"
                                                             method="GET" class="inline">
                                                             @csrf
                                                             @method('GET')

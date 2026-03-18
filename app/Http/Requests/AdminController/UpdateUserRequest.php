@@ -29,11 +29,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->route('id'))], //Ignorar el email del usuario que se está editando para que no de conflicto el email ya que debe ser único.
-            'name' => 'string|max:255',
-            'surname' => 'string|max:255',
-            'second_surname' => 'string|max:255',
+            'name' => 'string|max:25',
+            'surname' => 'string|max:25',
+            'second_surname' => 'string|max:25',
             'birthdate' => 'nullable|date',
             'biological_gender' => 'nullable|string|max:255|in:Masculino,Femenino,Otro',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',

@@ -1,18 +1,23 @@
 <?php
 
-namespace App\Http\Requests\CourseController;
+namespace App\Http\Requests\AdminController;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class UpdateCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        // IMPORTANTE: En visualStudioCode salta un error al acceder a hasRole, pero funciona correctamente. (Dejo mensaje por posibles errores a futuro).
+        if (auth()->user()->hasRole('admin')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -31,8 +36,7 @@ class StoreRequest extends FormRequest
             'owner_id' => [
                 'required',
                 Rule::exists('users', 'id')->where(function ($query) {
-                    $query->where('id', $this->input('owner_id'))
-                        ->where('id', auth()->id());
+                    $query->where('id', $this->input('owner_id'));
                 }),
             ],
             'courses_categories_id' => 'required|exists:courses_categories,id',

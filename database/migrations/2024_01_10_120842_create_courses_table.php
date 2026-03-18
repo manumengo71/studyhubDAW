@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('owner_id')->constrained('users');
             $table->foreignId('courses_categories_id')->constrained('courses_categories');
-            $table->string('name');
-            $table->string('short_description');
+            $table->string('name', 120);
+            $table->string('short_description', 200);
             $table->longText('description');
             $table->string('language');
+            $table->double('price', 8, 2);
             $table->timestamps();
             $table->softDeletes();
         });

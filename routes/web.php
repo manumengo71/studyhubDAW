@@ -111,6 +111,8 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::get('/categories', [App\Http\Controllers\AdminController::class, 'listCategories'])->name('listCategories');
         Route::get('/categories/busqueda', [App\Http\Controllers\AdminController::class, 'searchCategories'])->name('categories.search');
         Route::get('/createCourse', [App\Http\Controllers\AdminController::class, 'createCourse'])->name('admin.createCourse');
+        Route::patch('/updateCourse/{id}', [App\Http\Controllers\AdminController::class, 'updateCourse'])->name('admin.updateCourse');
+        Route::get('/editCourse/{id}', [App\Http\Controllers\AdminController::class, 'editCourse'])->name('admin.editCourse');
         Route::post('/storeCourse', [App\Http\Controllers\AdminController::class, 'storeCourse'])->name('admin.storeCourse');
 
         Route::get('/createCategory', [App\Http\Controllers\AdminController::class, 'createCategory'])->name('createCategory');

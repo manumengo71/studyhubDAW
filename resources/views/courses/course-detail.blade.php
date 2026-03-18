@@ -110,6 +110,8 @@
                                                 @csrf
                                                 @method('POST')
                                                 <button type="submit" id="boton-confirmar-compra"
+                                                    data-has-credit-card="{{ $hasCreditCard }}"
+                                                    onclick="comprarCurso(event)"
                                                     class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm">
                                                     Confirmar
                                                 </button>
@@ -271,22 +273,30 @@
             //  end faq
         </script>
         <script>
-            let botonComprar = document.getElementById('boton-confirmar-compra');
-            let formCompra = document.getElementById('form-compra');
-            botonComprar.addEventListener('click', function(event) {
+            function comprarCurso(event) {
+                let botonComprar = document.getElementById('boton-confirmar-compra');
+                let formCompra = document.getElementById('form-compra');
+                let hasCreditCard = event.target.dataset.hasCreditCard === '1';
+
                 event.preventDefault();
+
                 document.getElementById('modal').classList.remove('block');
                 document.getElementById('modal').classList.add('hidden');
-                document.getElementById('modal-confirmation').classList.remove('hidden');
-                document.getElementById('modal-confirmation').classList.add('block');
 
-                document.querySelector('.container-confirmation').classList.add('animate-confirmation');
-
-
-                setTimeout(() => {
+                if (!hasCreditCard) {
                     formCompra.submit();
-                }, 2000);
-            });
+                } else {
+
+                    document.getElementById('modal-confirmation').classList.remove('hidden');
+                    document.getElementById('modal-confirmation').classList.add('block');
+
+                    document.querySelector('.container-confirmation').classList.add('animate-confirmation');
+
+                    setTimeout(() => {
+                        formCompra.submit();
+                    }, 2000);
+                }
+            }
         </script>
     </x-slot>
 </x-app-layout>

@@ -61,7 +61,7 @@
                     {{-- 3 --}}
                     <div class="mb-5">
                         <div class="md:flex md:space-x-4">
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/5">
                                 <label for="language" class="block text-sm font-medium text-gray-700 mb-1">
                                     Idioma
                                 </label>
@@ -88,7 +88,18 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/5">
+                                <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Precio
+                                </label>
+                                <input type="number" name="price" id="price"
+                                    value=0
+                                    min="0"
+                                    max="999"
+                                    step="0.5"
+                                    class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none">
+                            </div>
+                            <div class="md:w-1/5">
                                 <label for="owner_id" class="block text-sm font-medium text-gray-700 mb-1">
                                     Creador
                                 </label>
@@ -102,7 +113,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/5">
                                 <label for="courses_categories_id" class="block text-sm font-medium text-gray-700 mb-1">
                                     Categoría
                                 </label>
@@ -116,7 +127,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="w-1/5">
                                 <label for="imageCourse" class="block text-sm font-medium text-gray-700 mb-1">
                                     Imagen del curso
                                 </label>

@@ -35,7 +35,7 @@
                                     @endif
                                 </div>
                                 <div class="absolute top-0 bg-yellow-300 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
-                                    PRECIO
+                                    {{ $course->price == 0 ? 'Gratis' :  number_format($course->price, 2) . '€' }}
                                 </div>
                             </div>
                             <h1

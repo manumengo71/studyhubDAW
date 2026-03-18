@@ -9,6 +9,7 @@ use App\Models\CourseCategory;
 use App\Models\User;
 use App\Models\User_course;
 use App\Models\User_course_status;
+use App\Models\User_course_progress;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -39,10 +40,17 @@ class MarketplaceController extends Controller
         if ($user->billingInformation()->count() == 0) {
             return redirect()->route('billinginfo', ['id' => $course->id])->with('errorCreditCard', 'Debes tener una tarjeta de crédito asociada a tu cuenta para poder comprar un curso.');
         } else {
+
+            $user_course_progresses = User_course_progress::create([
+                'user_id' => $user->id,
+                'course_id' => $course->id,
+                'users_courses_statuses_id' => 1,
+            ]);
+
             $user_course = User_course::create([
                 'users_id' => $user->id,
                 'courses_id' => $course->id,
-                'users_courses_statuses_id' => User_course_status::where('name', '¡Estréname!')->first()->id,
+                'user_course_progresses_id' => $user_course_progresses->id,
             ]);
 
             $billing_histories = BillingHistory::create([

@@ -38,6 +38,6 @@ class BillingHistory extends Model implements HasMedia
 
     public function course()
     {
-        return $this->belongsTo(Course::class, 'id');
+        return $this->belongsTo(Course::class, 'course_id');
     }
 }

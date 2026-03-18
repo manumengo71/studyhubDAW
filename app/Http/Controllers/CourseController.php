@@ -24,7 +24,7 @@ class CourseController extends Controller
     {
         $user = auth()->user();
         $courses = Course::withTrashed()->where('owner_id', $user->id)->paginate(5);
-        $usersCourses = $user->usersCourses()->get();  // En VisualStudio da error, pero funciona bien.
+        $usersCourses = $user->usersCourses()->orderBy('created_at', 'desc')->get();  // En VisualStudio da error, pero funciona bien.
         $coursesIds = $usersCourses->pluck('courses_id')->toArray();
         $coursesUsers = Course::whereIn('id', $coursesIds)->get();
         $temas = CourseCategory::all();
@@ -60,6 +60,7 @@ class CourseController extends Controller
         $courses = Course::inRandomOrder()->limit(4)->get();
         $Nlessons = DB::table('lessons')->where('courses_id', $request->id)->count();
         $lessons = Lesson::where('courses_id', $request->id)->get();
+        $hasCreditCard = $user->hasCreditCard();
         return view('courses.course-detail', [
             'course' => Course::withTrashed()->find($request->id),
             'user' => $user,
@@ -67,6 +68,7 @@ class CourseController extends Controller
             'courses' => $courses,
             'Nlessons' => $Nlessons,
             'lessons' => $lessons,
+            'hasCreditCard' => $hasCreditCard,
         ]);
     }
 
@@ -119,6 +121,7 @@ class CourseController extends Controller
             'short_description' => $request->input('short_description'),
             'description' => $request->input('description'),
             'language' => $request->input('language'),
+            'price' => $request->input('price'),
             'owner_id' => $request->input('owner_id'),
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
@@ -149,6 +152,7 @@ class CourseController extends Controller
         $curso->short_description = $request->short_description;
         $curso->description = $request->description;
         $curso->language = $request->language;
+        $curso->price = $request->price;
         $curso->owner_id = $request->owner_id;
         $curso->courses_categories_id = $request->courses_categories_id;
         $curso->save();
@@ -157,7 +161,9 @@ class CourseController extends Controller
             $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
         }
 
-        return redirect()->route('mycourses');
+        $abrirCreados = true;
+
+        return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados]);
     }
 
     /**
@@ -187,18 +193,22 @@ class CourseController extends Controller
     {
         $curso = Course::withTrashed()->find($request->id);
         $curso->restore();
+        $abrirCreados = true;
+        $pageActual = $request->input('page');
 
-        return redirect()->route('mycourses');
+        return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
     }
 
     /**
      * Desactivar un curso. **Desaparece del marketplace**
      */
-    public function destroy(Course $course)
+    public function destroy(Course $course, Request $request)
     {
         $course->delete();
+        $abrirCreados = true;
+        $pageActual = $request->input('page');
 
-        return redirect()->route('mycourses');
+        return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
     }
 
     /**

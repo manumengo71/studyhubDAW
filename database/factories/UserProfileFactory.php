@@ -23,9 +23,9 @@ class UserProfileFactory extends Factory
         $biologicalGenders = ['Masculino', 'Femenino', 'Otro'];
 
         return [
-            'name' => fake()->name,
-            'surname' => fake()->lastName,
-            'second_surname' => fake()->lastName,
+            'name' => substr(fake()->name, 0, 25),
+            'surname' => substr(fake()->lastName, 0, 25),
+            'second_surname' => substr(fake()->lastName, 0, 25),
             'birthdate' => fake()->dateTimeBetween('-50 years', '-18 years'),
             'biological_gender' => $this->faker->randomElement($biologicalGenders),
         ];

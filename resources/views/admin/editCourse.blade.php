@@ -9,7 +9,7 @@
     <x-slot name="slot">
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('mycourses.updateCourse', $courseInfo->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.updateCourse', $courseInfo->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     {{-- 1 --}}
@@ -58,7 +58,7 @@
                     {{-- 3 --}}
                     <div class="mb-5">
                         <div class="md:flex md:space-x-4">
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/5">
                                 <label for="language" class="block text-sm font-medium text-gray-700 mb-1">
                                     Idioma
                                 </label>
@@ -84,17 +84,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="md:w-1/4">
-                                {{-- <label for="owner_username" class="block text-sm font-medium text-gray-700 mb-1">
-                                    Creador
-                                </label>
-                                <input type="text" name="owner_username" id="owner_username"
-                                    value="{{ $user->username }}" readonly
-                                    class="w-full rounded-md border border-gray-300 py-2 px-3 bg-gray-100 focus:outline-none">
-                                <input type="hidden" name="owner_id" id="owner_id" value="{{ $user->id }}">
-                                @error('owner_id')
-                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                                @enderror --}}
+                            <div class="md:w-1/5">
                                 <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
                                     Precio
                                 </label>
@@ -102,11 +92,24 @@
                                     value="{{ number_format($courseInfo->price, 2) }}"
                                     min="0"
                                     max="999"
-                                    step="0.5"
+                                    step="0.01"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none">
-                                <input type="hidden" name="owner_id" id="owner_id" value="{{ $user->id }}">
                             </div>
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/5">
+                                <label for="owner_id" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Creador
+                                </label>
+                                <select name="owner_id" id="owner_id"
+                                    class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:border-indigo-500">
+                                    @foreach ($users->sortBy('username') as $user)
+                                        <option value="{{ $user->id }}" {{ $courseInfo->owner_id == $user->id ? 'selected' : '' }}>{{ $user->username }}</option>
+                                    @endforeach
+                                </select>
+                                @error('owner_id')
+                                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                                @enderror
+                            </div>
+                            <div class="md:w-1/5">
                                 <label for="courses_categories_id" class="block text-sm font-medium text-gray-700 mb-1">
                                     Categoría
                                 </label>
@@ -119,7 +122,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div>
+                            <div class="md:w-1/5">
                                 <x-input-label for="imageCourse" :value="__('Imagen del curso')" />
                                 @if ($courseInfo->getMedia('courses_images')->count() > 0)
                                     <input type="file" name="imageCourse" class="dropify"

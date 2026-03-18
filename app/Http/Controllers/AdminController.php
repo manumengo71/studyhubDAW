@@ -8,10 +8,12 @@ use App\Http\Requests\AdminController\StoreCategoryRequest;
 use App\Http\Requests\AdminController\StoreCourseRequest;
 use App\Http\Requests\AdminController\StoreRoleRequest;
 use App\Http\Requests\AdminController\StoreUserRequest;
+use App\Http\Requests\AdminController\UpdateCourseRequest;
 use App\Http\Requests\AdminController\UpdateUserRequest;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\CustomRole;
+use App\Models\Lesson;
 use App\Models\User;
 use App\Models\userProfile;
 use Illuminate\Contracts\View\View;
@@ -386,6 +388,7 @@ class AdminController extends Controller
             'short_description' => $request->input('short_description'),
             'description' => $request->input('description'),
             'language' => $request->input('language'),
+            'price' => $request->input('price'),
             'owner_id' => $request->input('owner_id'),
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
@@ -405,6 +408,32 @@ class AdminController extends Controller
     }
 
     /**
+     * Editar un curso
+     */
+
+    public function updateCourse(UpdateCourseRequest $request)
+    {
+        $request->safe();
+
+        $curso = Course::withTrashed()->find($request->id);
+        $curso->name = $request->name;
+        $curso->short_description = $request->short_description;
+        $curso->description = $request->description;
+        $curso->language = $request->language;
+        $curso->price = $request->price;
+        $curso->owner_id = $request->owner_id;
+        $curso->courses_categories_id = $request->courses_categories_id;
+        $curso->save();
+
+        if ($request->hasFile('imageCourse')) {
+            $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
+        }
+
+        return redirect()->route('listCourses')->with('success', 'Curso editado correctamente');
+
+    }
+
+    /**
      * Redirigir a la vista para crear un curso
      */
     public function createCourse(): View
@@ -412,6 +441,26 @@ class AdminController extends Controller
         $users = User::withTrashed()->get();
         $categories = CourseCategory::all();
         return view('admin.createCourse', compact('users', 'categories'));
+    }
+
+    /**
+     * Redirigir a la vista para editar un curso
+     */
+    public function editCourse(Request $request, Course $course): View
+    {
+        $users = user::withTrashed()->get();
+        $categories = CourseCategory::all();
+        $lessons = Lesson::where('courses_id', $request->id)->get();
+        $courseInfo = Course::withTrashed()->find($request->id);
+        $lessons = Lesson::where('courses_id', $request->id)->get();
+
+        return view('admin.editCourse', [
+            'users' => $users,
+            'categories' => $categories,
+            'lessons' => $lessons,
+            'courseInfo' => $courseInfo,
+            'lessons' => $lessons,
+        ]);
     }
 
     /**
@@ -526,7 +575,8 @@ class AdminController extends Controller
     {
         $category->delete();
 
-        return redirect()->route('listCategories')->with('success', 'Categoría eliminada correctamente');
+        // return redirect()->route('listCategories')->with('success', 'Categoría eliminada correctamente');
+        return back();
     }
 
     /**
@@ -539,7 +589,8 @@ class AdminController extends Controller
 
         $category->restore();
 
-        return redirect()->route('listCategories')->with('success', 'Categoría activada correctamente');
+        // return redirect()->route('listCategories')->with('success', 'Categoría activada correctamente');
+        return back();
     }
 
     /**
@@ -552,7 +603,8 @@ class AdminController extends Controller
 
         $category->forceDelete();
 
-        return redirect()->route('listCategories')->with('success', 'Categoría eliminada permanentemente');
+        // return redirect()->route('listCategories')->with('success', 'Categoría eliminada permanentemente');
+        return back();
     }
 
     /**
@@ -629,7 +681,8 @@ class AdminController extends Controller
 
         $role->restore();
 
-        return redirect()->route('listRoles')->with('success', 'Rol activado correctamente');
+        // return redirect()->route('listRoles')->with('success', 'Rol activado correctamente');
+        return back();
     }
 
     /**
@@ -644,7 +697,8 @@ class AdminController extends Controller
 
         $role->delete();
 
-        return redirect()->route('listRoles')->with('success', 'Rol desactivado correctamente');
+        // return redirect()->route('listRoles')->with('success', 'Rol desactivado correctamente');
+        return back();
     }
 
     /**
@@ -661,7 +715,8 @@ class AdminController extends Controller
 
         $role->forceDelete();
 
-        return redirect()->route('listRoles')->with('success', 'Rol eliminado permanentemente');
+        // return redirect()->route('listRoles')->with('success', 'Rol eliminado permanentemente');
+        return back();
     }
 
     /**
@@ -740,7 +795,8 @@ class AdminController extends Controller
         $user = User::withTrashed()->find($request->id);
         $user->restore();
 
-        return redirect()->route('listUsers');
+        // return redirect()->route('listUsers');
+        return back();
     }
 
     /**
@@ -751,7 +807,8 @@ class AdminController extends Controller
     {
         $user->delete();
 
-        return redirect()->route('listUsers');
+        // return redirect()->route('listUsers');
+        return back();
     }
 
     /**
@@ -775,7 +832,8 @@ class AdminController extends Controller
         // Eliminar al usuario
         $user->forceDelete();
 
-        return redirect()->route('listUsers');
+        // return redirect()->route('listUsers');
+        return back();
     }
 
     /**
@@ -787,7 +845,8 @@ class AdminController extends Controller
         $course = Course::withTrashed()->find($request->id);
         $course->restore();
 
-        return redirect()->route('listCourses');
+        // return redirect()->route('listCourses');
+        return back();
     }
 
     /**
@@ -798,7 +857,8 @@ class AdminController extends Controller
     {
         $course->delete();
 
-        return redirect()->route('listCourses');
+        // return redirect()->route('listCourses');
+        return back();
     }
 
     /**
@@ -809,6 +869,7 @@ class AdminController extends Controller
     {
         $course->forceDelete();
 
-        return redirect()->route('listCourses');
+        // return redirect()->route('listCourses');
+        return back();
     }
 }

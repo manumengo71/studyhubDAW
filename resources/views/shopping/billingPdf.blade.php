@@ -48,7 +48,7 @@
                     <tbody>
                         <tr>
                             <td style="padding: 1rem; border: 1px solid #333;">{{ ucfirst($billingHistory->course->name) }}</td>
-                            <td style="padding: 1rem; border: 1px solid #333; text-align: center; overflow: hidden;">Gratis</td>
+                            <td style="padding: 1rem; border: 1px solid #333; text-align: center; overflow: hidden;">{{ $billingHistory->course->price == 0 ? 'Gratis' : number_format($billingHistory->course->price, 2) . '€' }}</td>
                         </tr>
                         <tr style="background-color: #f3f4f6;">
                             <td colspan="2" style="padding: 1rem; border: 1px solid #333; text-align: left; text-transform: uppercase; font-weight: bold;">Información relativa al curso</td>

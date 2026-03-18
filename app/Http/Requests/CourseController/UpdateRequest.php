@@ -23,10 +23,11 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
-            'short_description' => 'required|string|max:255',
+            'name' => 'required|string|max:120',
+            'short_description' => 'required|string|max:200',
             'description' => 'required|string',
             'language' => 'required|string|in:Español,Inglés,Francés,Alemán,Italiano,Portugués,Chino (Mandarín),Hindi,Árabe,Bengalí,Ruso,Japonés,Malayo,Telugu,Vietnamita,Coreano',
+            'price' => 'required|numeric|min:0|max:999.99',
             'owner_id' => [
                 'required',
                 Rule::exists('users', 'id')->where(function ($query) {

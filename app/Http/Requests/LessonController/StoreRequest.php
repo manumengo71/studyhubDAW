@@ -23,12 +23,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'subtitle' => 'required|string|max:255',
-            // 'content_type' => [
-            //     Rule::exists('lessons_types', 'id'),
-            // ],
-            // 'content' => 'file|mimes:mp4,pdf,txt,png,jpg,jpeg|max:6291456',
+            'title' => 'required|string|max:50',
+            'subtitle' => 'required|string|max:100',
         ];
     }
 }

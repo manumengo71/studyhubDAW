@@ -46,7 +46,7 @@
                                 <label for="content_type" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Tipo de contenido
                                 </label>
-                                <select name="content_type" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
+                                <select name="content_type" class="ps-6 w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
                                     <option value="1" {{ $lesson->lessons_types_id == 1 ? 'selected' : '' }}>PDF</option>
                                     <option value="2" {{ $lesson->lessons_types_id == 2 ? 'selected' : '' }}>Texto</option>
                                     <option value="3" {{ $lesson->lessons_types_id == 3 ? 'selected' : '' }}>Video</option>

@@ -87,7 +87,7 @@
                                 @enderror
                             </div>
                             <div class="md:w-1/4">
-                                <label for="owner_username" class="block text-sm font-medium text-gray-700 mb-1">
+                                {{-- <label for="owner_username" class="block text-sm font-medium text-gray-700 mb-1">
                                     Creador
                                 </label>
                                 <input type="text" name="owner_username" id="owner_username"
@@ -96,7 +96,17 @@
                                 <input type="hidden" name="owner_id" id="owner_id" value="{{ $user->id }}">
                                 @error('owner_id')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
-                                @enderror
+                                @enderror --}}
+                                <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
+                                    Precio
+                                </label>
+                                <input type="number" name="price" id="price"
+                                    value=0
+                                    min="0"
+                                    max="999"
+                                    step="0.5"
+                                    class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none">
+                                <input type="hidden" name="owner_id" id="owner_id" value="{{ $user->id }}">
                             </div>
                             <div class="md:w-1/4">
                                 <label for="courses_categories_id" class="block text-sm font-medium text-gray-700 mb-1">

@@ -58,6 +58,10 @@
                                     </th>
                                     <th
                                         class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                        Precio
+                                    </th>
+                                    <th
+                                        class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                         Fecha creación
                                     </th>
                                     <th
@@ -93,19 +97,24 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $course->short_description }}
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
+                                            <p class="text-gray-900 whitespace-no-wrap ">
+                                                {{ Str::limit($course->short_description, 50) }}
                                             </p>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $course->description }}
+                                                {{ Str::limit($course->description, 50) }}
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 {{ $course->language }}
+                                            </p>
+                                        </td>
+                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                            <p class="text-gray-900 whitespace-no-wrap">
+                                                {{ $course->price == 0 ? 'Gratis' : number_format($course->price, 2) . '€' }}
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -151,6 +160,8 @@
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')
+                                                            <input type="hidden" name="page"
+                                                                value="{{ request()->input('page') }}">
                                                             <button type="submit"
                                                                 class="text-red-500 hover:text-red-700 flex items-center">
                                                                 <img src="https://i.postimg.cc/fRq1K2hg/cross.png"
@@ -164,6 +175,8 @@
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
+                                                            <input type="hidden" name="page"
+                                                                value="{{ request()->input('page') }}">
                                                             <button type="submit"
                                                                 class="text-red-500 hover:text-red-700 flex items-center">
                                                                 <img src="https://i.postimg.cc/tg1wm3qR/check.png"
@@ -187,26 +200,29 @@
         </div>
 
         <div id="cursos-comprados" onclick="abrirComprados()">
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap xl:ms-20 lg:ms-3 sm:ms-24" >
             @foreach ($usersCourses as $userCourse)
                 @php
                     $courseUser = $coursesUsers->firstWhere('id', $userCourse->courses_id);
                     // $courseStatus = $status->where('id', $userCourse->users_courses_statuses_id)->first()->name;
                 @endphp
 
-                @if ($courseUser)
-                    <div class="course-card max-w-sm w-72 2xl:w-96 mx-auto">
-                        <div>
-                            <p class="text head oculto mb-4">{{ $courseUser->name }}</p>
-                        </div>
+                    @if ($courseUser)
+                        <div class="course-card sm:w-44 md:w-56 lg:w-64 xl:w-72 2xl:w-96 sm:me-10 sm:mb-10 mx-auto sm:mx-0">
+                            <div>
+                                <p class="text head oculto mb-4">{{ $courseUser->name }}</p>
+                            </div>
 
-                        @if ($courseUser->getMedia('courses_images')->count() > 0)
-                            <img class="w-44 h-44 rounded-full img mt-10" src="{{ $courseUser->getMedia('courses_images')->last()->getUrl() }}" alt="" />
-                        @else
-                            <img class="w-40 h-40 img" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png" alt="" />
-                        @endif
+                            @if ($courseUser->getMedia('courses_images')->count() > 0)
+                                <img class="w-44 h-44 rounded-full img mt-10"
+                                    src="{{ $courseUser->getMedia('courses_images')->last()->getUrl() }}"
+                                    alt="" />
+                            @else
+                                <img class="w-40 h-40 img" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
+                                    alt="" />
+                            @endif
 
-                        <div class="textBox">
+                            <div class="textBox">
 
                             {{-- <span>{{ $courseStatus }}</span> --}}
                             <span class="px-0 py-5 mb-16 text-sm">
@@ -248,6 +264,10 @@
         cursosComprados.style.display = 'none';
 
         function abrirCreados() {
+            const cursosCreados = document.getElementById('cursos-creados');
+            const cursosComprados = document.getElementById('cursos-comprados');
+            const titulo = document.getElementById('titulo');
+
             cursosCreados.style.display = 'block';
             cursosComprados.style.display = 'none';
             titulo.innerHTML = 'CURSOS CREADOS';
@@ -257,6 +277,21 @@
             cursosCreados.style.display = 'none';
             cursosComprados.style.display = 'block';
             titulo.innerHTML = 'CURSOS COMPRADOS';
+        }
+    </script>
+
+    <script>
+        var abrir = @json(session('abrirCreados', false));
+        var pageRecibido = @json(session('pageActual'));
+
+        if (abrir === true) {
+            if(pageRecibido !== null){
+                window.location.href = window.location.href + '?page=' + pageRecibido;
+            } else {
+                abrirCreados();
+            }
+        } else if (window.location.href.includes('page')) {
+            abrirCreados();
         }
     </script>
 </x-app-layout>

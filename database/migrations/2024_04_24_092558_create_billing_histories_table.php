@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('buyer_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('billing_id')->constrained('billing_information');
-            $table->foreignId('course_id')->constrained('courses');
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
             $table->date('purchase_date');
             $table->timestamps();
         });

@@ -26,6 +26,7 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph,
             'language' => $this->faker->randomElement($languages),
             'owner_id' => $this->faker->randomElement($userIds),
+            'price' => $this->faker->randomFloat(2, 0, 200),
             'courses_categories_id' => $this->faker->randomElement($categoriesIds),
         ];
     }

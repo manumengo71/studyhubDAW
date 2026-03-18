@@ -32,9 +32,9 @@
                                         alt="Imagen por defecto">
                                 @endif
                             </div>
-                            {{-- <div class="absolute top-0 bg-yellow-300 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
-                                PRECIO
-                            </div> --}}
+                            <div class="absolute top-0 bg-yellow-300 text-gray-800 font-semibold py-1 px-3 rounded-br-lg rounded-tl-lg">
+                                {{ $course->price == 0 ? 'Gratis' :  number_format($course->price, 2) . '€' }}
+                            </div>
                         </div>
                         <h1
                             class="mt-4 text-gray-800 text-2xl font-bold overflow-hidden whitespace-nowrap overflow-ellipsis">

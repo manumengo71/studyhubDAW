@@ -19,14 +19,6 @@ class BillingInformationController extends Controller
 {
     public function getInfo()
     {
-        // if(BillingInformation::where('user_id', auth()->id())->first()) {
-        //     $creditCard = BillingInformation::where('user_id', auth()->id())->first();
-        // }else{
-        //     $creditCard = BillingInformation::create([
-        //         'user_id' => '11',
-        //         'credit_card_number' => '0000000000000000',
-        //     ]);
-        // }
 
         $coursesHistory = auth()->user()->billingHistories()->latest()->with(['course' => function ($query) {
             $query->with(['owner' => function ($query) {
@@ -67,11 +59,6 @@ class BillingInformationController extends Controller
             if ($coursesHistory->isEmpty()) {
                 return view('shopping.billinginfo', compact('creditCard', 'imgUrl', 'style'));
             } else {
-                // $coursesHistory = Course::join('users_courses', 'courses.id', '=', 'users_courses.courses_id')
-                //     ->join('users', 'courses.owner_id', '=', 'users.id')
-                //     ->where('users_courses.users_id', auth()->id())
-                //     ->select('courses.*', 'users.username as owner_name')
-                //     ->paginate(5);
 
                 return view('shopping.billinginfo', compact('creditCard', 'imgUrl', 'style', 'coursesHistory'));
             }
@@ -112,16 +99,8 @@ class BillingInformationController extends Controller
     {
         $billingHistory = BillingHistory::with(['course.owner', 'course.lesson', 'course.courseCategory', 'billing', 'buyer'])->find($id);
         $lessonCount = $billingHistory->course->lesson->count();
-
-
-        // dd($billingHistory);
-
         $pdf = FacadePdf::loadView('shopping.billingPdf', compact('billingHistory', 'lessonCount'));
-        // return $pdf->download('factura.pdf');
         $invoiceId = str_pad($id, 5, '0', STR_PAD_LEFT);
-        return $pdf->download("factura{$invoiceId}.pdf");
-
-
-        // return view('shopping.billingPdf', compact('billingHistory', 'lessonCount'));
+        return $pdf->stream("factura{$invoiceId}.pdf");
     }
 }
