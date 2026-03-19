@@ -15,6 +15,25 @@ use Illuminate\View\View;
 
 class MarketplaceController extends Controller
 {
+    public function index(): View
+    {
+        $input = [];
+        $courses = Course::latest()->take(11)->get();
+        $languages = Course::distinct()->pluck('language');
+        $temas = CourseCategory::all();
+        $categoriasPopulares = CourseCategory::select('courses_categories.*')
+            ->selectSub(function ($query) {
+                $query->selectRaw('count(*)')
+                    ->from('courses')
+                    ->whereColumn('courses.courses_categories_id', 'courses_categories.id');
+            }, 'courses_count')
+            ->orderByDesc('courses_count')
+            ->take(7)
+            ->get();
+
+        return view('courses.marketplace-principal', compact('courses', 'temas', 'categoriasPopulares', 'languages', 'input'));
+    }
+
     /**
      * Muestra el listado de todos los cursos y categorías.
      */

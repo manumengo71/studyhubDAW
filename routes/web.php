@@ -27,9 +27,9 @@ Route::get('/', function () {
 })->name('welcome');
 
 /** RUTAS DE DASHBOARD */
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+});
 
 /** RUTAS DE PERFIL */
 Route::middleware('auth', 'verified')->group(function () {
@@ -43,23 +43,7 @@ Route::middleware('auth', 'verified')->group(function () {
 
 /** RUTAS DE MARKETPLACE */
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/marketplace', function () {
-        $input = [];
-        $courses = Course::latest()->take(11)->get();
-        $languages = Course::distinct()->pluck('language');
-        $temas = CourseCategory::all();
-        $categoriasPopulares = CourseCategory::select('courses_categories.*')
-            ->selectSub(function ($query) {
-                $query->selectRaw('count(*)')
-                    ->from('courses')
-                    ->whereColumn('courses.courses_categories_id', 'courses_categories.id');
-            }, 'courses_count')
-            ->orderByDesc('courses_count')
-            ->take(7)
-            ->get();
-        return view('courses.marketplace-principal', compact('courses', 'temas', 'categoriasPopulares', 'languages', 'input'));
-    })->name('marketplace');
-
+    Route::get('/marketplace', [App\Http\Controllers\MarketplaceController::class, 'index'])->name('marketplace');
     Route::get('/marketplace/allcoursesAndCategories', [App\Http\Controllers\MarketplaceController::class, 'createAllCoursesAndCategories'])->name('marketplace.allCoursesAndCategories');
     Route::get('/marketplace/busqueda', [App\Http\Controllers\MarketplaceController::class, 'search'])->name('marketplace.search');
     Route::post('/marketplace/comprarCurso/{id}', [App\Http\Controllers\MarketplaceController::class, 'comprarCurso'])->name('marketplace.comprarCurso');
@@ -68,15 +52,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 /** RUTAS DE SHOPPING */
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Route::get('/billinginfo', function () {
-    //     $coursesHistory = "p";
-    //     return view('shopping.billinginfo', compact('coursesHistory'));
-    // })->name('billinginfo');
 
     Route::get('/billinginfo', [App\Http\Controllers\BillingInformationController::class, 'getInfo'])->name('billinginfo');
-
     Route::post('storeCreditCard', [App\Http\Controllers\BillingInformationController::class, 'storeCreditCard'])->name('storeCreditCard');
-
     Route::get('/billingpdf/{id}', [App\Http\Controllers\BillingInformationController::class, 'downloadPdf'])->name('downloadPdf');
 });
 
@@ -91,6 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/editCourse/{id}', [App\Http\Controllers\CourseController::class, 'edit'])->name('mycourses.editCourse');
     Route::patch('/updateCourse/{id}', [App\Http\Controllers\CourseController::class, 'update'])->name('mycourses.updateCourse');
     Route::get('/course-play/{id}/{idlesson?}', [App\Http\Controllers\CourseController::class, 'createPlay'])->name('mycourses.createPlay');
+    Route::get('/courses/createInfo/{id}', [App\Http\Controllers\CourseController::class, 'createInfo'])->name('mycourses.createInfo');
 });
 
 /** RUTAS PARA LECCIONES */

@@ -218,4 +218,16 @@ class CourseController extends Controller
     {
         $user = auth()->user();
     }
+
+    /**
+     * Mostrar la vista de información del curso.
+     */
+
+    public function createInfo(Request $request){
+        $course = Course::withTrashed()->find($request->id);
+
+        $courseImage = $course->getFirstMediaUrl('courses_images');
+
+        return view('courses.courseInfo')->with(['course' => $course, 'courseImage' => $courseImage]);
+    }
 }

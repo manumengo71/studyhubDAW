@@ -8,6 +8,7 @@
                     <a href="{{ route('dashboard') }}">
                         <x-application-logo class="w-16 h-16 rounded-full -translate-y-3" />
                     </a>
+                    <h1 class="text-2xl font-bold text-gray-800 -mt-6 ms-4 sm:hidden">StudyHub-App</h1>
                 </div>
 
                 <!-- Navigation Links -->
