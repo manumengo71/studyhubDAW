@@ -25,6 +25,8 @@ class StoreRequest extends FormRequest
         return [
             'title' => 'required|string|max:50',
             'subtitle' => 'required|string|max:100',
+            'content' => 'required|file|mimes:mp4,mp3,pdf,txt,png,jpg,jpeg|max:10485760',
+            'content_type' => 'required|string|exists:lessons_types,id',
         ];
     }
 }

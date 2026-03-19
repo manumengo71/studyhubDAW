@@ -57,7 +57,12 @@ class CourseController extends Controller
         $request->id;
         $user = auth()->user();
         $temas = CourseCategory::all();
-        $courses = Course::inRandomOrder()->limit(4)->get();
+        // $courses = Course::inRandomOrder()->limit(4)->get();
+        $courses = Course::whereNotIn('id', function ($query) use ($user) {
+            $query->select('courses_id')
+                ->from('users_courses')
+                ->where('users_id', $user->id);
+        })->inRandomOrder()->limit(4)->get();
         $Nlessons = DB::table('lessons')->where('courses_id', $request->id)->count();
         $lessons = Lesson::where('courses_id', $request->id)->get();
         $hasCreditCard = $user->hasCreditCard();
@@ -92,7 +97,7 @@ class CourseController extends Controller
         if (!$request->input('leccion') == null) {
             $lesson = Lesson::find($request->input('leccion'));
             $request->session()->put('leccion', $lesson->id);
-        }else{
+        } else {
             $request->session()->put('leccion', 0);
         }
 
@@ -223,7 +228,8 @@ class CourseController extends Controller
      * Mostrar la vista de información del curso.
      */
 
-    public function createInfo(Request $request){
+    public function createInfo(Request $request)
+    {
         $course = Course::withTrashed()->find($request->id);
 
         $courseImage = $course->getFirstMediaUrl('courses_images');

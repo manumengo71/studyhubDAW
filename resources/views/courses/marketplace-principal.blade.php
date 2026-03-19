@@ -41,13 +41,13 @@
                             {{ $course->name }}</h1>
                         <div class="my-4">
                             <div class="flex items-center">
-                                <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/cHpxRHGN/icons8-description-50.png"
+                                <img class="w-10 h-10 mr-2" src="https://i.postimg.cc/sX7HBJtw/title.png"
                                     alt="Imagen">
                                 <p class="text-gray-600 overflow-hidden whitespace-nowrap overflow-ellipsis">
                                     {{ $course->short_description }}</p>
                             </div>
                             <div class="flex items-center">
-                                <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/XNPFPc4V/icons8-language-50.png"
+                                <img class="w-10 h-10 mr-2" src="https://i.postimg.cc/WbHXzH9m/language.png"
                                     alt="Imagen">
                                 <p class="text-gray-600">{{ $course->language }}</p>
                             </div>

@@ -24,7 +24,7 @@
                     @foreach ($coursesSearch->where('courses_categories_id', $tema->id) as $course)
                         <div class="max-w-sm w-full md:w-1/2 lg:w-1/3 xl:w-1/4 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 m-4 md:ms-20"
                             style="box-shadow: 7px 20px 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -2px rgba(0, 0, 0, 0.05);">
-                            <h3 class="mb-3 text-xl font-bold text-indigo-600">Tema: {{ $tema->name }}</h3>
+                            <h3 class="mb-3 text-xl font-bold text-indigo-500">Tema: {{ $tema->name }}</h3>
                             <div class="relative">
                                 <div class="w-full h-64 overflow-hidden rounded-xl">
                                     @if ($course->getMedia('courses_images')->count() > 0)
@@ -43,13 +43,13 @@
                                 {{ $course->name }}</h1>
                             <div class="my-4">
                                 <div class="flex items-center">
-                                    <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/cHpxRHGN/icons8-description-50.png"
+                                    <img class="w-10 h-10 mr-2" src="https://i.postimg.cc/sX7HBJtw/title.png"
                                         alt="Imagen">
                                     <p class="text-gray-600 overflow-hidden whitespace-nowrap overflow-ellipsis">
                                         {{ $course->short_description }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/XNPFPc4V/icons8-language-50.png"
+                                    <img class="w-10 h-10 mr-2" src="https://i.postimg.cc/WbHXzH9m/language.png"
                                         alt="Imagen">
                                     <p class="text-gray-600">{{ $course->language }}</p>
                                 </div>

@@ -10,7 +10,7 @@
         position: relative;
         overflow: hidden;
         z-index: 1;
-        color: #090909;
+        color: #ffffff;
         padding: 0.7em 1.7em;
         cursor: pointer;
         border-radius: 0.5em;

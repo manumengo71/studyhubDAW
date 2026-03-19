@@ -73,12 +73,34 @@ class LessonController extends Controller
         $lesson->subtitle = $request->subtitle;
         $lesson->lessons_types_id = $request->content_type;
         $lesson->save();
+        $courseId = $lesson->courses_id;
 
         if ($request->hasFile('content')) {
             $lesson->addMediaFromRequest('content')->toMediaCollection('lesson_content');
         }
 
-        return redirect()->route('mycourses');
+        return redirect()->route('mycourses.editCourse', ['id' => $courseId]);
+    }
+
+        /**
+     * Actualizar una lección en la base de datos.
+     */
+    public function updateLessonAdmin(UpdateRequest $request)
+    {
+        $request->safe();
+
+        $lesson = Lesson::find($request->id);
+        $lesson->title = $request->title;
+        $lesson->subtitle = $request->subtitle;
+        $lesson->lessons_types_id = $request->content_type;
+        $lesson->save();
+        $courseId = $lesson->courses_id;
+
+        if ($request->hasFile('content')) {
+            $lesson->addMediaFromRequest('content')->toMediaCollection('lesson_content');
+        }
+
+        return redirect()->route('admin.editCourse', ['id' => $courseId]);
     }
 
 }

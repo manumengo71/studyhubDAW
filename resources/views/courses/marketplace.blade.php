@@ -13,7 +13,7 @@
                     placeholder="🔎 | Buscar..." x-model="search" />
 
                 <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100"
-                    :class="(search) ? 'bg-blue-500' : 'bg-blue-500'">
+                    :class="(search) ? 'bg-indigo-500' : 'bg-indigo-500'">
                     Buscar</button>
             </div>
             <div class="flex flex-wrap mt-4">

@@ -96,7 +96,7 @@
                                     value=0
                                     min="0"
                                     max="999"
-                                    step="0.5"
+                                    step="0.01"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none">
                             </div>
                             <div class="md:w-1/5">
@@ -143,7 +143,7 @@
 
                     <div class="flex justify-center">
                         <button type="submit"
-                            class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Crear curso
                         </button>
                     </div>

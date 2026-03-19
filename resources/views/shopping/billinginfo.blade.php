@@ -70,7 +70,7 @@
                         <div class="flex">
                             <img src="https://i.postimg.cc/4NnLgpbL/chip.png" class="chip" />
                         </div>
-                        <div class="flex mt-10">
+                        <div class="flex flex-wrap mt-5">
                             <p class="text-sm">
                                 @isset($creditCard)
                                     {{ $creditCard->owner_name . ' ' . $creditCard->owner_surname . ' ' . $creditCard->owner_second_surname }}
@@ -259,11 +259,11 @@
                             <div class="flex items-center gap-3">
                                 <div class="flex h-16 w-16 items-center justify-center">
                                     @if ($courseHistory->course->getMedia('courses_images')->count() > 0)
-                                        <img class="h-full w-full rounded-xl"
+                                        <img class="h-full w-full rounded-xl" style="object-fit: cover;"
                                             src="{{ $courseHistory->course->getMedia('courses_images')->last()->getUrl() }}"
                                             alt="" />
                                     @else
-                                        <img class="h-full w-full rounded-xl"
+                                        <img class="h-full w-full rounded-xl" style="object-fit: cover;"
                                             src="https://i.postimg.cc/HkL86Lc1/sinfoto.png" alt="" />
                                     @endif
                                 </div>
@@ -277,7 +277,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div class="mt-1 flex items-center justify-center text-navy-700 text-gray-600">
+                            <div class="mt-4 flex items-center justify-center text-navy-700 text-gray-600">
                                 {{-- <div>
                             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 320 512"
                                 height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
@@ -289,7 +289,7 @@
                                 <div
                                     class="ml-1 hidden lg:flex items-center text-sm font-bold text-navy-700 text-gray-600">
                                     <p>| PRECIO: </p>
-                                    <p class="ml-1"> GRATIS |</p>
+                                    <p class="ml-1"> {{ number_format($courseHistory->course->price, 2) . '€' }} |</p>
                                 </div>
                                 <div class="ml-2 hidden lg:flex items-center text-sm font-normal text-gray-600">
                                     <p>Fecha de compra: </p>

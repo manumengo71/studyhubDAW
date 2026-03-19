@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 /** RUTAS PARA LECCIONES */
 Route::get('/createLesson/{id}', [App\Http\Controllers\LessonController::class, 'createLesson'])->name('createLesson');
 Route::post('/storeLesson/{id}', [App\Http\Controllers\LessonController::class, 'storeLesson'])->name('storeLesson');
+Route::patch('/updateLesson/{id}', [App\Http\Controllers\LessonController::class, 'updateLesson'])->name('updateLesson');
 
 require __DIR__ . '/auth.php';
 
@@ -113,7 +114,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::get('/createLesson/{id}', [App\Http\Controllers\LessonController::class, 'createLesson'])->name('createLesson');
         Route::post('/storeLesson/{id}', [App\Http\Controllers\LessonController::class, 'storeLesson'])->name('storeLesson');
         Route::get('/editLesson/{id}', [App\Http\Controllers\LessonController::class, 'editLesson'])->name('editLesson');
-        Route::patch('/updateLesson/{id}', [App\Http\Controllers\LessonController::class, 'updateLesson'])->name('updateLesson');
+        Route::patch('/updateLesson/{id}', [App\Http\Controllers\LessonController::class, 'updateLessonAdmin'])->name('updateLessonAdmin');
 
         /** RUTAS PARA USERS */
         Route::get('/users', [App\Http\Controllers\AdminController::class, 'listUsers'])->name('listUsers');
@@ -139,4 +140,11 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::delete('/roles-delete/{id}/{guard_name}', [App\Http\Controllers\AdminController::class, 'forceDestroyRole'])->name('roles.forceDestroy');
 
     });
+
+    /**
+     * RUTAS PARA LEGAL
+     */
+    Route::view('/condiciones', 'legal.condiciones')->name('condiciones');
+    Route::view('/ayuda', 'legal.ayudaAsistencia')->name('ayuda');
+    Route::view('/politicaPrivacidad', 'legal.politicaPrivacidad')->name('privacidad');
 });

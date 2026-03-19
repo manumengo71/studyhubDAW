@@ -102,7 +102,7 @@
                                     value="{{ number_format($courseInfo->price, 2) }}"
                                     min="0"
                                     max="999"
-                                    step="0.5"
+                                    step="0.01"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none">
                                 <input type="hidden" name="owner_id" id="owner_id" value="{{ $user->id }}">
                             </div>
@@ -138,7 +138,7 @@
 
                     <div class="flex justify-center">
                         <button type="submit"
-                            class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Editar Curso
                         </button>
                     </div>
@@ -186,7 +186,7 @@
                             @csrf
                             @method('GET')
                             <button type="submit"
-                                class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                                class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                                 Crear Lección
                             </button>
                         </form>

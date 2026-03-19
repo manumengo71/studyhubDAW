@@ -12,7 +12,7 @@
                     class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 xl:gap-x-8">
                 @else
                     <div
-                        class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+                        class="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:max-w-5xl xl:grid-cols-4 xl:gap-x-8 mx-auto">
             @endif
 
             <a href="/courses" class="group">
@@ -120,7 +120,9 @@
                                         <div class="py-2"> Agrega una información de pago para comenzar. </div>
                                     </div>
                                     <div class="flex flex-auto flex-row-reverse me-2">
-                                        <a href="{{ route('billinginfo') }}" class="text-blue-800 underline">Agregar</a>
+                                        <a href="{{ route('billinginfo') }}" class="text-blue-800 underline">
+                                            <x-primary-button>Agregar</x-primary-button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -167,8 +169,9 @@
                                                 StudyHub-App. </div>
                                         </div>
                                         <div class="flex flex-auto flex-row-reverse me-2">
-                                            <a href="{{ route('marketplace') }}" class="text-blue-800 underline">Ver
-                                                cursos</a>
+                                            <a href="{{ route('marketplace') }}" class="text-blue-800 underline">
+                                                <x-primary-button>Ver cursos</x-primary-button>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>

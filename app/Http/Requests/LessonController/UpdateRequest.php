@@ -22,8 +22,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:50',
-            'subtitle' => 'required|string|max:100',
+            'title' => 'string|max:50',
+            'subtitle' => 'string|max:100',
+            'content' => 'file|mimes:mp4,mp3,pdf,txt,png,jpg,jpeg|max:10485760',
+            'content_type' => 'string|exists:lessons_types,id',
         ];
     }
 }

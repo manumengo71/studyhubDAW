@@ -9,25 +9,25 @@
 
     <div class="flex flex-wrap justify-center">
         <a href="/admin/users" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
                 Listado de Usuarios
             </button>
         </a>
 
         <a href="/admin/courses" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
                 Listado de Cursos
             </button>
         </a>
 
         <a href="/admin/categories" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
                 Listado de Categorías
             </button>
         </a>
 
         <a href="/admin/roles" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
                 Listado de Roles
             </button>
         </a>

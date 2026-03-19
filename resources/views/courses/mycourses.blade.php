@@ -25,10 +25,10 @@
                 </div> --}}
                 <div class="mt-4 sm:mt-0 space-y-4 sm:space-y-0 sm:ml-10">
                     <button onclick="abrirComprados()"
-                        class="button bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
+                        class="button bg-indigo-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
                         comprados</button>
                     <button onclick="abrirCreados()"
-                        class="button bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
+                        class="button bg-indigo-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
                         creados</button>
                 </div>
             </div>

@@ -57,7 +57,7 @@
     </div>
 </body>
 
-<footer class="bg-blue-100/80 font-sans bg-slate-500">
+<footer class="font-sans bg-indigo-500">
     <div class="container px-6 py-12 mx-auto">
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
             <div class="sm:col-span-2">
@@ -82,50 +82,44 @@
                 <div class="flex flex-col items-start mt-5 space-y-2">
                     <a href="{{ route('dashboard') }}">
                         <p
-                            class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
+                            class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer">
                             Dashboard</p>
                     </a>
 
                     <a href="{{ route('marketplace') }}">
                         <p
-                            class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
+                            class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer">
                             Marketplace</p>
                     </a>
 
                     <a href="{{ route('mycourses') }}">
                         <p
-                            class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
+                            class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer">
                             Mis cursos</p>
                     </a>
                 </div>
             </div>
 
             <div>
-                <p class="font-semibold text-gray-800 dark:text-white">Legal</p>
+                <p class="font-semibold text-white">Legal</p>
 
                 <div class="flex flex-col items-start mt-5 space-y-2">
-                    <p
-                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
-                        Condiciones</p>
-                    <p
-                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
-                        Política de privacidad</p>
-                    <p
-                        class="text-gray-600 transition-colors duration-300 dark:text-gray-300 dark:hover:text-blue-400 hover:underline hover:cursor-pointer hover:text-blue-500">
-                        Ayuda y asistencia</p>
+                    <a href="{{ route('condiciones') }}" class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer" target="_blank" rel="noopener noreferrer">
+                        Condiciones
+                    </a>
+                    <a href="{{ route('privacidad') }}" class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer" target="_blank" rel="noopener noreferrer">
+                        Política de privacidad
+                    </a>
+                    <a href="{{ route('ayuda') }}" class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer" target="_blank" rel="noopener noreferrer">
+                        Ayuda y sistencia
+                    </a>
                 </div>
             </div>
         </div>
 
-        <hr class="my-6 border-gray-200 md:my-8 dark:border-gray-700 h-2" />
+        <hr class="my-6 border-gray-200 md:my-8 h-2" />
 
         <div class="sm:flex sm:items-center sm:justify-between">
-            {{-- <div class="flex flex-1 gap-4 hover:cursor-pointer">
-                    <img src="https://www.svgrepo.com/show/303139/google-play-badge-logo.svg" width="130"
-                        height="110" alt="" />
-                    <img src="https://www.svgrepo.com/show/303128/download-on-the-app-store-apple-logo.svg" width="130"
-                        height="110" alt="" />
-                </div> --}}
 
             <div class="flex gap-4 hover:cursor-pointer">
                 <img src="https://www.svgrepo.com/show/303114/facebook-3-logo.svg" width="30" height="30"
@@ -143,7 +137,7 @@
                     alt="db" />
             </div>
         </div>
-        <p class="font-sans p-8 text-start md:text-center md:text-lg md:p-4">© 2024 StudyHub-App. Todos los derechos
+        <p class="font-sans p-8 text-start md:text-center md:text-lg md:p-4 text-white">© 2024 StudyHub-App. Todos los derechos
             reservados.</p>
     </div>
 </footer>

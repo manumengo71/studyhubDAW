@@ -27,7 +27,7 @@ class BillingInformationController extends Controller
         }, 'buyer'])->paginate(5);
 
         if (!BillingInformation::where('user_id', auth()->id())->first()) {
-            $imgUrl = 'https://i.postimg.cc/4yKH00Nd/9f3469e4-2cf4-44e0-bf77-bc28b015f363.jpg';
+            $imgUrl = 'https://i.postimg.cc/pVnKRTPJ/logo.jpg';
             $style = "w-16 h-16 rounded-full";
             return view('shopping.billinginfo', compact('imgUrl', 'style'));
         } else {
@@ -44,16 +44,16 @@ class BillingInformationController extends Controller
 
             if ($type->type == '4') {
                 $imgUrl = 'https://i.postimg.cc/QMKhtNJW/visa.png';
-                $style = 'w-20 h-13';
+                $style = 'w-20 h-auto';
             } elseif ($type->type == '5') {
                 $imgUrl = 'https://i.postimg.cc/7ZwdTH1W/mastercard.png';
-                $style = 'w-20 h-16';
+                $style = 'w-20 h-auto';
             } elseif ($type->type == '3') {
                 $imgUrl = 'https://i.postimg.cc/4xSXsHVg/americanexpress.png';
-                $style = 'w-20 h-13';
+                $style = 'w-20 h-auto';
             } elseif ($type->type == '0') {
                 $imgUrl = 'https://i.postimg.cc/pVnKRTPJ/logo.jpg';
-                $style = "w-16 h-16 rounded-full";
+                $style = "w-16 h-auto rounded-full";
             }
 
             if ($coursesHistory->isEmpty()) {

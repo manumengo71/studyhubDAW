@@ -24,20 +24,20 @@
                         </div>
                         <div class="w-full max-w-lg mx-auto mt-5 md:ml-8 md:mt-0 md:w-1/2">
                             <h3 class="text-gray-700 uppercase text-lg">{{ $course->name }}</h3>
-                            <span class="text-gray-500 mt-3">PRECIO</span>
+                            <span class="text-gray-500 mt-3">{{ number_format($course->price, 2) . '€' }}</span>
                             <hr class="my-3">
                             <div class="mt-2">
                                 <label class="text-gray-700 text-sm" for="count">Información:</label>
                                 <div class="flex items-center mt-1">
-                                    <img class="w-6 h-6 mr-2"
-                                        src="https://i.postimg.cc/cHpxRHGN/icons8-description-50.png" alt="Imagen">
+                                    <img class="w-9 h-9 mr-2"
+                                        src="https://i.postimg.cc/sX7HBJtw/title.png" alt="Imagen">
                                     <p class="text-gray-600 text-lg font-bold mr-2 focus:outline-none">
                                         {{ $course->short_description }}</p>
                                 </div>
                             </div>
                             <div class="mt-0">
                                 <div class="flex items-center mt-1">
-                                    <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/XNPFPc4V/icons8-language-50.png"
+                                    <img class="w-9 h-9 mr-2" src="https://i.postimg.cc/WbHXzH9m/language.png"
                                         alt="Imagen">
                                     <p class="text-gray-600 text-lg font-bold mr-2 focus:outline-none">
                                         {{ $course->language }}</p>
@@ -45,7 +45,7 @@
                             </div>
                             <div class="mt-0">
                                 <div class="flex items-center mt-1">
-                                    <img class="w-6 h-6 mr-2" src="https://i.postimg.cc/xXzCyLYD/icons8-libro-25.png"
+                                    <img class="w-9 h-9 mr-2" src="https://i.postimg.cc/fbhnPyQr/lesson.png"
                                         alt="Imagen">
                                     <p class="text-gray-600 text-lg font-bold mr-2 focus:outline-none">
                                         Nº lecciones: {{ $Nlessons }}
@@ -62,13 +62,13 @@
                             @if ($user->usersCourses()->where('users_id', $user->id)->where('courses_id', $course->id)->count() > 0)
                                 <div class="flex items-center mt-6">
                                     <button
-                                        class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">Curso
+                                        class="px-8 py-2 bg-indigo-500 text-white text-sm font-medium rounded hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Curso
                                         ya comprado</button>
                                 </div>
                             @else
                                 <div class="flex items-center mt-6">
                                     <button onclick="openModal()"
-                                        class="px-8 py-2 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">Comprar
+                                        class="px-8 py-2 bg-indigo-500 text-white text-sm font-medium rounded hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Comprar
                                         ahora</button>
                                 </div>
                             @endif

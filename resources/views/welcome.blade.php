@@ -37,7 +37,7 @@
         <div class="w-full container mx-auto p-6">
 
             <div class="w-full flex items-center justify-between">
-                <a class="flex items-center text-indigo-200 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+                <a class="flex items-center text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
                     href="{{ route('welcome') }}">
                     <x-application-logo class="w-16 h-16 rounded-full" />
                     <span class="ps-2">StudyHub-App</span>
@@ -72,7 +72,7 @@
                 <p class="leading-normal text-base md:text-2xl mb-8 text-center md:text-left slide-in-bottom-subtitle">
                     ¡Regístrate y empieza a disfrutar gratis!</p>
 
-                <p class="text-indigo-200 font-bold pb-8 lg:pb-6 text-center md:text-left fade-in">Regístrate o inicia
+                <p class="text-white font-bold pb-8 lg:pb-6 text-center md:text-left fade-in">Regístrate o inicia
                     sesión:</p>
                 <div class="flex w-full justify-center md:justify-start pb-24 lg:pb-0 fade-in">
                     <a href="{{ route('register') }}" class="mr-4">
