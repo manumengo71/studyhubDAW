@@ -12,6 +12,10 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        //
+        'createLessonStep1/{id}',
+        'createLessonStep2/{id}',
+        'storeLessonStep1/{id}',
+        'storeLessonStep2/{id}',
+        'post-media/*',
     ];
 }

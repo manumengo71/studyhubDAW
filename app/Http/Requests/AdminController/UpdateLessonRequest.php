@@ -1,18 +1,22 @@
 <?php
 
-namespace App\Http\Requests\LessonController;
+namespace App\Http\Requests\AdminController;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateRequest extends FormRequest
+class UpdateLessonRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        if (auth()->user()->hasRole('admin')) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -26,7 +30,7 @@ class UpdateRequest extends FormRequest
             'title' => 'string|max:50',
             'subtitle' => 'string|max:100',
             'content_type' => 'required|string|exists:lessons_types,id',
-            'media' => Rule::requiredIf($this->content_type == 2, 3, 4) . '|file|mimes:mp4,mp3,pdf,txt,png,jpg,jpeg|max:10485760',
+            'media' => Rule::requiredIf(in_array($this->content_type, [2, 3, 4])) . '|file|mimes:mp4,mp3,pdf,txt,png,jpg,jpeg|max:10485760',
             'content' => Rule::requiredIf($this->content_type == 5) . '|json',
         ];
     }

@@ -29,6 +29,7 @@ class CourseController extends Controller
         $coursesUsers = Course::whereIn('id', $coursesIds)->get();
         $temas = CourseCategory::all();
         $status = User_course_status::all();
+
         return view('courses.mycourses', compact('courses', 'temas', 'user', 'usersCourses', 'coursesUsers', 'status'));
     }
 
@@ -143,7 +144,7 @@ class CourseController extends Controller
         }
 
         // Se redirige a la vista de crear lección para seguir con el proceso.
-        return redirect()->route('createLesson', ['id' => $curso]);
+        return redirect()->route('createLessonStep1', ['id' => $curso]);
     }
 
     /**

@@ -182,7 +182,7 @@
 
                     </div>
                     <div class="flex justify-center mt-3">
-                        <form action="{{route('createLesson', $courseInfo->id)}}" method="GET">
+                        <form action="{{route('createLessonStep1', $courseInfo->id)}}" method="GET">
                             @csrf
                             @method('GET')
                             <button type="submit"

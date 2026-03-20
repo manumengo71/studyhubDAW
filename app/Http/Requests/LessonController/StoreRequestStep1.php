@@ -5,7 +5,7 @@ namespace App\Http\Requests\LessonController;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpdateRequest extends FormRequest
+class StoreRequestStep1 extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,11 +23,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'string|max:50',
-            'subtitle' => 'string|max:100',
-            'content_type' => 'required|string|exists:lessons_types,id',
-            'media' => Rule::requiredIf($this->content_type == 2, 3, 4) . '|file|mimes:mp4,mp3,pdf,txt,png,jpg,jpeg|max:10485760',
-            'content' => Rule::requiredIf($this->content_type == 5) . '|json',
+            'title' => 'required|string|max:50',
+            'subtitle' => 'required|string|max:100',
         ];
     }
 }

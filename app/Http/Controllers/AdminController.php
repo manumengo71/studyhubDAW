@@ -6,14 +6,19 @@ use App\Http\Requests\AdminController\EditCategoryRequest;
 use App\Http\Requests\AdminController\EditRoleRequest;
 use App\Http\Requests\AdminController\StoreCategoryRequest;
 use App\Http\Requests\AdminController\StoreCourseRequest;
+use App\Http\Requests\AdminController\StoreLessonRequestStep1;
+use App\Http\Requests\AdminController\StoreLessonRequestStep2;
 use App\Http\Requests\AdminController\StoreRoleRequest;
 use App\Http\Requests\AdminController\StoreUserRequest;
 use App\Http\Requests\AdminController\UpdateCourseRequest;
+use App\Http\Requests\AdminController\UpdateLessonRequest;
 use App\Http\Requests\AdminController\UpdateUserRequest;
+use App\Http\Requests\LessonController\StoreRequestStep1;
 use App\Models\Course;
 use App\Models\CourseCategory;
 use App\Models\CustomRole;
 use App\Models\Lesson;
+use App\Models\LessonType;
 use App\Models\User;
 use App\Models\userProfile;
 use Illuminate\Contracts\View\View;
@@ -889,5 +894,165 @@ class AdminController extends Controller
 
         // return redirect()->route('listCourses');
         return back();
+    }
+
+    /**
+     * Mostrar el formulario para crear el step 1 de una lección.
+     */
+
+    public function createLessonStep1($id): View
+    {
+        $curso = Course::withTrashed()->find($id);
+
+        // Verificar si existen lecciones para este curso
+        $hasLessons = Lesson::where('courses_id', $id)->exists();
+
+        return view('admin.createLessonStep1', compact('curso', 'hasLessons'));
+    }
+
+    /**
+     * Guardar el step1 de una lección en la base de datos.
+     */
+    public function storeLessonStep1(StoreLessonRequestStep1 $request, $id)
+    {
+
+        $request->safe();
+
+        $courseId = $request->route('id');
+
+        $lesson = Lesson::create([
+            'title' => $request->input('title'),
+            'subtitle' => $request->input('subtitle'),
+            'courses_id' => $courseId,
+            'lessons_types_id' => '1',
+        ]);
+
+        $lessonId = $lesson->id;
+
+        $course = Course::withTrashed()->find($courseId);
+
+        $course->validated = null;
+        $course->updated_at = now();
+        $course->deleted_at = now()->subSeconds(1);
+        $course->save();
+
+        return redirect()->route('admin.createLessonStep2', ['id' => $courseId, 'lessonId' => $lessonId]);
+    }
+
+    /**
+     * Mostrar el formulario para crear una nueva lección.
+     */
+
+    public function createLessonStep2($id, $lessonId): View
+    {
+        $curso = Course::withTrashed()->find($id);
+
+        return view('admin.createLessonStep2', compact('curso', 'lessonId'));
+    }
+
+    /**
+     * Guardar una nueva lección en la base de datos.
+     */
+    public function storeLessonStep2(StoreLessonRequestStep2 $request, $id)
+    {
+
+        $request->safe();
+
+        $courseId = $request->route('id');
+
+        $lesson = Lesson::where('courses_id', $courseId)->latest()->first();
+
+        if ($request->hasFile('media')) {
+
+            $lesson->update([
+                'lessons_types_id' => $request->input('content_type'),
+                'content' => null,
+            ]);
+
+            $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
+        } else {
+
+            $lesson->update([
+                'lessons_types_id' => $request->input('content_type'),
+                'content' => $request->input('content'),
+            ]);
+        }
+
+        $hasLessons = Lesson::where('courses_id', $courseId)->exists();
+
+        $course = Course::withTrashed()->find($courseId);
+
+        $course->validated = null;
+        $course->updated_at = now();
+        $course->deleted_at = now()->subSeconds(1);
+        $course->save();
+
+        return redirect()->route('admin.createLessonStep1', ['id' => $courseId])->with(compact('hasLessons'));
+    }
+
+    /**
+     * Mostrar el formulario para editar una lección.
+     */
+    public function editLesson(Request $request)
+    {
+        $lesson = Lesson::where('id', $request->id)->first();
+        $lessonType = LessonType::where('id', $lesson->lessons_types_id)->first();
+        $data = $lesson->content;
+
+        return view('lesson.updateLesson', [
+            'lesson' => $lesson,
+            'lessonType' => $lessonType,
+            'data' => $data,
+        ]);
+    }
+
+    /**
+     * Actualizar una lección en la base de datos.
+     */
+    public function updateLesson(UpdateLessonRequest $request)
+    {
+        $request->safe();
+
+        $lesson = Lesson::find($request->id);
+        $lesson->title = $request->title;
+        $lesson->subtitle = $request->subtitle;
+
+        if ($lesson->lessons_types_id == 5) {
+            $lesson->content = $request->content;
+        }else {
+            $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
+        }
+
+        $lesson->save();
+
+        $courseId = $lesson->courses_id;
+        $course = Course::withTrashed()->find($courseId);
+        $course->validated = null;
+        $course->updated_at = now();
+        $course->deleted_at = now()->subSeconds(1);
+        $course->save();
+
+        return redirect()->route('admin.editCourse', ['id' => $courseId]);
+    }
+
+    /**
+     * Prueba datos Editor.js
+     *
+     */
+    public function prueba(Request $request)
+    {
+        $lesson = Lesson::find(68);
+
+        $lesson->update([
+            'title' => 'EditorJS',
+            'subtitle' => 'holla',
+            'content' => $request->description,
+            'lessons_types_id' => '5',
+            'courses_id' => '35',
+        ]);
+
+        $data = $lesson->content;
+
+        return redirect()->route('privacidad')->with('data', $data);
     }
 }

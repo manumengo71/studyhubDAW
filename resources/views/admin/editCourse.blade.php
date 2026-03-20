@@ -169,7 +169,7 @@
                                         <div class="font-bold">- {{ $lesson->title}} </div>
 
                                         <div class="flex items-center">
-                                            <form action="{{ route('editLesson', $lesson->id) }}" method="GET" class="inline">
+                                            <form action="{{ route('admin.editLesson', $lesson->id) }}" method="GET" class="inline">
                                                 @csrf
                                                 @method('GET')
                                                 <button type="submit" class="flex items-center">
@@ -185,7 +185,7 @@
 
                     </div>
                     <div class="flex justify-center mt-3">
-                        <form action="{{route('createLesson', $courseInfo->id)}}" method="GET">
+                        <form action="{{route('admin.createLessonStep1', $courseInfo->id)}}" method="GET">
                             @csrf
                             @method('GET')
                             <button type="submit"

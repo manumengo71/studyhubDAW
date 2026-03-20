@@ -74,9 +74,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 /** RUTAS PARA LECCIONES */
-Route::get('/createLesson/{id}', [App\Http\Controllers\LessonController::class, 'createLesson'])->name('createLesson');
-Route::post('/storeLesson/{id}', [App\Http\Controllers\LessonController::class, 'storeLesson'])->name('storeLesson');
+Route::get('createLessonStep1/{id}', [App\Http\Controllers\LessonController::class, 'createLessonStep1'])->name('createLessonStep1');
+Route::post('/storeLessonStep1/{id}', [App\Http\Controllers\LessonController::class, 'storeLessonStep1'])->name('storeLessonStep1');
+Route::get('/createLessonStep2/{id}/{lessonId}', [App\Http\Controllers\LessonController::class, 'createLessonStep2'])->name('createLessonStep2');
+Route::post('/storeLessonStep2/{id}', [App\Http\Controllers\LessonController::class, 'storeLessonStep2'])->name('storeLessonStep2');
+Route::get('/editLesson/{id}', [App\Http\Controllers\LessonController::class, 'editLesson'])->name('editLesson');
 Route::patch('/updateLesson/{id}', [App\Http\Controllers\LessonController::class, 'updateLesson'])->name('updateLesson');
+
+Route::group(['middleware' => 'web'], function () {
+    Route::post('/post-media/{courseId}/{lessonId}', [App\Http\Controllers\LessonController::class, 'postMedia'])->name('postMedia');
+});
+
 
 require __DIR__ . '/auth.php';
 
@@ -112,10 +120,12 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::delete('/deleteCourse/{course}', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('courses.delete');
 
         /** RUTAS PARA LECCIONES */
-        Route::get('/createLesson/{id}', [App\Http\Controllers\LessonController::class, 'createLesson'])->name('createLesson');
-        Route::post('/storeLesson/{id}', [App\Http\Controllers\LessonController::class, 'storeLesson'])->name('storeLesson');
-        Route::get('/editLesson/{id}', [App\Http\Controllers\LessonController::class, 'editLesson'])->name('editLesson');
-        Route::patch('/updateLesson/{id}', [App\Http\Controllers\LessonController::class, 'updateLessonAdmin'])->name('updateLessonAdmin');
+        Route::get('/createLessonStep1/{id}', [App\Http\Controllers\AdminController::class, 'createLessonStep1'])->name('admin.createLessonStep1');
+        Route::get('/createLessonStep2/{id}/{lessonId}', [App\Http\Controllers\AdminController::class, 'createLessonStep2'])->name('admin.createLessonStep2');
+        Route::post('/storeLessonStep1/{id}', [App\Http\Controllers\AdminController::class, 'storeLessonStep1'])->name('admin.storeLessonStep1');
+        Route::post('/storeLessonStep2/{id}', [App\Http\Controllers\AdminController::class, 'storeLessonStep2'])->name('admin.storeLessonStep2');
+        Route::get('/editLesson/{id}', [App\Http\Controllers\AdminController::class, 'editLesson'])->name('admin.editLesson');
+        Route::patch('/updateLesson/{id}', [App\Http\Controllers\Controller::class, 'updateLessonAdmin'])->name('admin.updateLesson');
 
         /** RUTAS PARA USERS */
         Route::get('/users', [App\Http\Controllers\AdminController::class, 'listUsers'])->name('listUsers');

@@ -19,16 +19,18 @@ class LessonsTypesSeeder extends Seeder
 
         foreach($lessonTypes as $lessonType) {
             $lessonType->name = match($lessonType->id) {
-                1 => 'PDF',
-                2 => 'Texto',
+                1 => 'Default',
+                2 => 'PDF',
                 3 => 'Video',
                 4 => 'Imagen',
+                5 => 'Personalizado'
             };
             $lessonType->description = match($lessonType->id) {
-                1 => 'Archivo PDF',
-                2 => 'Archivo de texto',
+                1 => 'Sin asignar',
+                2 => 'Archivo PDF',
                 3 => 'Archivo de video',
                 4 => 'Archivo de imagen',
+                5 => 'Archivo personalizado'
             };
             $lessonType->save();
         }

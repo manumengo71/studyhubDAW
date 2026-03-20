@@ -29,6 +29,11 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    @stack("scripts")
+
+    @vite(['resources/js/alpine.js'])
+
 </head>
 
 <style>
@@ -55,7 +60,7 @@
             {{ $slot }}
         </main>
     </div>
-</body>
+
 
 <footer class="font-sans bg-indigo-500">
     <div class="container px-6 py-12 mx-auto">
@@ -142,4 +147,5 @@
     </div>
 </footer>
 
+</body>
 </html>
