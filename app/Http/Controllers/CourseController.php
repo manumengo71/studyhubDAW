@@ -66,7 +66,7 @@ class CourseController extends Controller
         $Nlessons = DB::table('lessons')->where('courses_id', $request->id)->count();
         $lessons = Lesson::where('courses_id', $request->id)->get();
         $hasCreditCard = $user->hasCreditCard();
-        return view('courses.course-detail', [
+        return view('courses.courseDetail', [
             'course' => Course::withTrashed()->find($request->id),
             'user' => $user,
             'temas' => $temas,
@@ -104,7 +104,7 @@ class CourseController extends Controller
         /**
          * Enviamos la vista con el curso, las lecciones y la lección actual.
          */
-        return view('courses.course-play', [
+        return view('courses.coursePlay', [
             'course' => $course,
             'lessons' => $lessons,
             'lesson' => $lesson,
@@ -161,8 +161,9 @@ class CourseController extends Controller
         $curso->price = $request->price;
         $curso->owner_id = $request->owner_id;
         $curso->courses_categories_id = $request->courses_categories_id;
+        $curso->validated = null;
         $curso->updated_at = now();
-        $curso->deleted_at = $curso->updated_at;
+        $curso->deleted_at = now()->subSeconds(1);
         $curso->save();
 
         if ($request->hasFile('imageCourse')) {
@@ -228,7 +229,6 @@ class CourseController extends Controller
             $curso->save();
             $abrirCreados = true;
             $pageActual = $request->input('page');
-            dd($curso);
             return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
         } else{
             $abrirCreados = true;

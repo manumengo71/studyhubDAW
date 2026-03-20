@@ -31,7 +31,7 @@ class MarketplaceController extends Controller
             ->take(7)
             ->get();
 
-        return view('courses.marketplace-principal', compact('courses', 'temas', 'categoriasPopulares', 'languages', 'input'));
+        return view('courses.marketplacePrincipal', compact('courses', 'temas', 'categoriasPopulares', 'languages', 'input'));
     }
 
     /**
@@ -44,7 +44,7 @@ class MarketplaceController extends Controller
         $temas = CourseCategory::all();
         $languages = Course::distinct()->pluck('language');
         $input = [];
-        return view('courses.marketplace-allCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
+        return view('courses.marketplaceAllCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
     }
 
     /**
@@ -313,7 +313,7 @@ class MarketplaceController extends Controller
         $temas = CourseCategory::has('courses')->get();
         $languages = Course::distinct()->pluck('language');
 
-        return view('courses.marketplace-search', compact('coursesSearch', 'temasSearch', 'temas', 'languages', 'input'), ['alert' => $alert]);
+        return view('courses.marketplaceSearch', compact('coursesSearch', 'temasSearch', 'temas', 'languages', 'input'), ['alert' => $alert]);
     }
 
     /**
@@ -326,6 +326,6 @@ class MarketplaceController extends Controller
         $temas = CourseCategory::all();
         $languages = Course::distinct()->pluck('language');
         $input = [];
-        return view('courses.marketplace-allCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
+        return view('courses.marketplaceAllCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
     }
 }

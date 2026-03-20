@@ -47,7 +47,7 @@
                                 <label for="content_type" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Tipo de contenido
                                 </label>
-                                <select name="content_type" class="w-full rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
+                                <select name="content_type" class="w-full rounded-md border border-gray-300 py-2 ps-4 pr-7 focus:outline-none focus:border-indigo-500">
                                     <option value="1">PDF</option>
                                     <option value="2">Texto</option>
                                     <option value="3">Video</option>

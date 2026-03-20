@@ -86,7 +86,7 @@ class AdminController extends Controller
 
         /** Devolver la vista con los resultados */
 
-        return view('admin.listado-roles', compact('roles', 'input'));
+        return view('admin.listadoRoles', compact('roles', 'input'));
     }
 
     public function searchCategories(Request $request)
@@ -142,7 +142,7 @@ class AdminController extends Controller
         $categories = $query->paginate(5)->appends($request->except('page'));
 
         // Devolver la vista con los resultados
-        return view('admin.listado-categorias', compact('categories', 'input'));
+        return view('admin.listadoCategorias', compact('categories', 'input'));
     }
 
     /**
@@ -191,9 +191,9 @@ class AdminController extends Controller
             $query->whereNotNull('deleted_at')
                 ->where(function ($query) {
                     $query->where('validated', 1)
-                          ->orWhereNull('validated');
+                        ->orWhereNull('validated');
                 });
-        }else if ($status ==='aValidar'){
+        } else if ($status === 'aValidar') {
             $query->where('validated', 0)
                 ->whereRaw('deleted_at = updated_at');
         }
@@ -220,7 +220,7 @@ class AdminController extends Controller
         $courses = $query->paginate(5)->appends($request->except('page'));
         $languages = Course::select('language')->distinct()->pluck('language');
 
-        return view('admin.listado-cursos', compact('courses', 'input', 'languages'));
+        return view('admin.listadoCursos', compact('courses', 'input', 'languages'));
     }
 
 
@@ -337,7 +337,7 @@ class AdminController extends Controller
         $roles = Role::whereHas('users')->get();
 
         // Devolver la vista con los resultados
-        return view('admin.listado-usuario', compact('users', 'input', 'roles'));
+        return view('admin.listadoUsuario', compact('users', 'input', 'roles'));
     }
 
     /**
@@ -348,7 +348,7 @@ class AdminController extends Controller
         $roles = Role::whereHas('users')->get();
         $users = User::withTrashed()->paginate(5);
         $input = [];
-        return view('admin.listado-usuario', compact('users', 'roles', 'input'));
+        return view('admin.listadoUsuario', compact('users', 'roles', 'input'));
     }
 
     /**
@@ -360,7 +360,7 @@ class AdminController extends Controller
         $languages = Course::select('language')->distinct()->pluck('language');
         $courses = Course::withTrashed()->paginate(5);
         $input = [];
-        return view('admin.listado-cursos', compact('courses', 'languages', 'input'));
+        return view('admin.listadoCursos', compact('courses', 'languages', 'input'));
     }
 
     /**
@@ -370,7 +370,7 @@ class AdminController extends Controller
     {
         $categories = CourseCategory::withTrashed()->paginate(5);
         $input = [];
-        return view('admin.listado-categorias', compact('categories', 'input'));
+        return view('admin.listadoCategorias', compact('categories', 'input'));
     }
 
     /**
@@ -380,7 +380,7 @@ class AdminController extends Controller
     {
         $roles = CustomRole::withTrashed()->paginate(5);
         $input = [];
-        return view('admin.listado-roles', compact('roles', 'input'));
+        return view('admin.listadoRoles', compact('roles', 'input'));
     }
 
     /**
@@ -437,7 +437,6 @@ class AdminController extends Controller
         }
 
         return redirect()->route('listCourses')->with('success', 'Curso editado correctamente');
-
     }
 
     /**
@@ -852,7 +851,7 @@ class AdminController extends Controller
     {
         $course = Course::withTrashed()->find($request->id);
 
-        if ($course->deleted_at == $course->updated_at && $course->validated === 1) {
+        if (($course->deleted_at == $course->updated_at && $course->validated === 0) || ($course->deleted_at == $course->updated_at && $course->validated === 1)) {
             $course->validated = 1;
             $course->restore();
             return back();

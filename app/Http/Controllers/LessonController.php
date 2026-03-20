@@ -45,6 +45,13 @@ class LessonController extends Controller
 
         $hasLessons = Lesson::where('courses_id', $courseId)->exists();
 
+        $course = Course::withTrashed()->find($courseId);
+
+        $course->validated = null;
+        $course->updated_at = now();
+        $course->deleted_at = now()->subSeconds(1);
+        $course->save();
+
         return redirect()->route('createLesson', ['id' => $courseId])->with(compact('hasLessons'));
 
     }
@@ -74,6 +81,13 @@ class LessonController extends Controller
         $lesson->lessons_types_id = $request->content_type;
         $lesson->save();
         $courseId = $lesson->courses_id;
+
+        $course = Course::withTrashed()->find($courseId);
+
+        $course->validated = null;
+        $course->updated_at = now();
+        $course->deleted_at = now()->subSeconds(1);
+        $course->save();
 
         if ($request->hasFile('content')) {
             $lesson->addMediaFromRequest('content')->toMediaCollection('lesson_content');
