@@ -56,6 +56,10 @@
             </form>
         </div>
 
+        <script>
+            abrirRoles();
+        </script>
+
         <section>
             @yield('contentRoles') {{-- Contenido dinámico --}}
         </section>

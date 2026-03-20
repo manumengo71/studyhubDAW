@@ -1,7 +1,7 @@
 .button {
     position: relative;
     border-radius: 7px;
-    border: 1px solid rgb(61, 106, 255);
+    border: 2px solid rgb(61, 106, 255);
     /* text-transform: uppercase; */
     font-weight: 600;
     letter-spacing: 1px;
@@ -14,6 +14,7 @@
 
 .button:hover {
     background: #6366F1;
+    color: white;
     box-shadow: 0 0 30px 5px #6366F1;
     -webkit-transition: all 0.2s ease-out;
     -moz-transition: all 0.2s ease-out;

@@ -127,6 +127,7 @@ class CourseController extends Controller
             'description' => $request->input('description'),
             'language' => $request->input('language'),
             'price' => $request->input('price'),
+            'validated' => null,
             'owner_id' => $request->input('owner_id'),
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
@@ -160,6 +161,8 @@ class CourseController extends Controller
         $curso->price = $request->price;
         $curso->owner_id = $request->owner_id;
         $curso->courses_categories_id = $request->courses_categories_id;
+        $curso->updated_at = now();
+        $curso->deleted_at = $curso->updated_at;
         $curso->save();
 
         if ($request->hasFile('imageCourse')) {
@@ -197,11 +200,43 @@ class CourseController extends Controller
     public function activate(Request $request)
     {
         $curso = Course::withTrashed()->find($request->id);
-        $curso->restore();
-        $abrirCreados = true;
-        $pageActual = $request->input('page');
 
-        return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+        if ($curso->deleted_at == $curso->updated_at && $curso->validated === 1) {
+            $curso->restore();
+            $abrirCreados = true;
+            $pageActual = $request->input('page');
+
+            return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+        }else {
+            $abrirCreados = true;
+            $pageActual = $request->input('page');
+            return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+        }
+
+    }
+
+    /**
+     * Enviar a validar un curso. **Valida Admin en listado de cursos**
+     */
+    public function validateCourse(Request $request)
+    {
+        $curso = Course::withTrashed()->find($request->id);
+        if ($curso->deleted_at !== null && $curso->validated === null) {
+            $curso->validated = false;
+            $curso->updated_at = now();
+            $curso->deleted_at = $curso->updated_at;
+            $curso->save();
+            $abrirCreados = true;
+            $pageActual = $request->input('page');
+            dd($curso);
+            return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+        } else{
+            $abrirCreados = true;
+            $pageActual = $request->input('page');
+
+            return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+        }
+
     }
 
     /**
@@ -209,11 +244,20 @@ class CourseController extends Controller
      */
     public function destroy(Course $course, Request $request)
     {
-        $course->delete();
-        $abrirCreados = true;
-        $pageActual = $request->input('page');
+        if ($course->deleted_at === null && $course->validated === 1) {
+            $course->updated_at = now();
+            $course->deleted_at = $course->updated_at;
+            $course->delete();
+            $abrirCreados = true;
+            $pageActual = $request->input('page');
 
-        return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+            return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+        } else{
+            $abrirCreados = true;
+            $pageActual = $request->input('page');
+
+            return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
+        }
     }
 
     /**

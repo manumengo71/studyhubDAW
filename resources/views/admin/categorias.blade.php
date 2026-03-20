@@ -44,6 +44,10 @@
         </div>
 
         <script>
+            abrirCategorias();
+        </script>
+
+        <script>
 
             document.getElementById('nombre').addEventListener('change', function() {
                 document.getElementById('descripcion').checked = false;

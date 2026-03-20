@@ -20,6 +20,7 @@ return new class extends Migration
             $table->longText('description');
             $table->string('language');
             $table->double('price', 8, 2);
+            $table->boolean('validated')->nullable()->default(null);
             $table->timestamps();
             $table->softDeletes();
         });

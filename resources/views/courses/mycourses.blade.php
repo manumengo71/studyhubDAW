@@ -24,11 +24,11 @@
                         placeholder="Buscar...">
                 </div> --}}
                 <div class="mt-4 sm:mt-0 space-y-4 sm:space-y-0 sm:ml-10">
-                    <button onclick="abrirComprados()"
+                    <button onclick="abrirComprados()" id="botonComprados"
                         class="button bg-indigo-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
                         comprados</button>
-                    <button onclick="abrirCreados()"
-                        class="button bg-indigo-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
+                    <button onclick="abrirCreados()" id="botonCreados"
+                        class="button bg-white px-4 py-2 rounded-md text-black font-semibold tracking-wide cursor-pointer">Cursos
                         creados</button>
                 </div>
             </div>
@@ -97,12 +97,14 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
+                                        <td
+                                            class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
                                             <p class="text-gray-900 whitespace-no-wrap ">
                                                 {{ Str::limit($course->short_description, 50) }}
                                             </p>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
+                                        <td
+                                            class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 {{ Str::limit($course->description, 50) }}
                                             </p>
@@ -123,14 +125,28 @@
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            @if ($course->deleted_at == null)
+                                            @if (($course->deleted_at == $course->updated_at) && ($course->validated === 0))
+                                                <span
+                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                    <span aria-hidden
+                                                        class="absolute inset-0 bg-yellow-400 opacity-50 rounded-full"></span>
+                                                    <span class="relative">A VALIDAR</span>
+                                                </span>
+                                            @elseif (($course->deleted_at == $course->updated_at) && ($course->validated === 1))
+                                                <span
+                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                    <span aria-hidden
+                                                        class="absolute inset-0 bg-red-400 opacity-50 rounded-full"></span>
+                                                    <span class="relative">INACTIVO</span>
+                                                </span>
+                                            @elseif (($course->deleted_at === null) && ($course->validated === 1))
                                                 <span
                                                     class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                     <span aria-hidden
                                                         class="absolute inset-0 bg-green-400 opacity-50 rounded-full"></span>
                                                     <span class="relative">ACTIVO</span>
                                                 </span>
-                                            @else
+                                            @elseif (($course->deleted_at !== null) && ($course->validated === null))
                                                 <span
                                                     class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                     <span aria-hidden
@@ -138,6 +154,7 @@
                                                     <span class="relative">INACTIVO</span>
                                                 </span>
                                             @endif
+
                                         </td>
                                         <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
@@ -154,7 +171,29 @@
                                                     </form>
                                                 </div>
 
-                                                @if ($course->deleted_at == null)
+                                                @if ($course->deleted_at == $course->updated_at && $course->validated === 0)
+                                                    <div class="flex items-center">
+                                                        <img src="https://i.postimg.cc/DZcnwwSX/reloj.png" title="El curso está pendiente de ser validado"
+                                                            class="w-8 h-8 mr-2" />
+                                                    </div>
+
+                                                @elseif ($course->deleted_at == $course->updated_at && $course->validated === 1)
+                                                    <div class="flex items-center">
+                                                        <form action="{{ route('mycourses.activate', $course->id) }}"
+                                                            method="POST" class="inline">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" name="page"
+                                                                value="{{ request()->input('page') }}">
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/tg1wm3qR/check.png"
+                                                                    class="w-8 h-8 mr-2" />
+                                                            </button>
+                                                        </form>
+                                                    </div>
+
+                                                @elseif ($course->deleted_at === null && $course->validated === 1)
                                                     <div class="flex items-center">
                                                         <form action="{{ route('mycourses.destroy', $course) }}"
                                                             method="POST" class="inline">
@@ -169,9 +208,9 @@
                                                             </button>
                                                         </form>
                                                     </div>
-                                                @else
+                                                @elseif ($course->deleted_at !== null && $course->validated === null)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('mycourses.activate', $course->id) }}"
+                                                        <form action="{{ route('mycourses.validate', $course->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
@@ -200,15 +239,16 @@
         </div>
 
         <div id="cursos-comprados" onclick="abrirComprados()">
-            <div class="flex flex-wrap xl:ms-20 lg:ms-3 sm:ms-24" >
-            @foreach ($usersCourses as $userCourse)
-                @php
-                    $courseUser = $coursesUsers->firstWhere('id', $userCourse->courses_id);
-                    // $courseStatus = $status->where('id', $userCourse->users_courses_statuses_id)->first()->name;
-                @endphp
+            <div class="flex flex-wrap xl:ms-20 lg:ms-3 sm:ms-24">
+                @foreach ($usersCourses as $userCourse)
+                    @php
+                        $courseUser = $coursesUsers->firstWhere('id', $userCourse->courses_id);
+                        // $courseStatus = $status->where('id', $userCourse->users_courses_statuses_id)->first()->name;
+                    @endphp
 
                     @if ($courseUser)
-                        <div class="course-card sm:w-44 md:w-56 lg:w-64 xl:w-72 2xl:w-96 sm:me-10 sm:mb-10 mx-auto sm:mx-0">
+                        <div
+                            class="course-card sm:w-44 md:w-56 lg:w-64 xl:w-72 2xl:w-96 sm:me-10 sm:mb-10 mx-auto sm:mx-0">
                             <div>
                                 <p class="text head oculto mb-4">{{ $courseUser->name }}</p>
                             </div>
@@ -224,16 +264,21 @@
 
                             <div class="textBox">
 
-                            {{-- <span>{{ $courseStatus }}</span> --}}
-                            <span class="px-0 py-5 mb-16 text-sm">
-                                <form action="{{ route('mycourses.createPlay', $courseUser->id) }}" method="GET">
-                                    @csrf
-                                    {{-- @if ($courseStatus == '¡Estréname!') --}}
-                                        <button class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white" type="submit">
+                                {{-- <span>{{ $courseStatus }}</span> --}}
+                                <span class="px-0 py-5 mb-16 text-sm">
+                                    <form action="{{ route('mycourses.createPlay', $courseUser->id) }}"
+                                        method="GET">
+                                        @csrf
+                                        {{-- @if ($courseStatus == '¡Estréname!') --}}
+                                        <button
+                                            class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white"
+                                            type="submit">
                                             EMPEZAR
-                                            <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
+                                            <div
+                                                class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
+                                            </div>
                                         </button>
-                                    {{-- @elseif ($courseStatus == 'En progreso')
+                                        {{-- @elseif ($courseStatus == 'En progreso')
                                         <button class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white" type="submit">
                                             CONTINUAR
                                             <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
@@ -244,12 +289,12 @@
                                             <div class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
                                         </button>
                                     @endif --}}
-                                </form>
-                            </span>
+                                    </form>
+                                </span>
+                            </div>
                         </div>
-                    </div>
-                @endif
-            @endforeach
+                    @endif
+                @endforeach
             </div>
         </div>
 
@@ -261,22 +306,40 @@
         const titulo = document.getElementById('titulo');
 
         cursosCreados.style.display = 'none';
-        cursosComprados.style.display = 'none';
+        // cursosComprados.style.display = 'none';
+        titulo.innerHTML = 'CURSOS COMPRADOS';
 
         function abrirCreados() {
             const cursosCreados = document.getElementById('cursos-creados');
             const cursosComprados = document.getElementById('cursos-comprados');
             const titulo = document.getElementById('titulo');
+            let botonCreados = document.getElementById('botonCreados');
+            let botonComprados = document.getElementById('botonComprados');
 
             cursosCreados.style.display = 'block';
             cursosComprados.style.display = 'none';
             titulo.innerHTML = 'CURSOS CREADOS';
+
+            botonCreados.classList.remove('bg-white', 'text-black');
+            botonCreados.classList.add('bg-indigo-500', 'text-white');
+
+            botonComprados.classList.remove('bg-indigo-500', 'text-white');
+            botonComprados.classList.add('bg-white', 'text-black');
         }
 
         function abrirComprados() {
+            let botonCreados = document.getElementById('botonCreados');
+            let botonComprados = document.getElementById('botonComprados');
+
             cursosCreados.style.display = 'none';
             cursosComprados.style.display = 'block';
             titulo.innerHTML = 'CURSOS COMPRADOS';
+
+            botonComprados.classList.remove('bg-white', 'text-black');
+            botonComprados.classList.add('bg-indigo-500', 'text-white');
+
+            botonCreados.classList.remove('bg-indigo-500', 'text-white');
+            botonCreados.classList.add('bg-white', 'text-black');
         }
     </script>
 
@@ -285,7 +348,7 @@
         var pageRecibido = @json(session('pageActual'));
 
         if (abrir === true) {
-            if(pageRecibido !== null){
+            if (pageRecibido !== null) {
                 window.location.href = window.location.href + '?page=' + pageRecibido;
             } else {
                 abrirCreados();

@@ -9,29 +9,58 @@
 
     <div class="flex flex-wrap justify-center">
         <a href="/admin/users" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
+            <button id="btnUsuarios" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
                 Listado de Usuarios
             </button>
         </a>
 
         <a href="/admin/courses" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
+            <button id="btnCursos" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
                 Listado de Cursos
             </button>
         </a>
 
         <a href="/admin/categories" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
+            <button id="btnCategorias"
+                class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
                 Listado de Categorías
             </button>
         </a>
 
         <a href="/admin/roles" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button class="button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
+            <button id="btnRoles" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
                 Listado de Roles
             </button>
         </a>
     </div>
+
+    <script>
+        let btnUsuarios = document.getElementById('btnUsuarios');
+        let btnCursos = document.getElementById('btnCursos');
+        let btnCategorias = document.getElementById('btnCategorias');
+        let btnRoles = document.getElementById('btnRoles');
+
+        function abrirUsuarios() {
+            btnUsuarios.classList.remove('bg-white', 'text-black');
+            btnUsuarios.classList.add('bg-indigo-500', 'text-white');
+        }
+
+        function abrirCursos() {
+            btnCursos.classList.remove('bg-white', 'text-black');
+            btnCursos.classList.add('bg-indigo-500', 'text-white');
+
+        }
+
+        function abrirCategorias() {
+            btnCategorias.classList.remove('bg-white', 'text-black');
+            btnCategorias.classList.add('bg-indigo-500', 'text-white');
+        }
+
+        function abrirRoles() {
+            btnRoles.classList.remove('bg-white', 'text-black');
+            btnRoles.classList.add('bg-indigo-500', 'text-white');
+        }
+    </script>
 
     <section>
         @yield('content') {{-- Contenido dinámico --}}

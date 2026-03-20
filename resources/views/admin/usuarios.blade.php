@@ -100,6 +100,11 @@
             </form>
         </div>
 
+        <script>
+            abrirUsuarios();
+        </script>
+
+
         <section>
             @yield('contentUsers') {{-- Contenido dinámico --}}
         </section>

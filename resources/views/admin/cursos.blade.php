@@ -38,6 +38,7 @@
                             <option value="todos" {{ isset($input['status']) && $input['status'] == 'todos' ? 'selected' : '' }}>Todos</option>
                             <option value="activo" {{ isset($input['status']) && $input['status'] == 'activo' ? 'selected' : '' }}>Activo</option>
                             <option value="inactivo" {{ isset($input['status']) && $input['status'] == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
+                            <option value="aValidar" {{ isset($input['status']) && $input['status'] == 'A validar' ? 'selected' : '' }}>A validar</option>
                         </select>
                     </label>
                     <label class="flex items-center ml-4">
@@ -55,6 +56,10 @@
                 </x-success-button>
             </form>
         </div>
+
+        <script>
+            abrirCursos();
+        </script>
 
         <script>
                 document.getElementById('nombre').addEventListener('change', function() {

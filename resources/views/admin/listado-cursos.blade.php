@@ -71,7 +71,14 @@
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            @if ($course->deleted_at == null)
+                                            @if (($course->deleted_at == $course->updated_at) && ($course->validated === 0))
+                                                <span
+                                                    class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
+                                                    <span aria-hidden
+                                                        class="absolute inset-0 bg-yellow-400 opacity-50 rounded-full"></span>
+                                                    <span class="relative">A VALIDAR</span>
+                                                </span>
+                                            @elseif ($course->deleted_at == null)
                                                 <span
                                                     class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                     <span aria-hidden

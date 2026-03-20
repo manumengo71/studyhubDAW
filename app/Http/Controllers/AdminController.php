@@ -188,7 +188,14 @@ class AdminController extends Controller
         } else if ($status === 'activo') {
             $query->whereNull('deleted_at');
         } else if ($status === 'inactivo') {
-            $query->whereNotNull('deleted_at');
+            $query->whereNotNull('deleted_at')
+                ->where(function ($query) {
+                    $query->where('validated', 1)
+                          ->orWhereNull('validated');
+                });
+        }else if ($status ==='aValidar'){
+            $query->where('validated', 0)
+                ->whereRaw('deleted_at = updated_at');
         }
 
         // Aplicar búsqueda global
@@ -815,10 +822,10 @@ class AdminController extends Controller
      * Eliminar un usuario
      *
      */
-    public function deleteUser(User $user)
+    public function deleteUser($id)
     {
         // Obtener todos los cursos del usuario
-        $courses = Course::where('owner_id', $user->id)->get();
+        $courses = Course::where('owner_id', $id)->get();
 
         // Obtener id del usuario StudyHub-App
         $academy = User::where('username', 'StudyHub-App')->first();
@@ -830,6 +837,7 @@ class AdminController extends Controller
         }
 
         // Eliminar al usuario
+        $user = User::withTrashed()->find($id);
         $user->forceDelete();
 
         // return redirect()->route('listUsers');
@@ -843,10 +851,20 @@ class AdminController extends Controller
     public function activateCourse(Request $request)
     {
         $course = Course::withTrashed()->find($request->id);
-        $course->restore();
+
+        if ($course->deleted_at == $course->updated_at && $course->validated === 1) {
+            $course->validated = 1;
+            $course->restore();
+            return back();
+        } else if ($course->deleted_at !== null && $course->validated === null) {
+            $course->validated = 1;
+            $course->restore();
+            return back();
+        } else {
+            return back();
+        }
 
         // return redirect()->route('listCourses');
-        return back();
     }
 
     /**
@@ -865,8 +883,9 @@ class AdminController extends Controller
      * Eliminar un curso
      *
      */
-    public function deleteCourse(Course $course)
+    public function deleteCourse($id)
     {
+        $course = Course::withTrashed()->find($id);
         $course->forceDelete();
 
         // return redirect()->route('listCourses');

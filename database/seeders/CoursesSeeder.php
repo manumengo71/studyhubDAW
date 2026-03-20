@@ -19,7 +19,7 @@ class CoursesSeeder extends Seeder
 
         $urls = [
             'https://i.postimg.cc/RFZSnrXf/anh-nguyen-kc-A-c3f-3-FE-unsplash.jpg',
-            // 'https://i.postimg.cc/LXQHtybW/blake-connally-IKUYGCFmfw4-unsplash.jpg',
+            'https://i.postimg.cc/LXQHtybW/blake-connally-IKUYGCFmfw4-unsplash.jpg',
             'https://i.postimg.cc/Hkbsq9rJ/max-duzij-q-Aj-Jk-un3-BI-unsplash.jpg',
             'https://i.postimg.cc/zX6Ft8hz/anna-pelzer-IGf-IGP5-ONV0-unsplash.jpg',
             'https://i.postimg.cc/fLCvBdcp/campaign-creators-ykt-K2qai-VHI-unsplash.jpg',

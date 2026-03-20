@@ -27,6 +27,7 @@ class Course extends Model implements HasMedia
         'language',
         'owner_id',
         'price',
+        'validated',
         'courses_categories_id',
     ];
 

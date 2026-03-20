@@ -62,6 +62,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('mycourses');
     Route::put('/courses-activate/{id}', [App\Http\Controllers\CourseController::class, 'activate'])->name('mycourses.activate');
+    Route::put('/course-validate/{id}', [App\Http\Controllers\CourseController::class, 'validateCourse'])->name('mycourses.validate');
     Route::delete('/courses/{course}', [App\Http\Controllers\CourseController::class, 'destroy'])->name('mycourses.destroy');
     Route::get('/createCourse', [App\Http\Controllers\CourseController::class, 'create'])->name('mycourses.createCourse');
     Route::post('/createCourse', [App\Http\Controllers\CourseController::class, 'store'])->name('mycourses.storeCourse');
