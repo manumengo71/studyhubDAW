@@ -14,7 +14,7 @@
                 <div class="container mx-auto px-6">
                     <div class="md:flex md:items-center">
                         <div class="md:h-96 md:mb-0 mb-4">
-                            <button type="button" onclick="history.back()"
+                            <button type="button" onclick="window.location='{{ route('marketplace') }}'"
                                 class="hover:shadow-form rounded-md bg-indigo-500 py-2 px-4 text-base font-semibold text-white outline-none">
                                 <img src="https://i.postimg.cc/NMz2xBBV/atras.png" class="w-4 h-4" alt="Volver atrás">
                             </button>

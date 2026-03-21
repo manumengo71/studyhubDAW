@@ -91,6 +91,7 @@ class CourseController extends Controller
          * Inicializa la variable $lesson en null.
          */
         $lesson = null;
+        $data = null;
 
         /**
          * Si el request trae una lección, se guarda en la sesión.
@@ -98,6 +99,10 @@ class CourseController extends Controller
         if (!$request->input('leccion') == null) {
             $lesson = Lesson::find($request->input('leccion'));
             $request->session()->put('leccion', $lesson->id);
+
+            if ($lesson->lessons_types_id == 5) {
+                $data = $lesson->content;
+            }
         } else {
             $request->session()->put('leccion', 0);
         }
@@ -109,6 +114,7 @@ class CourseController extends Controller
             'course' => $course,
             'lessons' => $lessons,
             'lesson' => $lesson,
+            'data' => $data,
         ])->with('lesson', $lesson);
     }
 

@@ -138,7 +138,9 @@ class LessonController extends Controller
         if ($lesson->lessons_types_id == 5) {
             $lesson->content = $request->content;
         } else {
-            $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
+            if ($request->hasFile('media')) {
+                $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
+            }
         }
 
         $lesson->save();

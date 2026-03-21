@@ -1024,7 +1024,9 @@ class AdminController extends Controller
         if ($lesson->lessons_types_id == 5) {
             $lesson->content = $request->content;
         } else {
-            $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
+            if ($request->hasFile('media')) {
+                $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
+            }
         }
 
         $lesson->save();
@@ -1037,27 +1039,6 @@ class AdminController extends Controller
         $course->save();
 
         return redirect()->route('admin.editCourse', ['id' => $courseId]);
-    }
-
-    /**
-     * Prueba datos Editor.js
-     *
-     */
-    public function prueba(Request $request)
-    {
-        $lesson = Lesson::find(68);
-
-        $lesson->update([
-            'title' => 'EditorJS',
-            'subtitle' => 'holla',
-            'content' => $request->description,
-            'lessons_types_id' => '5',
-            'courses_id' => '35',
-        ]);
-
-        $data = $lesson->content;
-
-        return redirect()->route('privacidad')->with('data', $data);
     }
 
     /**
