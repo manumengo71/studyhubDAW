@@ -644,6 +644,10 @@ class AdminController extends Controller
             'description' => $request->description,
         ]);
 
+        if ($request->hasFile('imageCategory')) {
+            $category->addMediaFromRequest('imageCategory')->toMediaCollection('images_categories');
+        }
+
         return redirect()->route('listCategories')->with('success', 'Categoría editada correctamente');
     }
 
@@ -999,7 +1003,7 @@ class AdminController extends Controller
         $lessonType = LessonType::where('id', $lesson->lessons_types_id)->first();
         $data = $lesson->content;
 
-        return view('lesson.updateLesson', [
+        return view('admin.updateLesson', [
             'lesson' => $lesson,
             'lessonType' => $lessonType,
             'data' => $data,
@@ -1019,7 +1023,7 @@ class AdminController extends Controller
 
         if ($lesson->lessons_types_id == 5) {
             $lesson->content = $request->content;
-        }else {
+        } else {
             $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
         }
 
@@ -1054,5 +1058,16 @@ class AdminController extends Controller
         $data = $lesson->content;
 
         return redirect()->route('privacidad')->with('data', $data);
+    }
+
+    /**
+     * Eliminar una lección.
+     */
+    public function deleteLesson($id)
+    {
+        $lesson = Lesson::find($id);
+        $lesson->forceDelete();
+
+        return back();
     }
 }

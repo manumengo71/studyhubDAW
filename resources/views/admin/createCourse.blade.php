@@ -92,11 +92,8 @@
                                 <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
                                     Precio
                                 </label>
-                                <input type="number" name="price" id="price"
-                                    value=0
-                                    min="0"
-                                    max="999"
-                                    step="0.01"
+                                <input type="number" name="price" id="price" value=0 min="0"
+                                    max="999" step="0.01"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none">
                             </div>
                             <div class="md:w-1/5">
@@ -127,7 +124,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/5">
+                            <div class="md:w-1/5">
                                 <label for="imageCourse" class="block text-sm font-medium text-gray-700 mb-1">
                                     Imagen del curso
                                 </label>
@@ -142,6 +139,10 @@
                     </div>
 
                     <div class="flex justify-center">
+                        <button type="button" onclick="history.back()"
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none me-4">
+                            Volver atrás
+                        </button>
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Crear curso

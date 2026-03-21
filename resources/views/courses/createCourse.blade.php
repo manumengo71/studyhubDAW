@@ -14,8 +14,8 @@
 
                     {{-- 1 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/2">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/2 mb-4 md:mb-4">
                                 <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Nombre del curso
                                 </label>
@@ -25,7 +25,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/2">
+                            <div class="md:w-1/2">
                                 <label for="short_description" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Pequeña descripción
                                 </label>
@@ -59,7 +59,7 @@
                     {{-- 3 --}}
                     <div class="mb-5">
                         <div class="md:flex md:space-x-4">
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/4 mb-4 md:mb-4">
                                 <label for="language" class="block text-sm font-medium text-gray-700 mb-1">
                                     Idioma
                                 </label>
@@ -86,7 +86,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/4 mb-4 md:mb-4">
                                 {{-- <label for="owner_username" class="block text-sm font-medium text-gray-700 mb-1">
                                     Creador
                                 </label>
@@ -100,15 +100,12 @@
                                 <label for="price" class="block text-sm font-medium text-gray-700 mb-1">
                                     Precio
                                 </label>
-                                <input type="number" name="price" id="price"
-                                    value=0
-                                    min="0"
-                                    max="999"
-                                    step="0.01"
+                                <input type="number" name="price" id="price" value=0 min="0"
+                                    max="999" step="0.01"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none">
                                 <input type="hidden" name="owner_id" id="owner_id" value="{{ $user->id }}">
                             </div>
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/4 mb-4 md:mb-4">
                                 <label for="courses_categories_id" class="block text-sm font-medium text-gray-700 mb-1">
                                     Categoría
                                 </label>
@@ -122,7 +119,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="md:w-1/4">
                                 <label for="imageCourse" class="block text-sm font-medium text-gray-700 mb-1">
                                     Imagen del curso
                                 </label>
@@ -137,6 +134,10 @@
                     </div>
 
                     <div class="flex justify-center">
+                        <button type="button" onclick="window.location='{{ route('marketplace') }}'"
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none me-4">
+                            Volver atrás
+                        </button>
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Crear curso

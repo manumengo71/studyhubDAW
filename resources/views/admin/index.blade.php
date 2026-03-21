@@ -9,26 +9,26 @@
 
     <div class="flex flex-wrap justify-center">
         <a href="/admin/users" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button id="btnUsuarios" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
+            <button id="btnUsuarios" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded w-36 md:w-56">
                 Listado de Usuarios
             </button>
         </a>
 
         <a href="/admin/courses" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button id="btnCursos" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
+            <button id="btnCursos" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded w-36 md:w-56">
                 Listado de Cursos
             </button>
         </a>
 
         <a href="/admin/categories" class="m-2 mt-6 md:m-10 md:ms-16">
             <button id="btnCategorias"
-                class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
+                class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded w-36 md:w-56">
                 Listado de Categorías
             </button>
         </a>
 
         <a href="/admin/roles" class="m-2 mt-6 md:m-10 md:ms-16">
-            <button id="btnRoles" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded">
+            <button id="btnRoles" class="button bg-white hover:bg-indigo-600 text-black font-bold py-2 px-4 rounded w-36 md:w-56">
                 Listado de Roles
             </button>
         </a>

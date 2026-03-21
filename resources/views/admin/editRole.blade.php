@@ -12,8 +12,8 @@
                     @method('PATCH')
                     @csrf
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/2">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/2 mb-4 md:mb-4">
                                 <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Nombre
                                 </label>
@@ -23,7 +23,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/2">
+                            <div class="md:w-1/2">
                                 <label for="guard_name" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Guard Name
                                 </label>
@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="flex justify-center">
-                        <button type="button" onclick="window.location='{{ route('listRoles') }}'"
+                        <button type="button" onclick="history.back()"
                             class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Volver atrás
                         </button>

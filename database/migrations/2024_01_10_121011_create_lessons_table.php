@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('lessons_types_id')->constrained('lessons_types')->onDelete('cascade');
             $table->string('title', 50);
             $table->longText('subtitle', 100);
+            $table->longText('content')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

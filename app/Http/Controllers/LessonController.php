@@ -137,7 +137,7 @@ class LessonController extends Controller
 
         if ($lesson->lessons_types_id == 5) {
             $lesson->content = $request->content;
-        }else {
+        } else {
             $lesson->addMediaFromRequest('media')->toMediaCollection('lesson_content');
         }
 
@@ -197,6 +197,16 @@ class LessonController extends Controller
         } else {
             return response()->json(['success' => false, 'file' => ['url' => '']]);
         }
+    }
 
+    /**
+     * Eliminar una lección.
+     */
+    public function deleteLesson($id)
+    {
+        $lesson = Lesson::find($id);
+        $lesson->forceDelete();
+
+        return back();
     }
 }

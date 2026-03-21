@@ -13,7 +13,7 @@ class LessonsTypesSeeder extends Seeder
     public function run(): void
     {
 
-        LessonType::factory(4)->create();
+        LessonType::factory(5)->create();
 
         $lessonTypes = LessonType::all();
 

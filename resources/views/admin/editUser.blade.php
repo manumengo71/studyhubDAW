@@ -14,28 +14,28 @@
                     @csrf
                     {{-- 1 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/3">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/3">
                                 <label for="username" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Username
                                 </label>
                                 <input type="text" name="username" id="username" value={{ $user->username }}
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    class="mb-4 md:mb-4 w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('username')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3">
                                 <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Email
                                 </label>
                                 <input type="email" name="email" id="email" value={{ $user->email }}
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    class="mb-4 md:mb-4 w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('email')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3">
                                 <label for="password" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Contraseña
                                 </label>
@@ -50,30 +50,30 @@
 
                     {{-- 2 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/3">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/3">
                                 <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Nombre
                                 </label>
                                 <input type="text" name="name" id="name"
                                     value="{{ isset($userProfile->name) ? $userProfile->name : 'Nombre' }}"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    class="mb-4 md:mb-4 w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('name')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3">
                                 <label for="surname" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Primer Apellido
                                 </label>
                                 <input type="text" name="surname" id="surname"
                                     value="{{ isset($userProfile->surname) ? $userProfile->surname : 'Primer Apellido' }}"
-                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                                    class="mb-4 md:mb-4 w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('surname')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/3">
+                            <div class="md:w-1/3">
                                 <label for="second_surname" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Segundo Apellido
                                 </label>
@@ -89,8 +89,8 @@
 
                     {{-- 3 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/4">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/4 mb-4 md:mb-4">
                                 <label for="birthdate" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Fecha de Nacimiento
                                 </label>
@@ -103,7 +103,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="md:w-1/4 mb-4 md:mb-4">
                                 <label for="gender" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Género Biológico
                                 </label>
@@ -124,7 +124,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="md:w-1/4 mb-4 md:mb-4">
                                 <label for="role" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Rol
                                 </label>
@@ -145,7 +145,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/4">
+                            <div class="md:w-1/4">
                                 <label for="avatar" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Foto de Perfil
                                 </label>
@@ -163,6 +163,10 @@
                     </div>
 
                     <div class="flex justify-center">
+                        <button type="button" onclick="history.back()"
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none me-4">
+                            Volver atrás
+                        </button>
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Editar Usuario

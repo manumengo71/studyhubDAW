@@ -90,6 +90,10 @@
 
                 {{-- 3 --}}
                 <div class="flex justify-center">
+                    <button type="button" onclick="window.location='{{ route('mycourses.editCourse', $lesson->courses_id) }}'"
+                        class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none me-4">
+                        Volver atrás
+                    </button>
                     <button type="submit"
                         class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                         Editar

@@ -13,6 +13,12 @@
             <main class="my-8">
                 <div class="container mx-auto px-6">
                     <div class="md:flex md:items-center">
+                        <div class="md:h-96 md:mb-0 mb-4">
+                            <button type="button" onclick="history.back()"
+                                class="hover:shadow-form rounded-md bg-indigo-500 py-2 px-4 text-base font-semibold text-white outline-none">
+                                <img src="https://i.postimg.cc/NMz2xBBV/atras.png" class="w-4 h-4" alt="Volver atrás">
+                            </button>
+                        </div>
                         <div class="w-full h-64 md:w-1/2 lg:h-96">
                             @if ($course->getMedia('courses_images')->count() > 0)
                                 <img class="h-full w-full rounded-md object-cover max-w-lg mx-auto"
@@ -70,7 +76,8 @@
                                     {{-- <button onclick="openModal()"
                                         class="px-8 py-2 bg-indigo-500 text-white text-sm font-medium rounded hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Comprar
                                         ahora</button> --}}
-                                    <div data-tooltip="{{ $course->price }}€" class="unique-button-comprar" onclick="openModal()">
+                                    <div data-tooltip="{{ $course->price }}€" class="unique-button-comprar"
+                                        onclick="openModal()">
                                         <div class="unique-button-wrapper">
                                             <div class="unique-text">Comprar ahora</div>
                                             <span class="unique-icon">

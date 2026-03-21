@@ -22,7 +22,7 @@
             @foreach ($temas as $tema)
                 @if ($coursesSearch->where('courses_categories_id', $tema->id)->isNotEmpty())
                     @foreach ($coursesSearch->where('courses_categories_id', $tema->id) as $course)
-                        <div class="max-w-sm w-96 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 m-4 2xl:w-96 mx-auto"
+                        <div class="max-w-sm w-96 bg-slate-300 px-6 pt-6 pb-4 rounded-xl shadow-2xl transform hover:scale-105 transition duration-500 m-4 md:ms-10 ms-3 2xl:w-96 mx-auto"
                             style="box-shadow: 7px 20px 15px -3px rgba(0, 0, 0, 0.1), 4px 0 6px -2px rgba(0, 0, 0, 0.05);">
                             <h3 class="mb-3 text-xl font-bold text-indigo-500">Tema: {{ $tema->name }}</h3>
                             <div class="relative">

@@ -120,11 +120,15 @@
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="flex items-center">
-                                                    <a href="editUser/{{ $user->id }}"
-                                                        class="text-blue-500 hover:text-blue-700 flex items-center">
-                                                        <img src="https://i.postimg.cc/d3nq626Q/edit.png"
-                                                            class="w-8 h-8 mr-2" />
-                                                    </a>
+                                                    <form action="{{ route('editUser', $user->id) }}"
+                                                        method="POST" class="inline">
+                                                        @csrf
+                                                        @method('GET')
+                                                        <button type="submit"
+                                                            class="text-red-500 hover:text-red-700 flex items-center">
+                                                            <img src="https://i.postimg.cc/d3nq626Q/edit.png"
+                                                                class="w-8 h-8 mr-2" />
+                                                    </form>
                                                 </div>
                                                 @if ($user->deleted_at == null)
                                                     <div class="flex items-center">

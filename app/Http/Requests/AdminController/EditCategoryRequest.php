@@ -29,6 +29,7 @@ class EditCategoryRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:255',
+            'imageCategory' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 }

@@ -34,6 +34,10 @@
                     </div>
 
                     <div class="flex justify-center">
+                        <button type="button" onclick="history.back()"
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none me-4">
+                            Volver atrás
+                        </button>
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Crear Rol

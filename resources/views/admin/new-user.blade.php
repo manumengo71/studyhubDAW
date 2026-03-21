@@ -28,8 +28,7 @@
                                 <label for="email" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Email
                                 </label>
-                                <input type="email" name="email" id="email"
-                                    placeholder="tunombre@loquesea.com"
+                                <input type="email" name="email" id="email" placeholder="tunombre@loquesea.com"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('email')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
@@ -39,8 +38,7 @@
                                 <label for="password" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Contraseña
                                 </label>
-                                <input type="password" name="password" id="password"
-                                    placeholder="***********"
+                                <input type="password" name="password" id="password" placeholder="***********"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('password')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
@@ -56,8 +54,7 @@
                                 <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Nombre
                                 </label>
-                                <input type="text" name="name" id="name"
-                                    placeholder="Nombre"
+                                <input type="text" name="name" id="name" placeholder="Nombre"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('name')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
@@ -67,8 +64,7 @@
                                 <label for="surname" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Primer Apellido
                                 </label>
-                                <input type="text" name="surname" id="surname"
-                                    placeholder="Primer Apellido"
+                                <input type="text" name="surname" id="surname" placeholder="Primer Apellido"
                                     class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('surname')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
@@ -142,6 +138,10 @@
                     </div>
 
                     <div class="flex justify-center">
+                        <button type="button" onclick="history.back()"
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none me-4">
+                            Volver atrás
+                        </button>
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Crear Usuario

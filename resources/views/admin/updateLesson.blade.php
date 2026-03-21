@@ -14,17 +14,16 @@
 
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('admin.updateLesson', $lesson->id) }}" method="POST"  @submit.prevent="beforeSend"
-                    enctype="multipart/form-data"
-                    x-data="editor({{ $data }})" id="post-form">
+                <form action="{{ route('admin.updateLesson', $lesson->id) }}" method="POST" @submit.prevent="beforeSend"
+                    enctype="multipart/form-data" x-data="editor({{ $data }})" id="post-form">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" id="courseId" value="{{ $lesson->courses_id }}">
                     <input type="hidden" id="lessonId" value="{{ $lesson->id }}">
                     {{-- 1 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/2">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/2 mb-4 md:mb-0">
                                 <label for="title" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Título de la lección
                                 </label>
@@ -34,7 +33,7 @@
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
                             </div>
-                            <div class="w-1/2">
+                            <div class="md:w-1/2 mb-4 md:mb-0">
                                 <label for="subtitle" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Subtítulo
                                 </label>
@@ -49,8 +48,8 @@
 
                     {{-- 2 --}}
                     <div class="mb-5">
-                        <div class="flex space-x-4">
-                            <div class="w-1/3">
+                        <div class="md:flex md:space-x-4">
+                            <div class="md:w-1/3 mb-4 md:mb-0">
                                 <label for="content_type" class="mb-3 block text-base font-medium text-[#07074D]">
                                     Tipo de contenido
                                 </label>
@@ -69,7 +68,7 @@
                                 <input type="hidden" name="content" id="content" value="">
                                 <div id="editor"></div>
                             @else
-                                <div class="w-2/3">
+                                <div class="md:w-2/3">
                                     <x-input-label for="imageCourse" :value="__('Contenido de la lección')" />
                                     @if ($lesson->getMedia('lesson_content')->count() > 0)
                                         <input type="file" name="media" class="dropify"
@@ -87,6 +86,10 @@
 
                     {{-- 3 --}}
                     <div class="flex justify-center">
+                        <button type="button" onclick="window.location='{{ route('admin.editCourse', $lesson->courses_id) }}'"
+                            class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none me-4">
+                            Volver atrás
+                        </button>
                         <button type="submit"
                             class="hover:shadow-form rounded-md bg-indigo-500 py-3 px-8 text-base font-semibold text-white outline-none">
                             Editar
