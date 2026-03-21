@@ -83,8 +83,27 @@
                     </div>
                     @if (isset($ultimoCursoEmpezado))
                         <div class="flex items-end flex-auto py-8 pt-0 px-9 ">
-                            <a href="#"><img src="https://i.postimg.cc/ht4XRQtY/icons8-play-50-1.png"
-                                    alt="play-icon" class="w-10 h-10 me-4"></a>
+                            @if (isset($progresoUltimoCurso))
+
+                                <form action="{{ route('mycourses.createPlay', $ultimoCursoEmpezado->id) }}"
+                                    method="GET">
+                                    @csrf
+
+                                    @if ($progresoUltimoCurso->users_courses_statuses_id == 2)
+                                        <input type="hidden" name="continuar" value="true">
+                                    @elseif ($progresoUltimoCurso->users_courses_statuses_id == 3)
+                                        <input type="hidden" name="empezarDeNuevo" value="true">
+                                    @endif
+
+                                    <button type="submit"><img src="https://i.postimg.cc/ht4XRQtY/icons8-play-50-1.png"
+                                            alt="play-icon" class="w-10 h-10 me-4"></button>
+
+                                </form>
+                            @else
+                                <img src="https://i.postimg.cc/ht4XRQtY/icons8-play-50-1.png" alt="play-icon"
+                                    class="w-10 h-10 me-4">
+                            @endif
+
                             <div class="flex flex-col items-center w-full mt-3">
                                 <div
                                     class="flex justify-between w-full mt-auto mb-2 font-semibold text-white/80 text-lg/normal">

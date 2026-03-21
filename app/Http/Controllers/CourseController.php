@@ -12,6 +12,7 @@ use Illuminate\View\View;
 use App\Models\User;
 use App\Models\CourseCategory;
 use App\Models\Lesson;
+use App\Models\User_course_progress;
 use App\Models\User_course_status;
 use Illuminate\Support\Facades\DB;
 
@@ -24,13 +25,16 @@ class CourseController extends Controller
     {
         $user = auth()->user();
         $courses = Course::withTrashed()->where('owner_id', $user->id)->paginate(5);
-        $usersCourses = $user->usersCourses()->orderBy('created_at', 'desc')->get();  // En VisualStudio da error, pero funciona bien.
-        $coursesIds = $usersCourses->pluck('courses_id')->toArray();
-        $coursesUsers = Course::whereIn('id', $coursesIds)->get();
-        $temas = CourseCategory::all();
-        $status = User_course_status::all();
 
-        return view('courses.mycourses', compact('courses', 'temas', 'user', 'usersCourses', 'coursesUsers', 'status'));
+        $usersCourses = $user->usersCourses()->with('userCourseProgresses')->orderBy('created_at', 'desc')->get(); // En VisualStudio da error, pero funciona bien.
+
+        $coursesIds = $usersCourses->pluck('courses_id')->toArray();
+        $coursesUsers = Course::withTrashed()->whereIn('id', $coursesIds)->get();
+        $temas = CourseCategory::all();
+
+
+
+        return view('courses.mycourses', compact('courses', 'temas', 'user', 'usersCourses', 'coursesUsers'));
     }
 
     /**
@@ -93,6 +97,19 @@ class CourseController extends Controller
         $lesson = null;
         $data = null;
 
+        if ($request->input('continuar') == 'true') {
+            $user = auth()->user();
+            $userCourse = User_course_progress::where('user_id', $user->id)->where('course_id', $course->id)->first();
+            $lesson = Lesson::find($userCourse->lesson_id);
+        } elseif ($request->input('empezarDeNuevo') == 'true') {
+            $user = auth()->user();
+            $userCourse = User_course_progress::where('user_id', $user->id)->where('course_id', $course->id)->first();
+            $lesson = null;
+            $userCourse->users_courses_statuses_id = 1;
+            $userCourse->lesson_id = null;
+            $userCourse->save();
+        }
+
         /**
          * Si el request trae una lección, se guarda en la sesión.
          */
@@ -100,9 +117,36 @@ class CourseController extends Controller
             $lesson = Lesson::find($request->input('leccion'));
             $request->session()->put('leccion', $lesson->id);
 
+            /**
+             * Guardar el progreso del curso.
+             */
+
+            $user = auth()->user();
+
+            $userCourse = User_course_progress::where('user_id', $user->id)->where('course_id', $course->id)->first();
+
+            $ultimaLeccionCurso = Lesson::where('courses_id', $course->id)->orderBy('id', 'desc')->first();
+
+            // dd($userCourse->lesson_id, $ultimaLeccionCurso->id);
+
+            if ($userCourse->lesson_id < $lesson->id) {
+                $userCourse->lesson_id = $lesson->id;
+                $userCourse->users_courses_statuses_id = 2;
+                $userCourse->save();
+
+                if ($userCourse->lesson_id == $ultimaLeccionCurso->id) {
+                    $userCourse->users_courses_statuses_id = 3;
+                    $userCourse->save();
+                }
+            }
+
             if ($lesson->lessons_types_id == 5) {
                 $data = $lesson->content;
             }
+        } elseif ($request->input('continuar') == 'true') {
+            $request->session()->put('leccion', $lesson->id);
+        } elseif ($request->input('empezarDeNuevo') == 'true') {
+            $request->session()->put('leccion', 0);
         } else {
             $request->session()->put('leccion', 0);
         }
@@ -215,12 +259,11 @@ class CourseController extends Controller
             $pageActual = $request->input('page');
 
             return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
-        }else {
+        } else {
             $abrirCreados = true;
             $pageActual = $request->input('page');
             return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
         }
-
     }
 
     /**
@@ -237,13 +280,12 @@ class CourseController extends Controller
             $abrirCreados = true;
             $pageActual = $request->input('page');
             return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
-        } else{
+        } else {
             $abrirCreados = true;
             $pageActual = $request->input('page');
 
             return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
         }
-
     }
 
     /**
@@ -259,7 +301,7 @@ class CourseController extends Controller
             $pageActual = $request->input('page');
 
             return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados, 'pageActual' => $pageActual]);
-        } else{
+        } else {
             $abrirCreados = true;
             $pageActual = $request->input('page');
 

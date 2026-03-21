@@ -66,7 +66,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function hasCourse($courseId)
     {
-        return $this->courses->contains('id', $courseId);
+        return $this->courses()->withTrashed()->get()->contains('id', $courseId);
     }
 
     public function billingInformation()

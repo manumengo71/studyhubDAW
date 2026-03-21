@@ -20,26 +20,51 @@ class DashboardController extends Controller
 
             $ultimoCursoEmpezadoProgreso = $userActual->userCourseProgresses()->where('users_courses_statuses_id', '!=', 3)->orderBy('updated_at', 'desc')->first();
 
-            $ultimoCursoEmpezado = $ultimoCursoEmpezadoProgreso->course()->first();
+            if ($ultimoCursoEmpezadoProgreso == null) {
+                $ultimoCursoFinalizado = $userActual->userCourseProgresses()->where('users_courses_statuses_id', '=', 3)->orderBy('updated_at', 'desc')->first();
+                $ultimoCursoEmpezado = $ultimoCursoFinalizado->course()->first();
 
-            /** Cuentas para el porcentaje del curso */
-            $totalLeccionesCurso = $ultimoCursoEmpezado->lesson()->count();
+                $totalLeccionesCurso = $ultimoCursoEmpezado->lesson()->count();
 
-            $totalLeccionesIdsCurso = $ultimoCursoEmpezado->lesson()->pluck('id');
+                $totalLeccionesIdsCurso = $ultimoCursoEmpezado->lesson()->pluck('id');
 
-            if ($ultimoCursoEmpezadoProgreso->lesson()->count() > 0) {
+                if ($ultimoCursoFinalizado->lesson()->count() > 0) {
 
-                $ultimaLeccionComenzada = $ultimoCursoEmpezado->lesson()->first()->id;
+                    $ultimaLeccionComenzada = $ultimoCursoFinalizado->lesson()->first()->id;
 
-                $posicionUltimaLeccionComenzada = array_search($ultimaLeccionComenzada, $totalLeccionesIdsCurso->toArray()) + 1;
+                    $posicionUltimaLeccionComenzada = array_search($ultimaLeccionComenzada, $totalLeccionesIdsCurso->toArray()) + 1;
 
-                $porcentajeCurso = ($posicionUltimaLeccionComenzada / $totalLeccionesCurso) * 100;
+                    $porcentajeCurso = ($posicionUltimaLeccionComenzada / $totalLeccionesCurso) * 100;
+                } else {
+                    $porcentajeCurso = 0;
+                }
 
+                $progresoUltimoCurso = $userActual->userCourseProgresses()->where('course_id', $ultimoCursoEmpezado->id)->first();
+
+                return view('dashboard', compact('userNumeroCursosFinalizados', 'ultimoCursoEmpezado', 'porcentajeCurso', 'mostrarTarjeta', 'userActual', 'progresoUltimoCurso'));
             } else {
-                $porcentajeCurso = 0;
-            }
+                $ultimoCursoEmpezado = $ultimoCursoEmpezadoProgreso->course()->first();
 
-            return view('dashboard', compact('userNumeroCursosFinalizados', 'ultimoCursoEmpezado', 'porcentajeCurso', 'mostrarTarjeta', 'userActual'));
+                /** Cuentas para el porcentaje del curso */
+                $totalLeccionesCurso = $ultimoCursoEmpezado->lesson()->count();
+
+                $totalLeccionesIdsCurso = $ultimoCursoEmpezado->lesson()->pluck('id');
+
+                if ($ultimoCursoEmpezadoProgreso->lesson()->count() > 0) {
+
+                    $ultimaLeccionComenzada = $ultimoCursoEmpezadoProgreso->lesson()->first()->id;
+
+                    $posicionUltimaLeccionComenzada = array_search($ultimaLeccionComenzada, $totalLeccionesIdsCurso->toArray()) + 1;
+
+                    $porcentajeCurso = ($posicionUltimaLeccionComenzada / $totalLeccionesCurso) * 100;
+                } else {
+                    $porcentajeCurso = 0;
+                }
+
+                $progresoUltimoCurso = $userActual->userCourseProgresses()->where('course_id', $ultimoCursoEmpezado->id)->first();
+
+                return view('dashboard', compact('userNumeroCursosFinalizados', 'ultimoCursoEmpezado', 'porcentajeCurso', 'mostrarTarjeta', 'userActual', 'progresoUltimoCurso'));
+            }
         } else {
             $mostrarTarjeta = true;
             $mostrarPasosPorHacer = true;

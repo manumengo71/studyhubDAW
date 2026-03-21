@@ -25,7 +25,7 @@ class User_course_progress extends Model
 
     public function course()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class)->withTrashed();
     }
 
     public function lesson()
@@ -37,5 +37,4 @@ class User_course_progress extends Model
     {
         return $this->belongsTo(User_course_status::class);
     }
-
 }

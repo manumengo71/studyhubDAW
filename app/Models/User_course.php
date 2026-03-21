@@ -21,4 +21,9 @@ class User_course extends Model
         'courses_id',
         'user_course_progresses_id',
     ];
+
+    public function userCourseProgresses()
+    {
+        return $this->hasMany(User_course_progress::class, 'course_id', 'courses_id');
+    }
 }
