@@ -12,18 +12,28 @@
 
     <x-slot name="slot">
         <div class="flex">
-            <div id="reproductor" class="md:w-3/4 w-full bg-gray-800 text-white p-6 min-h-screen transition-all duration-1000">
+            <div id="reproductor"
+                class="md:w-3/4 w-full bg-gray-800 text-white p-6 min-h-screen transition-all duration-1000">
                 <div class="md:flex justify-end p-2 h-12 hidden">
 
                     <div class="bg-gray-100 flex flex-col justify-center rounded-md">
                         <div class="relative py-3 sm:max-w-xl mx-auto">
                             <nav x-data="{ open: true }">
-                                <button id="toggleSidebar" type="button" class="rounded-md text-gray-500 w-10 h-10 relative focus:outline-none bg-white" @click="open = !open">
+                                <button id="toggleSidebar" type="button"
+                                    class="rounded-md text-gray-500 w-10 h-10 relative focus:outline-none bg-white"
+                                    @click="open = !open">
                                     <span class="sr-only">Open main menu</span>
-                                    <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                                        <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'rotate-45': open,' -translate-y-1.5': !open }"></span>
-                                        <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'opacity-0': open } "></span>
-                                        <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'-rotate-45': open, ' translate-y-1.5': !open}"></span>
+                                    <div
+                                        class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <span aria-hidden="true"
+                                            class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
+                                            :class="{ 'rotate-45': open, ' -translate-y-1.5': !open }"></span>
+                                        <span aria-hidden="true"
+                                            class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
+                                            :class="{ 'opacity-0': open }"></span>
+                                        <span aria-hidden="true"
+                                            class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out"
+                                            :class="{ '-rotate-45': open, ' translate-y-1.5': !open }"></span>
                                     </div>
                                 </button>
                             </nav>
@@ -43,16 +53,16 @@
                     {{-- VIDEO --}}
                     @if ($lesson->lessons_types_id === 3 && $lesson->getMedia('lesson_content')->isNotEmpty())
                         <video id="lessonVideo" controls class="w-full">
-                            <source src="{{ $lesson->getFirstMediaUrl('lesson_content') }}" type="video/mp4">
+                            <source src="{{ $lesson->getMedia('lesson_content')->last()->getUrl() }}" type="video/mp4">
                             Tu navegador no soporta el tag de video.
                         </video>
                         {{-- PDF --}}
                     @elseif ($lesson->lessons_types_id === 2 && $lesson->getMedia('lesson_content')->isNotEmpty())
-                        <iframe src="{{ $lesson->getFirstMediaUrl('lesson_content') }}" type="application/pdf"
+                        <iframe src="{{ $lesson->getMedia('lesson_content')->last()->getUrl() }}" type="application/pdf"
                             width="100%" height="850px"></iframe>
                         {{-- IMAGEN --}}
                     @elseif ($lesson->lessons_types_id === 4 && $lesson->getMedia('lesson_content')->isNotEmpty())
-                        <img src="{{ $lesson->getFirstMediaUrl('lesson_content') }}" class="" />
+                        <img src="{{ $lesson->getMedia('lesson_content')->last()->getUrl() }}" class="" />
                         {{-- PERSONALIZADO --}}
                     @elseif ($lesson->lessons_types_id === 5)
                         <form class="space-y-4 md:space-y-6" x-data="editor({{ $data }}, true)" id="post-form">
