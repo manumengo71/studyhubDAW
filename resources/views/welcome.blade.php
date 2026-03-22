@@ -77,12 +77,12 @@
                 <div class="flex w-full justify-center md:justify-start pb-24 lg:pb-0 fade-in">
                     <a href="{{ route('register') }}" class="mr-4">
                         <x-primary-button>
-                            {{ __('register') }}
+                            {{ __('Registrarse') }}
                         </x-primary-button>
                     </a>
                     <a href="{{ route('login') }}" class="mr-4">
                         <x-secondary-button>
-                            {{ __('login') }}
+                            {{ __('Iniciar sesión') }}
                         </x-secondary-button>
                     </a>
                 </div>
@@ -92,6 +92,7 @@
             <!--Footer-->
             <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
                 <a class="text-black no-underline hover:no-underline" href="#">&copy; 2023-2024</a>
+                <a class="text-black no-underline hover:no-underline" href="{{route('ayuda')}}">| FAQS</a>
             </div>
 
         </div>

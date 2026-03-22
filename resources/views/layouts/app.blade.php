@@ -45,7 +45,9 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-white">
-        @include('layouts.navigation')
+        @section('navigation')
+            @include('layouts.navigation')
+        @show
 
         {{-- <!-- Page Heading -->
         @if (isset($header))
@@ -66,29 +68,16 @@
         <div class="footer">
             <!-- Footer content -->
             <footer class="font-sans bg-indigo-500">
-                <div class="container px-6 py-12 mx-auto">
+                <div class="container px-6 py-12 mx-auto text-center md:text-left">
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
                         <div class="sm:col-span-2">
-                            <h1
-                                class="max-w-lg text-xl font-semibold tracking-tight text-gray-800 xl:text-2xl dark:text-white">
-                                Suscríbete a nuestro newsletter.</h1>
-
-                            <div class="flex flex-col mx-auto mt-6 space-y-3 md:space-y-0 md:flex-row">
-                                <input id="email" type="text"
-                                    class="px-4 py-2 text-gray-700 bg-white border rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:outline-none focus:ring focus:ring-opacity-40 focus:ring-blue-300"
-                                    placeholder="Dirección de email" />
-
-                                <button
-                                    class="w-full px-6 py-2.5 text-sm font-medium tracking-wider text-white transition-colors duration-300 transform md:w-auto md:mx-4 focus:outline-none bg-gray-800 rounded-lg hover:bg-gray-700 focus:ring focus:ring-gray-300 focus:ring-opacity-80">
-                                    Subscribirme
-                                </button>
-                            </div>
+                            <x-application-logo class="w-32 mx-auto md:mx-0 md:ms-20 rounded-full" />
                         </div>
 
-                        <div>
+                        <div class="mx-auto md:mx-0">
                             <p class="font-semibold text-gray-800 dark:text-white">Links rápidos</p>
 
-                            <div class="flex flex-col items-start mt-5 space-y-2">
+                            <div class="flex flex-col items-center md:items-start mt-5 space-y-2">
                                 <a href="{{ route('dashboard') }}">
                                     <p
                                         class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer">
@@ -109,10 +98,10 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="mx-auto md:mx-0">
                             <p class="font-semibold text-white">Legal</p>
 
-                            <div class="flex flex-col items-start mt-5 space-y-2">
+                            <div class="flex flex-col items-center md:items-start mt-5 space-y-2">
                                 <a href="{{ route('condiciones') }}"
                                     class="text-gray-300 transition-colors duration-300 hover:text-white hover:underline hover:cursor-pointer"
                                     target="_blank" rel="noopener noreferrer">
@@ -136,7 +125,7 @@
 
                     <div class="sm:flex sm:items-center sm:justify-between">
 
-                        <div class="flex gap-4 hover:cursor-pointer">
+                        <div class="flex gap-4 hover:cursor-pointer justify-center md:justify-start">
                             <img src="https://www.svgrepo.com/show/303114/facebook-3-logo.svg" width="30" height="30"
                                 alt="fb" />
                             <img src="https://www.svgrepo.com/show/303115/twitter-3-logo.svg" width="30" height="30"
@@ -153,7 +142,7 @@
                                 height="30" alt="db" />
                         </div>
                     </div>
-                    <p class="font-sans p-8 text-start md:text-center md:text-lg md:p-4 text-white">© 2024 StudyHub-App.
+                    <p class="font-sans p-8 text-center md:text-lg md:p-4 text-white">© 2024 StudyHub-App.
                         Todos los derechos
                         reservados.</p>
                 </div>

@@ -1,5 +1,5 @@
 <x-app-layout>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Realizar curso
@@ -12,18 +12,24 @@
 
     <x-slot name="slot">
         <div class="flex">
-            <div id="reproductor" class="md:w-3/4 w-full bg-gray-800 text-white p-6 min-h-screen">
+            <div id="reproductor" class="md:w-3/4 w-full bg-gray-800 text-white p-6 min-h-screen transition-all duration-1000">
                 <div class="md:flex justify-end p-2 h-12 hidden">
-                    <button id="toggleSidebar" type="button"
-                        class="p-2 inline-flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none"
-                        data-hs-overlay="#sidebar-mini" aria-controls="sidebar-mini" aria-label="Toggle navigation">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <svg class="flex-shrink-0 size-4" width="16" height="16" fill="currentColor"
-                            viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
-                                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                        </svg>
-                    </button>
+
+                    <div class="bg-gray-100 flex flex-col justify-center rounded-md">
+                        <div class="relative py-3 sm:max-w-xl mx-auto">
+                            <nav x-data="{ open: true }">
+                                <button id="toggleSidebar" type="button" class="rounded-md text-gray-500 w-10 h-10 relative focus:outline-none bg-white" @click="open = !open">
+                                    <span class="sr-only">Open main menu</span>
+                                    <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                        <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'rotate-45': open,' -translate-y-1.5': !open }"></span>
+                                        <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'opacity-0': open } "></span>
+                                        <span aria-hidden="true" class="block absolute h-0.5 w-5 bg-current transform transition duration-500 ease-in-out" :class="{'-rotate-45': open, ' translate-y-1.5': !open}"></span>
+                                    </div>
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+
                 </div>
                 @if ($lesson)
                     <h1 class="text-2xl font-semibold mb-4"> Curso: {{ ucfirst($course->name) }} | Lección:
@@ -88,7 +94,7 @@
 
             <!-- Contenedor principal -->
 
-            <div id="sidebar" class="flex-1 p-8 overflow-hidden hidden md:block">
+            <div id="sidebar" class="flex-1 p-8 overflow-hidden hidden md:block transition-all duration-00">
                 <div class="flex-1 p-8 overflow-hidden">
                     <div class="flex mb-4">
                         <div class="w-full pr-4">
@@ -150,7 +156,6 @@
                 sidebar.classList.toggle('hiddenSidebar');
                 let reproductor = document.getElementById('reproductor');
                 reproductor.classList.toggle('md:w-full');
-
             });
         </script>
 

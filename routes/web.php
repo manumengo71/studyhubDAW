@@ -86,6 +86,13 @@ Route::group(['middleware' => 'web'], function () {
     Route::post('/post-media/{courseId}/{lessonId}', [App\Http\Controllers\LessonController::class, 'postMedia'])->name('postMedia');
 });
 
+/**
+ * RUTAS PARA LEGAL
+ */
+Route::view('/condiciones', 'legal.condiciones')->name('condiciones');
+Route::view('/ayuda', 'legal.ayudaAsistencia')->name('ayuda');
+Route::view('/politicaPrivacidad', 'legal.politicaPrivacidad')->name('privacidad');
+
 
 require __DIR__ . '/auth.php';
 
@@ -151,13 +158,5 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::put('/roles-activate/{id}', [App\Http\Controllers\AdminController::class, 'activateRole'])->name('roles.activate');
         Route::delete('/roles-disable/{id}', [App\Http\Controllers\AdminController::class, 'destroyRole'])->name('roles.disable');
         Route::delete('/roles-delete/{id}/{guard_name}', [App\Http\Controllers\AdminController::class, 'forceDestroyRole'])->name('roles.forceDestroy');
-
     });
-
-    /**
-     * RUTAS PARA LEGAL
-     */
-    Route::view('/condiciones', 'legal.condiciones')->name('condiciones');
-    Route::view('/ayuda', 'legal.ayudaAsistencia')->name('ayuda');
-    Route::view('/politicaPrivacidad', 'legal.politicaPrivacidad')->name('privacidad');
 });
