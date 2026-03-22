@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+    mysql:
+        image: mysql:8.0.30
+        container_name: mi-mysql
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+    laravel:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: mi-contenedor-laravel
+        ports:
+            - "8000:80"
+            - "5173:5173" # Mapea el puerto 5173 del contenedor al puerto 5173 del host
+        depends_on:
+            - mysql
+        environment:
+            DB_CONNECTION: mysql
+            DB_HOST: mi-mysql
+            DB_PORT: 3306
+            DB_DATABASE: StudyHub-App
+            DB_USERNAME: root
+            DB_PASSWORD: root
+        volumes:
+            - ./storage:/var/www/html/storage # Mapea la carpeta de almacenamiento de Laravel
+
+volumes:
+    mysql_data:
