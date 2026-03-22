@@ -21,7 +21,7 @@ use App\Models\CustomRole;
 use App\Models\Lesson;
 use App\Models\LessonType;
 use App\Models\User;
-use App\Models\userProfile;
+use App\Models\UserProfile;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

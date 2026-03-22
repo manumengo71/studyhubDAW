@@ -14,7 +14,7 @@ class Course extends Model implements HasMedia
     use InteractsWithMedia;
     use SoftDeletes;
 
-    protected $table = 'Courses';
+    protected $table = 'courses';
     /**
      * The attributes that are mass assignable.
      *
