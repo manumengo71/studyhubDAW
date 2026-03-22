@@ -71,7 +71,9 @@
                 <div class="container px-6 py-12 mx-auto text-center md:text-left">
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-y-10 lg:grid-cols-4">
                         <div class="sm:col-span-2">
-                            <x-application-logo class="w-32 mx-auto md:mx-0 md:ms-20 rounded-full" />
+                            <a href="{{ route('dashboard') }}">
+                                <x-application-logo class="w-32 mx-auto md:mx-0 md:ms-20 rounded-full" />
+                            </a>
                         </div>
 
                         <div class="mx-auto md:mx-0">

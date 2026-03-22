@@ -88,4 +88,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->billingInformation()->exists();
     }
+
+    public function isAdmin()
+    {
+        return $this->hasRole('admin');
+    }
 }

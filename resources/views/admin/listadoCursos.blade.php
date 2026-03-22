@@ -6,8 +6,7 @@
         <div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                    @if($courses->isNotEmpty())
-
+                    @if ($courses->isNotEmpty())
                         <table class="min-w-full leading-normal">
                             <thead>
                                 <tr>
@@ -50,12 +49,14 @@
                                                 {{ $course->name }}
                                             </p>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
+                                        <td
+                                            class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 {{ Str::limit($course->short_description, 50) }}
                                             </p>
                                         </td>
-                                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
+                                        <td
+                                            class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 {{ Str::limit($course->description, 50) }}
                                             </p>
@@ -71,7 +72,7 @@
                                             </p>
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                            @if (($course->deleted_at == $course->updated_at) && ($course->validated === 0))
+                                            @if ($course->deleted_at == $course->updated_at && $course->validated === 0)
                                                 <span
                                                     class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
                                                     <span aria-hidden
@@ -96,16 +97,16 @@
                                         </td>
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
-                                                <form action="{{ route('admin.editCourse', $course) }}"
-                                                            method="GET" class="inline">
-                                                            @csrf
-                                                            @method('GET')
-                                                            <button type="submit"
-                                                                class="text-red-500 hover:text-red-700 flex items-center">
-                                                                <img src="https://i.postimg.cc/d3nq626Q/edit.png"
-                                                                    class="w-8 h-8 mr-2" />
-                                                            </button>
-                                                        </form>
+                                                <form action="{{ route('admin.editCourse', $course) }}" method="GET"
+                                                    class="inline">
+                                                    @csrf
+                                                    @method('GET')
+                                                    <button type="submit"
+                                                        class="text-red-500 hover:text-red-700 flex items-center">
+                                                        <img src="https://i.postimg.cc/d3nq626Q/edit.png"
+                                                            class="w-8 h-8 mr-2" />
+                                                    </button>
+                                                </form>
 
 
                                                 @if ($course->deleted_at == null)
@@ -121,7 +122,7 @@
                                                             </button>
                                                         </form>
                                                     </div>
-                                                    @else
+                                                @else
                                                     <div class="flex items-center">
                                                         <form action="{{ route('courses.activate', $course->id) }}"
                                                             method="POST" class="inline">
@@ -137,8 +138,8 @@
                                                 @endif
                                                 <div class="flex items-center">
                                                     <form id="deleteForm"
-                                                        action="{{ route('courses.delete', $course->id) }}"
-                                                        method="POST" class="inline">
+                                                        action="{{ route('courses.delete', $course->id) }}" method="POST"
+                                                        class="inline">
                                                         @csrf
                                                         @method('DELETE')
 
@@ -165,15 +166,30 @@
                                                         </div>
                                                     </form>
                                                 </div>
+                                                @if ($course->lesson()->count() > 0)
+                                                    <div class="flex items-center">
+                                                        <form action="{{ route('courses.viewCourse', $course->id) }}"
+                                                            method="GET" class="inline">
+                                                            @csrf
+                                                            @method('GET')
+                                                            <button type="submit"
+                                                                class="text-red-500 hover:text-red-700 flex items-center">
+                                                                <img src="https://i.postimg.cc/8cMSqcYj/visionar.png"
+                                                                    class="w-9 mr-2" />
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        @else
+                    @else
                         <div class="flex flex-col items-center justify-center m-10">
-                            <img class="w-64 h-64 mb-8" src="https://i.postimg.cc/sfq3rQXM/trsite-removebg-preview.png" alt="No results">
+                            <img class="w-64 h-64 mb-8" src="https://i.postimg.cc/sfq3rQXM/trsite-removebg-preview.png"
+                                alt="No results">
                             <h2 class="text-gray-600 text-2xl font-semibold">Ningún resultado</h2>
                             <p class="text-gray-500">No pudimos encontrar ningún resultado que coincida con tu búsqueda.</p>
                         </div>

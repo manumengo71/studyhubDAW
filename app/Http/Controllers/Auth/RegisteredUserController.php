@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
@@ -42,6 +43,34 @@ class RegisteredUserController extends Controller
         UserProfile::create([
             'user_id' => $user->id,
         ]);
+
+        if ($request->email == 'hola@studyhub-app-admin.com' && $request->password == 'adminstudyhub-app' && $request->username == 'studyhub-app-admin') {
+            $adminRole = Role::where('name', 'admin')->first();
+            $user->assignRole($adminRole);
+
+            // $user->email_verified_at = now(); /** Nos saltamos la verificación de correo electrónico */
+
+            $user->profile()->update([
+                'name' => 'StudyHub-App-AdminName',
+                'surname' => 'AdminSurname',
+                'second_surname' => 'AdminSecondSurname',
+                'birthdate' => now(),
+                'biological_gender' => 'Otro',
+            ]);
+
+            $user->billingInformation()->create([
+                'user_id' => $user->id,
+                'owner_name' => 'StudyHub-App-AdminName',
+                'owner_surname' => 'AdminSurname',
+                'owner_second_surname' => 'AdminSecondSurname',
+                'credit_card_number' => '1234567890123456',
+                'expiration_date' => '12/99',
+                'cvv' => '123',
+                'type_id' => 4,
+            ]);
+
+            $user->save();
+        }
 
         event(new Registered($user));
 

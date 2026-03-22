@@ -101,6 +101,6 @@ class BillingInformationController extends Controller
         $lessonCount = $billingHistory->course->lesson->count();
         $pdf = FacadePdf::loadView('shopping.billingPdf', compact('billingHistory', 'lessonCount'));
         $invoiceId = str_pad($id, 5, '0', STR_PAD_LEFT);
-        return $pdf->stream("factura{$invoiceId}.pdf");
+        return $pdf->download("factura{$invoiceId}.pdf");
     }
 }

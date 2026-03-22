@@ -13,6 +13,7 @@ use App\Http\Requests\AdminController\StoreUserRequest;
 use App\Http\Requests\AdminController\UpdateCourseRequest;
 use App\Http\Requests\AdminController\UpdateLessonRequest;
 use App\Http\Requests\AdminController\UpdateUserRequest;
+use App\Http\Requests\AdminController\ViewCourseRequest;
 use App\Http\Requests\LessonController\StoreRequestStep1;
 use App\Models\Course;
 use App\Models\CourseCategory;
@@ -435,6 +436,11 @@ class AdminController extends Controller
         $curso->price = $request->price;
         $curso->owner_id = $request->owner_id;
         $curso->courses_categories_id = $request->courses_categories_id;
+
+        $curso->validated = null;
+        $curso->updated_at = now();
+        $curso->deleted_at = now()->subSeconds(1);
+
         $curso->save();
 
         if ($request->hasFile('imageCourse')) {
@@ -740,8 +746,7 @@ class AdminController extends Controller
      */
     public function editUser($id)
     {
-        $user = User::withTrashed($id)->first();
-        // $user = User::findOrFail($id);
+        $user = User::withTrashed()->findOrFail($id);
         $userProfile = UserProfile::where('user_id', $user->id)->first();
         $roles = Role::all();
 
@@ -785,7 +790,10 @@ class AdminController extends Controller
 
         if ($role) {
             // Actualizar el rol del usuario
-            $user->syncRoles([$role]);
+            $roleName = Role::findById($role);
+            $user->syncRoles([$roleName]);
+        } else if ($request->input('role') == null) {
+            $user->syncRoles([]);
         }
 
         // Subir la nueva imagen
@@ -1050,5 +1058,47 @@ class AdminController extends Controller
         $lesson->forceDelete();
 
         return back();
+    }
+
+    /**
+     * Visionar Curso desde Admin
+     */
+
+    public function viewCourse(ViewCourseRequest $request, $id)
+    {
+        $course = Course::withTrashed()->find($id);
+        $lessons = Lesson::where('courses_id', $course->id)->get();
+
+        /**
+         * Inicializa la variable $lesson en null.
+         */
+        $lesson = null;
+        $data = null;
+
+        /**
+         * Si el request trae una lección, se guarda en la sesión.
+         */
+        if (!$request->input('leccion') == null) {
+            $lesson = Lesson::find($request->input('leccion'));
+            $request->session()->put('leccion', $lesson->id);
+
+            if ($lesson->lessons_types_id == 5) {
+                $data = $lesson->content;
+            }
+        } else {
+            $request->session()->put('leccion', 0);
+        }
+
+
+
+        /**
+         * Enviamos la vista con el curso, las lecciones y la lección actual.
+         */
+        return view('admin.viewCourse', [
+            'course' => $course,
+            'lessons' => $lessons,
+            'lesson' => $lesson,
+            'data' => $data,
+        ])->with('lesson', $lesson);
     }
 }

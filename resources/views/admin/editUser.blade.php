@@ -95,10 +95,8 @@
                                     Fecha de Nacimiento
                                 </label>
                                 <input type="date" name="birthdate" id="birthdate"
-                                @if (isset($userProfile->birthdate))
-                                    value="{{ $userProfile->birthdate->format('Y-m-d') }}"
-                                @endif
-                                class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"/>
+                                    @if (isset($userProfile->birthdate)) value="{{ $userProfile->birthdate->format('Y-m-d') }}" @endif
+                                    class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
                                 @error('birthdate')
                                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                                 @enderror
@@ -109,7 +107,8 @@
                                 </label>
                                 <select name="gender" id="gender"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:border-indigo-500 md:h-12">
-                                    <option value="" disabled {{ (!$userProfile->biological_gender) ? 'selected' : '' }}>
+                                    <option value="" disabled
+                                        {{ !$userProfile->biological_gender ? 'selected' : '' }}>
                                         @if (!$userProfile->biological_gender)
                                             Género sin especificar
                                         @else
@@ -130,15 +129,12 @@
                                 </label>
                                 <select name="role" id="role"
                                     class="w-full rounded-md border border-gray-300 py-2 px-3 focus:outline-none focus:border-indigo-500 md:h-12">
-                                    <option value="" disabled selected>
-                                        @if ($user->roles->isEmpty())
-                                            Sin Rol
-                                        @else
-                                            {{ $user->roles->first()->name }}
-                                        @endif
+                                    <option value="" {{ $user->roles->count() == 0 ? 'selected' : '' }}>Sin rol
                                     </option>
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        <option value="{{ $role->id }}"
+                                            {{ $user->hasRole($role->name) ? 'selected' : '' }}>{{ $role->name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 @error('role')

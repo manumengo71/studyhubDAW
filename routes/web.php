@@ -126,6 +126,7 @@ Route::middleware(['auth', 'verified', 'admin'])->group(function () {
         Route::put('/activateCourse/{id}', [App\Http\Controllers\AdminController::class, 'activateCourse'])->name('courses.activate');
         Route::delete('/disableCourse/{course}', [App\Http\Controllers\AdminController::class, 'disableCourse'])->name('courses.disable');
         Route::delete('/deleteCourse/{course}', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('courses.delete');
+        Route::get('/viewCourse/{id}', [App\Http\Controllers\AdminController::class, 'viewCourse'])->name('courses.viewCourse');
 
         /** RUTAS PARA LECCIONES */
         Route::get('/createLessonStep1/{id}', [App\Http\Controllers\AdminController::class, 'createLessonStep1'])->name('admin.createLessonStep1');

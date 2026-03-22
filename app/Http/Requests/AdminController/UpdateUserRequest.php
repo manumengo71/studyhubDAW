@@ -37,9 +37,9 @@ class UpdateUserRequest extends FormRequest
             'birthdate' => 'nullable|date',
             'biological_gender' => 'nullable|string|max:255|in:Masculino,Femenino,Otro',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:1024',
-            'role' => Rule::exists('roles', 'id')->where(function ($query) {
+            'role' => ['nullable', Rule::exists('roles', 'id')->where(function ($query) {
                 $query->where('id', $this->input('role'));
-            }),
+            })],
         ];
     }
 }
