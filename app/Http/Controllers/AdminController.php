@@ -841,10 +841,10 @@ class AdminController extends Controller
     public function deleteUser($id)
     {
         // Obtener todos los cursos del usuario
-        $courses = Course::where('owner_id', $id)->get();
+        $courses = Course::withTrashed()->where('owner_id', $id)->get();
 
         // Obtener id del usuario StudyHub-App
-        $academy = User::where('username', 'StudyHub-App')->first();
+        $academy = User::where('username', 'studyhub-app')->first();
 
         // Modificar el owner_id de cada curso
         foreach ($courses as $course) {

@@ -20,12 +20,12 @@ class ProfileController extends Controller
      * Mostrar el formulario para editar el perfil del usuario.
      */
     public function edit(Request $request): View
-{
-    return view('profile.edit', [
-        'user' => $request->user(),
-        'userProfile' => UserProfile::where('user_id', $request->user()->id)->first(),
-    ]);
-}
+    {
+        return view('profile.edit', [
+            'user' => $request->user(),
+            'userProfile' => UserProfile::where('user_id', $request->user()->id)->first(),
+        ]);
+    }
 
     /**
      * Update the user's profile information.
@@ -82,10 +82,10 @@ class ProfileController extends Controller
         Auth::logout();
 
         // Obtener todos los cursos del usuario
-        $courses = Course::where('owner_id', $user->id)->get();
+        $courses = Course::withTrashed()->where('owner_id', $user->id)->get();
 
         // Obtener id del usuario StudyHub-App
-        $academy = User::where('username', 'StudyHub-App')->first();
+        $academy = User::where('username', 'studyhub-app')->first();
 
         // Modificar el owner_id de cada curso
         foreach ($courses as $course) {
@@ -100,5 +100,4 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
-
 }

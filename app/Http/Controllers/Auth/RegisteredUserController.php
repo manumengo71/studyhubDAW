@@ -69,6 +69,26 @@ class RegisteredUserController extends Controller
                 'type_id' => 4,
             ]);
 
+            // Crear cuenta Global de StudyHub-App
+
+            $cuentaGlobal = User::create([
+                'username' => 'studyhub-app',
+                'email' => 'studyhub-app@admin.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('1234567890'),
+            ]);
+
+            UserProfile::create([
+                'user_id' => $cuentaGlobal->id,
+                'name' => 'StudyHub-App',
+                'surname' => 'AcademySurname',
+                'second_surname' => 'AcademySecondSurname',
+                'birthdate' => '2024-01-01',
+                'biological_gender' => 'Masculino',
+            ]);
+
+            $cuentaGlobal->assignRole($adminRole);
+
             $user->save();
         }
 

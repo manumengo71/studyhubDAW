@@ -159,8 +159,7 @@
                                             class="justify-center flex">
                                             @csrf
                                             <button type="submit"
-                                                class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-3 rounded">Salir
-                                                del curso</button>
+                                                class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-8 rounded">Salir</button>
                                         </form>
                                     </div>
 
@@ -170,7 +169,7 @@
                                             @csrf
                                             @method('PUT')
                                             <button type="submit"
-                                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-8 rounded">VALIDAR</button>
+                                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-6 rounded">VALIDAR</button>
                                         </form>
                                     </div>
                                 </div>
