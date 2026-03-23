@@ -29,6 +29,19 @@ services:
             DB_PASSWORD: root
         volumes:
             - ./storage:/var/www/html/storage # Mapea la carpeta de almacenamiento de Laravel
+            - ./php.ini:/usr/local/etc/php/conf.d/uploads.ini # Mapea el archivo de configuración de PHP
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: mi-phpmyadmin
+        ports:
+            - "8080:80"
+        depends_on:
+            - mysql
+        environment:
+            PMA_HOST: mi-mysql
+            PMA_PORT: 3306
+            PMA_ARBITRARY: 1
 
 volumes:
     mysql_data:

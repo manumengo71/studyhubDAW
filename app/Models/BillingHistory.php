@@ -32,7 +32,7 @@ class BillingHistory extends Model implements HasMedia
 
     public function billing()
     {
-        return $this->belongsTo(BillingInformation::class, 'buyer_id');
+        return $this->belongsTo(BillingInformation::class, 'buyer_id', 'user_id');
     }
 
 

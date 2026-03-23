@@ -1,11 +1,16 @@
 # Usa una imagen base de PHP con Apache
 FROM php:8.2.4-apache
 
-# Instala dependencias necesarias para Laravel y habilita la extensión exif de PHP
+# Instala dependencias necesarias para Laravel y habilita la extensión exif y gd de PHP
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     unzip \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
     && docker-php-ext-install zip pdo_mysql exif \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd \
     && a2enmod rewrite
 
 # Establece el directorio de trabajo dentro del contenedor
