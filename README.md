@@ -1,66 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://i.postimg.cc/4yKH00Nd/9f3469e4-2cf4-44e0-bf77-bc28b015f363.jpg" alt="StudyHub-App" width="200">
 </p>
 
-## About Laravel
+# StudyHub - Plataforma de Compra/Creación/Realización de Cursos y Panel Administrador
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 1. Introducción
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Este repositorio contiene el código fuente de StudyHub, una aplicación web diseñada para la compra de cursos de diferentes temáticas, junto con un panel administrador completo para gestionar la plataforma.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 2. Datos generales del Proyecto
 
-## Learning Laravel
+### 2.1 Título del proyecto
+StudyHub-App
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 2.2 Descripción del proyecto
+StudyHub es una aplicación que permite a los usuarios comprar, crear y realizar cursos sobre diversas temáticas, además de proporcionar un panel administrador para gestionar la plataforma.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2.3 Necesidades a cubrir
+La plataforma permite a los usuarios buscar, comprar y realizar cursos en línea, ofreciendo flexibilidad y comodidad en el aprendizaje.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+EJ: Una persona quiere realizar un curso online de NextJS, así que para ello accede a nuestra plataforma y compra un curso, pudiendo elegir entre todos los disponibles. La persona realiza el curso.
+Acude a nuestra web debido a su sencillez y ser online (no es presencial, por lo que tiene total control de horas y evita la movilidad). 
 
-## Laravel Sponsors
+### 2.3 Entorno Tecnológico del proyecto
+- Laravel
+- Blade
+- Tailwind CSS
+- MySQL
+- Apache
+- PHP
+- npm
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 2.4 Software
+- Visual Studio Code
+- Laragon
+- Docker
 
-### Premium Partners
+## 3. Descripción del proyecto
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+StudyHub es una plataforma completa que incluye las siguientes características:
 
-## Contributing
+- **Autenticación**: Los usuarios pueden registrarse e iniciar sesión en la plataforma, junto con todo lo relacionado con ello y lo que implica (Recuperar contraseña, eliminar cuenta...).
+- **Panel de usuario**: Cada usuario tiene un perfil personal donde pueden ver y actualizar su información, así como administrar su cuenta. También tienen una sección donde podrán administrar y realizar los cursos creados y comprados.
+- **Compra de cursos**: Los usuarios pueden explorar, comprar y realizar cursos de diferentes temáticas desde el marketplace integrado.
+- **Creación de cursos**: Los usuarios también tienen la posibilidad de crear sus propios cursos y administrarlos.
+- **Panel administrador**: Los administradores tienen acceso a un panel especial con funciones de administración completa, incluyendo CRUD para los diferentes modelos de datos.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3.1 Pantallas
 
-## Code of Conduct
+- **Landpage**: Página principal con información básica y enlaces de registro e inicio de sesión.
+  
+- **Auth**:
+  - Registro: Formulario de registro. Botón para ir al login.
+  - Inicio de sesión: Formulario de inicio de sesión. Botón de has olvidado contraseña para recuperarla a través de un correo electrónico.
+    
+- **Dashboard**: Panel principal con enlaces rápidos a las diferentes secciones de la plataforma.
+  
+- **Perfil**: Información del usuario y opciones de gestión de la cuenta.
+  
+- **Mis cursos**: Lista de cursos comprados y creados por el usuario.
+  - Cursos creados: Se podrán editar y desactivar/activar a través de un formulario de actualización. Se podrán agregar o eliminar lecciones. Los cursos nuevos/editados tendrán que ser validados por un administrador para su publicación.
+  - Cursos comprados: Se podrán empezar o seguir desde el último punto. Se visualizará el contenido de él.
+        - Las lecciones de cada curso podrán ser de diferentes tipos (pdf, texto, video, imágenes…). Se visualizará en un reproductor de lecciones.
+        - Se podrá descargar en forma de PDF el recibo de la compra de los cursos comprados(en otra vista).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **Marketplace**: Página para explorar y comprar cursos.
+  - En la página se podrán ver categorías y cursos, aparecerán los ultimos cursos y categorías, asi como lo mas relevantes y la posibilidad de tener una lista completa (página que los contiene a todos) de todos juntos.
+  - Desde esta página se podran crear nuevos cursos (por defecto irán desactivados hasta no completar un mínimo de información de él).
+  - Se podrá ir a la vista detallada del curso en la que aparecerá toda su información y cursos relacionados.
+  - Una vez comprado un curso se agregará a la lista en mis cursos.
+  - Se podrá filrar y buscar los cursos y categorías a través de su buscador integrado.
+    
+- **Información de pago**: Agregar/editar la tarjeta de crédito asociada a la cuenta. Historial de compras, donde se podrá ver un general de cada curso y podrá descargarase un pdf con el recibo de compra.
+  
+- **Panel administrador**: Sección exclusiva para administradores con funciones de gestión. Se tiene acceso completo a todos los datos y modelos de la aplicación y la total gestión de ellos. Métodos de validación de cursos para seguridad.
 
-## Security Vulnerabilities
+### 3.2 Tecnologías utilizadas
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+La plataforma utiliza Laravel como framework backend, Blade, JS , Tailwind CSS para el diseño, y MySQL como base de datos.
 
-## License
+### 3.3 Consideraciones adicionales
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Se utilizan layouts compartidos para mejorar la eficiencia y la consistencia del código y la interfaz de usuario.
+
+Modelo seguido:
+
+**[ruta a foto]**
+
+Puedes encontrar toda la documentación completa, junto a toda la información y lo necesario de la aplicación en **[añadir ruta]**.
+
+## 4. Instalación y despliegue
+
+### 4.1 Instalación y despliegue local:
+
+1. Clona este repositorio: `git clone https://github.com/manumengo71/StudyHub-App`
+
+2. Instala las dependencias PHP: `composer install`
+
+3. Instala las dependencias de frontend: `npm install`
+
+4. Copia el archivo `.env.example` y renómbralo a `.env`
+
+5. Genera una nueva clave de aplicación: `php artisan key:generate`
+
+6. Configura tu base de datos en el archivo `.env` (y todo lo necesario)
+
+7. Ejecuta las migraciones de la base de datos: `php artisan migrate`
+
+8. Ejecuta el Database seeder que contiene datos de prueba: `php artisan db:seed` (solo si se requieren). Si NO se requieren datos de prueba, ejecutar: `php artisan db:seed --class=DatabaseProductionSeeder` (Crea las tablas con los datos necesarios para el correcto funcionamiento de la aplicación).
+
+9. Genera un acceso directo al almacenamiento público ejecutando: `php artisan storage:link`.
+
+10. Inicia el servidor: `php artisan serve` (en caso de no utilizar alguna aplicación como laragon, xampp...)
+
+11. Visita `http://localhost:8000` en tu navegador (o la ruta utilizada por tu aplicación).
+    
+<br/>
+
+### 4.2 Instalación y despliegue con Docker (Dockerizar APP):
+
+1. Clona este repositorio: `git clone https://github.com/manumengo71/StudyHub-App`
+
+2. Ejecutar `docker-compose up --build -d` (construye las imágenes de Docker según el archivo dockerfile, inicia los contenedores en segundo plano y los deja corriendo).
+
+3. Lanzar `docker exec -it mi-contenedor-laravel /bin/bash` (Abre terminal para utilizar comandos).
+    - 3.2. Lanzar `php artisan migrate` para ejecutar las migraciones (Crear base de datos).
+    - 3.3. (SI SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed`
+    - 4.4. (SI NO SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed --class=DatabaseProductionSeeder`
+
+<br/>
+<br/>
+
+** **Versión de laravel utilizada: 10.x | Versión de PHP utilizada: 8.2.4 | Versión de MYSQL utilizada: 8.0.30 | Versión de apache utilizada: 2.4.54 | Versión de Node.js utilizada: 20.11.1** **
+
+<br/>
+
+## Creador, redes e información:
+¡Hola! Soy Manuel Cándido Mendoza González, actualmente estoy cursando el grado superior DAM (Desarrollo de aplicaciones multiplataforma) en modalidad dual y estoy realizando mi FCT y TFG. Este repositorio incluye todo mi trabajo para el proyecto del TFG. ¡Espero que os guste!
+<br/><br/>
+Hecho con cariño ❤️.
+
+<a href="https://www.linkedin.com/in/manuelcandidomendozagonzalez" target="_blank">
+    <img src="https://img.shields.io/badge/-LinkedIn-blue?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+</a>
+
+<a href="https://github.com/manumengo71" target="_blank">
+    <img src="https://img.shields.io/badge/-GitHub-black?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+</a>
