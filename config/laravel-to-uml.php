@@ -5,10 +5,10 @@ return [
      * Default route to see the UML diagram.
      */
     'route' => '/uml',
-    
+
     /**
      * You can turn on or off the indexing of specific types
-     * of classes. By default, LTU processes only controllers 
+     * of classes. By default, LTU processes only controllers
      * and models.
      */
     'casts'         => false,
@@ -36,8 +36,8 @@ return [
      * For more information: https://github.com/skanaar/nomnoml
      */
     'style' => [
-        'background' => '#071013',
-        'stroke'     => '#EBEBEB',
+        'stroke' => '#071013',
+        'background'     => '#EBEBEB',
         'arrowSize'  => 1,
         'bendSize'   => 0.3,
         'direction'  => 'down',

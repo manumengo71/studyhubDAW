@@ -131,6 +131,23 @@ Puedes encontrar toda la documentación completa, junto a toda la información y
 <br/>
 <br/>
 
+<hr/>
+
+### Credenciales inicio sesión:
+
+* **Si la base de datos se ha migrado CON datos de prueba:** *
+1. En la sección "Iniciar sesión", ingrese la siguiente información:
+    - username -> admin
+    - password -> 1234567890
+
+* **Si la base de datos se ha migrado SIN datos de prueba:** *
+2. En la sección "Crear cuenta", ingrese la siguiente información para establecer una cuenta de administrador con todos los permisos necesarios. Se creará tambien la cuenta global de la aplicación:
+    - email -> hola.studyhubapp.com
+    - username -> studyhub-app-admin
+    - password -> adminstudyhub-app
+
+<hr/>
+
 ** **Versión de laravel utilizada: 10.x | Versión de PHP utilizada: 8.2.4 | Versión de MYSQL utilizada: 8.0.30 | Versión de apache utilizada: 2.4.54 | Versión de Node.js utilizada: 20.11.1** **
 
 <br/>
