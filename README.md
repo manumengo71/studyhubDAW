@@ -85,9 +85,9 @@ Se utilizan layouts compartidos para mejorar la eficiencia y la consistencia del
 
 Modelo seguido:
 
-**[ruta a foto]**
+**![Modelo completo](https://github.com/manumengo71/StudyHub-App/blob/develop/DocumentacionAPP/Diagramas/modelocompleto.png)**
 
-Puedes encontrar toda la documentación completa, junto a toda la información y lo necesario de la aplicación en **[añadir ruta]**.
+Puedes encontrar toda la documentación completa, junto a toda la información y lo necesario de la aplicación en **[Documentación APP](https://github.com/manumengo71/StudyHub-App/tree/develop/DocumentacionAPP)**.
 
 ## 4. Instalación y despliegue
 
