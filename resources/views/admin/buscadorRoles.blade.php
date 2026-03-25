@@ -9,7 +9,7 @@
         </div>
 
         <div class="flex flex-col md:flex-row justify-between items-center md:ms-10 md:me-10">
-            <form action="{{ route('roles.search') }}" class="flex-1 m-4">
+            <form action="{{ route('admin.roles.search') }}" class="flex-1 m-4">
                 <div class="flex flex-col md:flex-row rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
                     <input type="search" name="search"
                         class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
@@ -49,7 +49,7 @@
                 </div>
             </form>
 
-            <form action="{{ route('createRole') }}" class="mt-4 md:-mt-16" method="GET">
+            <form action="{{ route('admin.createRole') }}" class="mt-4 md:-mt-16" method="GET">
                 <x-success-button class="">
                     {{ __('Nuevo Rol') }}
                 </x-success-button>

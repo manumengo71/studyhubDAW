@@ -9,7 +9,7 @@
     <x-slot name="slot">
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('category.edit', $category->id) }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('admin.category.edit', $category->id) }}" method="post" enctype="multipart/form-data">
                     @method('PATCH')
                     @csrf
                     <div class="mb-5">

@@ -8,7 +8,7 @@
     <x-slot name="slot">
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('roles.edit', $role->id) }}" method="post">
+                <form action="{{ route('admin.roles.edit', $role->id) }}" method="post">
                     @method('PATCH')
                     @csrf
                     <div class="mb-5">

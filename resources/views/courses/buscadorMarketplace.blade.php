@@ -1,39 +1,40 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Marketplace') }}
-        </h2>
+        <h2 class="page-title">{{ __('Marketplace') }}</h2>
     </x-slot>
 
-    <div class="flex flex-col md:flex-row justify-between items-center md:ms-10 md:me-10">
-        <form action="{{ route('marketplace.search') }}" class="flex-1 m-4">
-            <div class="flex flex-col md:flex-row rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
-                <input type="search" name="search"
-                    class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
-                    placeholder="🔎 | Buscar..." x-model="search" />
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-                <button class="m-2 rounded px-4 py-2 ms-4 font-semibold text-gray-100"
-                    :class="(search) ? 'bg-indigo-500' : 'bg-indigo-500'">
-                    Buscar</button>
-            </div>
-            <div class="flex flex-wrap mt-4">
-                <p class="text-gray-600 font-semibold me-4 flex items-center">Filtrar por: </p>
-                <x-checkbox-filter id="solocursos" name="solocursos" label="Solo Cursos" :value="$input['solocursos'] ?? false ? 'checked' : ''" />
-                {{-- <label class="flex items-center mr-4">
-                    <input type="checkbox" name="solocursos" class="form-checkbox"
-                        {{ $input['solocursos'] ?? false ? 'checked' : '' }}>
-                    <span class="ml-2">Solo cursos</span>
-                </label> --}}
-                <x-checkbox-filter id="solocategorias" name="solocategorias" label="Solo Categorias"
-                    :value="$input['solocategorias'] ?? false ? 'checked' : ''" />
-                <x-checkbox-filter id="nombre" name="nombre" label="Nombre" :value="$input['nombre'] ?? false ? 'checked' : ''" />
-                <x-checkbox-filter id="descripcion" name="descripcion" label="Descripción" :value="$input['descripcion'] ?? false ? 'checked' : ''" />
+        {{-- Search Bar --}}
+        <div class="bg-white rounded-2xl shadow-card p-6 mb-8 animate-fade-in">
+            <form action="{{ route('marketplace.search') }}" class="space-y-4">
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="flex-1 relative">
+                        <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="search" name="search"
+                            class="form-input-modern !pl-12"
+                            placeholder="Buscar cursos, categorías..."
+                            value="{{ $input['search'] ?? '' }}" />
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        Buscar
+                    </button>
+                </div>
 
-                <div class="flex flex-wrap md:flex-nowrap">
-                    <label class="flex items-center mr-4">
-                        <select name="idioma"
-                            class="form-select block w-full mt-1 rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
-                            <option value="0">Ninguna idioma</option>
+                {{-- Filters --}}
+                <div class="flex flex-wrap items-center gap-3 pt-3 border-t border-surface-100">
+                    <span class="text-sm font-medium text-surface-600">Filtrar:</span>
+                    
+                    <x-checkbox-filter id="solocursos" name="solocursos" label="Solo Cursos" :value="$input['solocursos'] ?? false ? 'checked' : ''" />
+                    <x-checkbox-filter id="solocategorias" name="solocategorias" label="Solo Categorías" :value="$input['solocategorias'] ?? false ? 'checked' : ''" />
+                    <x-checkbox-filter id="nombre" name="nombre" label="Nombre" :value="$input['nombre'] ?? false ? 'checked' : ''" />
+                    <x-checkbox-filter id="descripcion" name="descripcion" label="Descripción" :value="$input['descripcion'] ?? false ? 'checked' : ''" />
+
+                    <div class="flex flex-wrap gap-2 ml-auto">
+                        <select name="idioma" class="form-input-modern !py-2 !text-xs !rounded-lg min-w-[130px]">
+                            <option value="0">Cualquier idioma</option>
                             @foreach ($languages as $language)
                                 <option value="{{ $language }}"
                                     {{ isset($input['idioma']) && $input['idioma'] == $language ? 'selected' : '' }}>
@@ -41,11 +42,9 @@
                                 </option>
                             @endforeach
                         </select>
-                    </label>
-                    <label class="flex items-center mr-4">
-                        <select name="categoria"
-                            class="form-select block w-full mt-1 rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
-                            <option value="0">Ninguna categoría</option>
+
+                        <select name="categoria" class="form-input-modern !py-2 !text-xs !rounded-lg min-w-[140px]">
+                            <option value="0">Cualquier categoría</option>
                             @foreach ($temas as $category)
                                 <option value="{{ $category->id }}"
                                     {{ isset($input['categoria']) && $input['categoria'] == $category->id ? 'selected' : '' }}>
@@ -53,31 +52,31 @@
                                 </option>
                             @endforeach
                         </select>
-                    </label>
-                    <label class="flex items-center mr-4">
-                        <select name="orden"
-                            class="form-select block w-full mt-1 rounded-md border border-gray-300 py-2 pr-7 focus:outline-none focus:border-indigo-500">
-                            <option value="asc"
-                                {{ isset($input['orden']) && $input['orden'] == 'asc' ? 'selected' : '' }}>Ascendente
-                            </option>
-                            <option value="desc"
-                                {{ isset($input['orden']) && $input['orden'] == 'desc' ? 'selected' : '' }}>Descendente
-                            </option>
-                        </select>
-                    </label>
-                </div>
-            </div>
-        </form>
-        <form action="{{ route('mycourses.createCourse') }}" class="-mt-14 ms-6 md:-mt-16 md:ms-0" method="GET">
-            <x-success-button class="">
-                {{ __('Nuevo Curso') }}
-            </x-success-button>
-        </form>
-    </div>
 
-    <section>
-        @yield('content')
-    </section>
+                        <select name="orden" class="form-input-modern !py-2 !text-xs !rounded-lg min-w-[120px]">
+                            <option value="asc" {{ isset($input['orden']) && $input['orden'] == 'asc' ? 'selected' : '' }}>Ascendente</option>
+                            <option value="desc" {{ isset($input['orden']) && $input['orden'] == 'desc' ? 'selected' : '' }}>Descendente</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {{-- New Course Button --}}
+        <div class="flex justify-end mb-6">
+            <a href="{{ route('mycourses.createCourse') }}" class="btn-accent">
+                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                Nuevo Curso
+            </a>
+        </div>
+
+        {{-- Content Section --}}
+        <section>
+            @yield('content')
+        </section>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -92,30 +91,13 @@
             soloCursosCheckbox.addEventListener('change', function() {
                 if (soloCursosCheckbox.checked) {
                     soloCategoriasCheckbox.checked = false;
-
                     nombreCheckbox.checked = false;
                     descripcionCheckbox.checked = false;
                     idiomaSelect.value = '0';
                     categoriaSelect.value = '0';
                     ordenSelect.value = 'asc';
-
-                    idiomaSelect.disabled = false;
-                    idiomaSelect.classList.remove('disabled');
-
-                    categoriaSelect.disabled = false;
-                    categoriaSelect.classList.remove('disabled');
-
-                    ordenSelect.disabled = false;
-                    ordenSelect.classList.remove('disabled');
-
-                    descripcionCheckbox.disabled = false;
-                    descripcionCheckbox.classList.remove('disabled');
-
-                    nombreCheckbox.disabled = false;
-                    nombreCheckbox.classList.remove('disabled');
-                }
-
-                if (soloCursosCheckbox.checked == false) {
+                    enableAll();
+                } else {
                     nombreCheckbox.checked = false;
                     descripcionCheckbox.checked = false;
                     idiomaSelect.value = '0';
@@ -128,7 +110,6 @@
             soloCategoriasCheckbox.addEventListener('change', function() {
                 if (soloCategoriasCheckbox.checked) {
                     soloCursosCheckbox.checked = false;
-
                     nombreCheckbox.checked = false;
                     descripcionCheckbox.checked = false;
                     idiomaSelect.value = '0';
@@ -136,26 +117,11 @@
                     ordenSelect.value = 'asc';
 
                     idiomaSelect.disabled = true;
-                    idiomaSelect.classList.add('disabled');
-                    idiomaSelect.value = '0';
-
                     categoriaSelect.disabled = true;
-                    categoriaSelect.classList.add('disabled');
-                    categoriaSelect.value = '0';
-
                     ordenSelect.disabled = true;
-                    ordenSelect.classList.add('disabled');
-                    ordenSelect.value = 'asc';
-
                     descripcionCheckbox.disabled = true;
-                    descripcionCheckbox.classList.add('disabled');
-                    descripcionCheckbox.checked = false;
-
                     nombreCheckbox.disabled = false;
-                    nombreCheckbox.classList.remove('disabled');
-                }
-
-                if (soloCategoriasCheckbox.checked == false) {
+                } else {
                     nombreCheckbox.checked = false;
                     disableAll();
                 }
@@ -169,10 +135,17 @@
                 ordenSelect.disabled = true;
             }
 
+            function enableAll() {
+                nombreCheckbox.disabled = false;
+                descripcionCheckbox.disabled = false;
+                idiomaSelect.disabled = false;
+                categoriaSelect.disabled = false;
+                ordenSelect.disabled = false;
+            }
+
             if (!soloCursosCheckbox.checked && !soloCategoriasCheckbox.checked) {
                 disableAll();
             }
         });
     </script>
-
 </x-app-layout>

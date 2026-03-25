@@ -66,7 +66,7 @@
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="flex items-center">
-                                                    <form action="{{ route('category.editView', $category) }}"
+                                                    <form action="{{ route('admin.category.editView', $category) }}"
                                                         method="POST" class="inline">
                                                         @csrf
                                                         @method('GET')
@@ -80,7 +80,7 @@
 
                                                 @if (!$category->deleted_at == null)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('category.activate', $category) }}"
+                                                        <form action="{{ route('admin.category.activate', $category) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
@@ -93,7 +93,7 @@
                                                     </div>
                                                 @else
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('category.destroy', $category) }}"
+                                                        <form action="{{ route('admin.category.destroy', $category) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -108,7 +108,7 @@
 
                                                 <div class="flex items-center">
                                                     <form id="deleteForm"
-                                                        action="{{ route('category.forceDestroy', $category->id) }}"
+                                                        action="{{ route('admin.category.forceDestroy', $category->id) }}"
                                                         method="POST" class="inline">
                                                         @csrf
                                                         @method('DELETE')

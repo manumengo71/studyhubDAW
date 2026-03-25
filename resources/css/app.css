@@ -1,3 +1,526 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================================
+   StudyHub Design System — Base Styles
+   ============================================ */
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+        @apply bg-surface-50 text-surface-900 font-sans;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-display font-bold tracking-tight;
+    }
+
+    /* Focus ring consistency */
+    *:focus-visible {
+        @apply outline-none ring-2 ring-primary-500/50 ring-offset-2;
+    }
+}
+
+@layer components {
+    /* ---- Stat Cards ---- */
+    .stat-card {
+        @apply bg-white rounded-2xl p-6 shadow-card hover:shadow-card-hover transition-all duration-300;
+    }
+
+    .stat-card-icon {
+        @apply w-12 h-12 rounded-xl flex items-center justify-center;
+    }
+
+    /* ---- Course Cards ---- */
+    .course-card-modern {
+        @apply bg-white rounded-2xl overflow-hidden shadow-card hover:shadow-card-hover transition-all duration-300;
+    }
+
+    .course-card-modern .course-image {
+        @apply w-full h-full object-cover group-hover:scale-105 transition-transform duration-500;
+    }
+
+    /* ---- Buttons ---- */
+    .btn-primary {
+        @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white 
+               bg-primary-600 hover:bg-primary-700 active:bg-primary-800
+               rounded-xl shadow-sm hover:shadow-md
+               transition-all duration-200 
+               focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:ring-offset-2;
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold 
+               text-surface-700 bg-white border border-surface-200 
+               hover:bg-surface-50 hover:border-surface-300 active:bg-surface-100
+               rounded-xl shadow-sm
+               transition-all duration-200 
+               focus:outline-none focus:ring-2 focus:ring-surface-400/30 focus:ring-offset-2;
+    }
+
+    .btn-accent {
+        @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white
+               bg-accent-500 hover:bg-accent-600 active:bg-accent-700
+               rounded-xl shadow-sm hover:shadow-md
+               transition-all duration-200;
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white
+               bg-danger-500 hover:bg-danger-600 active:bg-danger-600
+               rounded-xl shadow-sm transition-all duration-200;
+    }
+
+    .btn-ghost {
+        @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium 
+               text-surface-600 hover:text-surface-900 hover:bg-surface-100
+               rounded-xl transition-all duration-200;
+    }
+
+    .btn-icon {
+        @apply inline-flex items-center justify-center w-10 h-10 
+               text-surface-500 hover:text-surface-700 hover:bg-surface-100 
+               rounded-xl transition-all duration-200;
+    }
+
+    /* ---- Data Tables ---- */
+    .data-table {
+        @apply bg-white rounded-2xl shadow-card overflow-hidden;
+    }
+
+    .data-table-header {
+        @apply px-6 py-4 flex items-center justify-between border-b border-surface-100;
+    }
+
+    .data-table th {
+        @apply px-6 py-3.5 text-left text-xs font-semibold text-surface-500 uppercase tracking-wider bg-surface-50;
+    }
+
+    .data-table td {
+        @apply px-6 py-4 text-sm text-surface-700;
+    }
+
+    .data-table tbody tr {
+        @apply border-b border-surface-100 last:border-0 hover:bg-surface-50/50 transition-colors;
+    }
+
+    /* ---- Status Badges ---- */
+    .badge {
+        @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
+    }
+
+    .badge-active {
+        @apply bg-accent-100 text-accent-700;
+    }
+
+    .badge-inactive {
+        @apply bg-danger-100 text-danger-700;
+    }
+
+    .badge-pending {
+        @apply bg-warning-100 text-warning-600;
+    }
+
+    .badge-info {
+        @apply bg-primary-100 text-primary-700;
+    }
+
+    /* ---- Form inputs ---- */
+    .form-input-modern {
+        @apply block w-full rounded-xl border-surface-200 bg-white px-4 py-3 text-sm text-surface-900
+               placeholder:text-surface-400
+               focus:border-primary-500 focus:ring-primary-500/20
+               transition-colors duration-200;
+    }
+
+    .form-label {
+        @apply block text-sm font-medium text-surface-700 mb-1.5;
+    }
+
+    /* ---- Alert boxes ---- */
+    .alert {
+        @apply flex items-center gap-3 p-4 rounded-xl text-sm;
+    }
+
+    .alert-info {
+        @apply bg-primary-50 text-primary-800 border border-primary-200;
+    }
+
+    .alert-warning {
+        @apply bg-warning-50 text-warning-600 border border-warning-100;
+    }
+
+    .alert-success {
+        @apply bg-accent-50 text-accent-700 border border-accent-200;
+    }
+
+    .alert-danger {
+        @apply bg-danger-50 text-danger-600 border border-danger-100;
+    }
+
+    /* ---- Page sections ---- */
+    .page-header {
+        @apply mb-8;
+    }
+
+    .page-title {
+        @apply text-2xl md:text-3xl font-bold text-surface-900 tracking-tight;
+    }
+
+    .page-subtitle {
+        @apply mt-1 text-sm text-surface-500;
+    }
+
+    /* ---- Empty states ---- */
+    .empty-state {
+        @apply flex flex-col items-center justify-center py-16 px-6 text-center;
+    }
+
+    .empty-state-icon {
+        @apply w-16 h-16 rounded-2xl bg-surface-100 flex items-center justify-center mb-4;
+    }
+
+    /* ---- Progress bar ---- */
+    .progress-bar {
+        @apply h-2 bg-surface-200 rounded-full overflow-hidden;
+    }
+
+    .progress-bar-fill {
+        @apply h-full bg-accent-500 rounded-full transition-all duration-500;
+    }
+}
+
+@layer utilities {
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-primary-400;
+    }
+
+    .glass {
+        @apply bg-white/80 backdrop-blur-xl;
+    }
+}
+
+/* ---- Dropify overrides ---- */
+.dropify-wrapper {
+    border-radius: 1rem !important;
+    border: 2px dashed #e4e4e7 !important;
+}
+
+.dropify-wrapper:hover {
+    border-color: #818cf8 !important;
+}
+
+/* ============================================
+   "Comprar ahora" Button
+   ============================================ */
+.unique-button-comprar {
+    --bg: #4f46e5;
+    --hover: #4338ca;
+    --text: #fff;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--bg);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0;
+    overflow: hidden;
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.unique-button-comprar:hover {
+    background: var(--hover);
+    box-shadow: 0 4px 16px rgba(79, 70, 229, 0.35);
+}
+
+.unique-button-comprar::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.8);
+    background: #1e1b4b;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+}
+
+.unique-button-comprar:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+.unique-button-wrapper {
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 1.25rem;
+    gap: 0.5rem;
+}
+
+.unique-text {
+    transition: transform 0.3s;
+}
+
+.unique-button-comprar:hover .unique-text {
+    transform: translateX(-4px);
+}
+
+.unique-icon {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s;
+}
+
+.unique-icon svg {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}
+
+.unique-button-comprar:hover .unique-icon {
+    transform: translateX(4px);
+}
+
+/* ============================================
+   Purchase Confirmation — Datáfono Animation
+   ============================================ */
+.container-confirmation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+    gap: 1rem;
+}
+
+.container-confirmation .left-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* POS terminal card slot */
+.container-confirmation .card {
+    width: 60px;
+    height: 90px;
+    background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.container-confirmation .card-line {
+    position: absolute;
+    top: 16px;
+    left: 8px;
+    right: 8px;
+    height: 8px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 4px;
+}
+
+.container-confirmation .buttons {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+}
+
+/* POS terminal body */
+.container-confirmation .post {
+    width: 80px;
+    background: #27272a;
+    border-radius: 0 0 12px 12px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.container-confirmation .post-line {
+    width: 60%;
+    height: 4px;
+    background: #52525b;
+    border-radius: 2px;
+}
+
+.container-confirmation .screen {
+    width: 56px;
+    height: 32px;
+    background: #22c55e;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+}
+
+.container-confirmation .dollar {
+    font-weight: 800;
+    color: #fff;
+    font-size: 1.1rem;
+}
+
+.container-confirmation .numbers {
+    width: 50px;
+    height: 4px;
+    background: #3f3f46;
+    border-radius: 2px;
+}
+
+.container-confirmation .numbers-line2 {
+    width: 36px;
+    height: 4px;
+    background: #3f3f46;
+    border-radius: 2px;
+}
+
+/* Right-side success text */
+.container-confirmation .right-side {
+    opacity: 0;
+    transform: translateX(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.container-confirmation .right-side p {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #10b981;
+}
+
+/* Animate the datáfono card sliding in and showing success */
+.animate-confirmation .left-side .card {
+    animation: slideCardIn 0.8s ease forwards;
+}
+
+.animate-confirmation .right-side {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: 0.9s;
+}
+
+@keyframes slideCardIn {
+    0% {
+        transform: translateY(-40px);
+        opacity: 0;
+    }
+    60% {
+        transform: translateY(6px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   Credit Card — 3D Flip (Billing Page)
+   ============================================ */
+.card {
+    width: 300px;
+    height: 185px;
+    perspective: 900px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
+}
+
+.card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    backface-visibility: hidden;
+    padding: 1.25rem;
+    color: #fff;
+    overflow: hidden;
+}
+
+.card-front {
+    background: linear-gradient(135deg, #d4a76a 0%, #c4944a 50%, #b8862d 100%);
+    box-shadow: 0 8px 24px rgba(180, 130, 60, 0.35);
+}
+
+.card-back {
+    background: linear-gradient(135deg, #b8862d 0%, #c4944a 50%, #d4a76a 100%);
+    box-shadow: 0 8px 24px rgba(180, 130, 60, 0.35);
+    transform: rotateY(180deg);
+}
+
+.chip {
+    width: 45px;
+    height: auto;
+}
+
+.credit-card-band {
+    background: #1a1a2e;
+}
+
+.credit-card-band-small {
+    background: linear-gradient(90deg, #e0e0e0, #f5f5f5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================
+   Edit / Add Card Button
+   ============================================ */
+.BtnEditar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #fff;
+    background: #4f46e5;
+    cursor: pointer;
+    transition: background 0.25s, box-shadow 0.25s;
+}
+
+.BtnEditar:hover {
+    background: #4338ca;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+}
+
+.svgEditar {
+    width: 18px;
+    height: 18px;
+    fill: currentColor;
+}

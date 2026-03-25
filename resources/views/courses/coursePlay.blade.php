@@ -91,10 +91,10 @@
                             <select id="leccionMovil" name="leccion"
                                 class="mt-4 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500 text-black">
                                 <option class="text-black" value="0">Seleciona una lección</option>
-                                @foreach ($lessons as $lesson)
-                                    <option class="text-black" value="{{ $lesson->id }}"
-                                        {{ session('leccion') == $lesson->id ? 'selected' : '' }}>
-                                        {{ ucfirst($lesson->title) }}</option>
+                                @foreach ($lessons as $lessonItem)
+                                    <option class="text-black" value="{{ $lessonItem->id }}"
+                                        {{ session('leccion') == $lessonItem->id ? 'selected' : '' }}>
+                                        {{ ucfirst($lessonItem->title) }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -118,10 +118,10 @@
                                     <select id="leccion" name="leccion"
                                         class="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500">
                                         <option value="0">Seleciona una lección</option>
-                                        @foreach ($lessons as $lesson)
-                                            <option value="{{ $lesson->id }}"
-                                                {{ session('leccion') == $lesson->id ? 'selected' : '' }}>
-                                                {{ ucfirst($lesson->title) }}</option>
+                                        @foreach ($lessons as $lessonItem)
+                                            <option value="{{ $lessonItem->id }}"
+                                                {{ session('leccion') == $lessonItem->id ? 'selected' : '' }}>
+                                                {{ ucfirst($lessonItem->title) }}</option>
                                         @endforeach
                                     </select>
                                 </div>

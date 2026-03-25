@@ -62,7 +62,7 @@
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="flex items-center">
-                                                    <form action="{{ route('roles.editView', $role) }}" method="POST"
+                                                    <form action="{{ route('admin.roles.editView', $role) }}" method="POST"
                                                         class="inline">
                                                         @csrf
                                                         @method('GET')
@@ -76,7 +76,7 @@
 
                                                 @if (!$role->deleted_at == null)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('roles.activate', $role->id) }}"
+                                                        <form action="{{ route('admin.roles.activate', $role->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
@@ -89,7 +89,7 @@
                                                     </div>
                                                 @else
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('roles.disable', $role->id) }}"
+                                                        <form action="{{ route('admin.roles.disable', $role->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -104,7 +104,7 @@
 
                                                 <div class="flex items-center">
                                                     <form id="deleteForm"
-                                                        action="{{ route('roles.forceDestroy', ['id' => $role->id, 'guard_name' => $role->guard_name]) }}"
+                                                        action="{{ route('admin.roles.forceDestroy', ['id' => $role->id, 'guard_name' => $role->guard_name]) }}"
                                                         method="POST" class="inline">
                                                         @csrf
                                                         @method('DELETE')

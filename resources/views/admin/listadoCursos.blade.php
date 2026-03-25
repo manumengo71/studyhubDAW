@@ -111,7 +111,7 @@
 
                                                 @if ($course->deleted_at == null)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('courses.disable', $course) }}"
+                                                        <form action="{{ route('admin.courses.disable', $course) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -124,7 +124,7 @@
                                                     </div>
                                                 @else
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('courses.activate', $course->id) }}"
+                                                        <form action="{{ route('admin.courses.activate', $course->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
@@ -138,7 +138,7 @@
                                                 @endif
                                                 <div class="flex items-center">
                                                     <form id="deleteForm"
-                                                        action="{{ route('courses.delete', $course->id) }}" method="POST"
+                                                        action="{{ route('admin.courses.delete', $course->id) }}" method="POST"
                                                         class="inline">
                                                         @csrf
                                                         @method('DELETE')
@@ -168,7 +168,7 @@
                                                 </div>
                                                 @if ($course->lesson()->count() > 0)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('courses.viewCourse', $course->id) }}"
+                                                        <form action="{{ route('admin.courses.viewCourse', $course->id) }}"
                                                             method="GET" class="inline">
                                                             @csrf
                                                             @method('GET')

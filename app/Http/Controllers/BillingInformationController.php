@@ -7,13 +7,9 @@ use App\Models\BillingHistory;
 use App\Models\BillingInformation;
 use App\Models\Course;
 use App\Models\CreditCardType;
-use Barryvdh\DomPDF\Facade;
 use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-use function PHPSTORM_META\type;
-use PDF;
 
 class BillingInformationController extends Controller
 {

@@ -8,7 +8,7 @@
         </div>
 
         <div class="flex flex-col md:flex-row justify-between items-center md:ms-10 md:me-10">
-            <form action="{{ route('users.search') }}" class="flex-1 m-4">
+            <form action="{{ route('admin.users.search') }}" class="flex-1 m-4">
                 <div class="flex flex-col md:flex-row rounded borde bg-white" x-data="{ search: '{{ $input['search'] ?? '' }}' }">
                     <input type="search" name="search"
                         class="w-full rounded-md border border-gray-400 px-4 py-1 text-gray-900 focus:outline-none focus:border-indigo-500"
@@ -93,7 +93,7 @@
                 </div>
             </form>
 
-            <form action="{{ route('createUser') }}" class="mt-4 md:-mt-24" method="GET">
+            <form action="{{ route('admin.createUser') }}" class="mt-4 md:-mt-24" method="GET">
                 <x-success-button class="">
                     {{ __('Nuevo Usuario') }}
                 </x-success-button>

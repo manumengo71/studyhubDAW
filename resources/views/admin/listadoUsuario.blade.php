@@ -120,7 +120,7 @@
                                         <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                             <div class="flex">
                                                 <div class="flex items-center">
-                                                    <form action="{{ route('editUser', $user->id) }}"
+                                                    <form action="{{ route('admin.editUser', $user->id) }}"
                                                         method="POST" class="inline">
                                                         @csrf
                                                         @method('GET')
@@ -132,7 +132,7 @@
                                                 </div>
                                                 @if ($user->deleted_at == null)
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('users.disable', $user) }}" method="POST"
+                                                        <form action="{{ route('admin.users.disable', $user) }}" method="POST"
                                                             class="inline">
                                                             @csrf
                                                             @method('DELETE')
@@ -145,7 +145,7 @@
                                                     </div>
                                                 @else
                                                     <div class="flex items-center">
-                                                        <form action="{{ route('users.activate', $user->id) }}"
+                                                        <form action="{{ route('admin.users.activate', $user->id) }}"
                                                             method="POST" class="inline">
                                                             @csrf
                                                             @method('PUT')
@@ -158,7 +158,7 @@
                                                     </div>
                                                 @endif
                                                 <div class="flex items-center">
-                                                    <form id="deleteForm" action="{{ route('users.delete', $user) }}"
+                                                    <form id="deleteForm" action="{{ route('admin.users.delete', $user) }}"
                                                         method="POST" class="inline">
                                                         @csrf
                                                         @method('DELETE')

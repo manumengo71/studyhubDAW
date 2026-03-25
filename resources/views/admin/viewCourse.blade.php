@@ -81,7 +81,7 @@
                 @endif
                 <hr class="mb-4 mt-4">
                 <div class="md:hidden block">
-                    <form id="leccionFormMovil" action="{{ route('courses.viewCourse', $course->id) }}" method="GET">
+                    <form id="leccionFormMovil" action="{{ route('admin.courses.viewCourse', $course->id) }}" method="GET">
                         @method('GET')
                         @csrf
                         <div class="mb-2">
@@ -107,7 +107,7 @@
                 <div class="flex-1 p-8 overflow-hidden">
                     <div class="flex mb-4">
                         <div class="w-full pr-4">
-                            <form id="leccionForm" action="{{ route('courses.viewCourse', $course->id) }}"
+                            <form id="leccionForm" action="{{ route('admin.courses.viewCourse', $course->id) }}"
                                 method="GET">
                                 @method('GET')
                                 @csrf
@@ -155,7 +155,7 @@
                                 <div class="flex justify-between">
 
                                     <div class="w-2/4 text-center">
-                                        <form action="{{ route('listCourses') }}" method="GET"
+                                        <form action="{{ route('admin.listCourses') }}" method="GET"
                                             class="justify-center flex">
                                             @csrf
                                             <button type="submit"
@@ -164,7 +164,7 @@
                                     </div>
 
                                     <div class="w-2/4 text-right">
-                                        <form action="{{ route('courses.activate', $course->id) }}" method="POST"
+                                        <form action="{{ route('admin.courses.activate', $course->id) }}" method="POST"
                                             class="justify-center flex">
                                             @csrf
                                             @method('PUT')

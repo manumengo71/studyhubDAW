@@ -56,7 +56,7 @@
                 </form>
                 {{-- si cursos tiene alguna lección creada --}}
                 @if ($hasLessons == true)
-                    <form action="{{ route('listCourses') }}" method="GET" enctype="multipart/form-data">
+                    <form action="{{ route('admin.listCourses') }}" method="GET" enctype="multipart/form-data">
                         @csrf
                         <div class="flex justify-center mt-3">
                             <button type="submit"

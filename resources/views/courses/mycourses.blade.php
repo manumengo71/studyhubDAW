@@ -1,355 +1,245 @@
 <x-app-layout>
-    <link rel="stylesheet" href="{{ asset('css/mycourses.css') }}">
-
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Cursos') }}
-        </h2>
+        <h2 class="page-title">{{ __('Mis Cursos') }}</h2>
     </x-slot>
 
-    <div class="p-8 rounded-md w-full">
-        <div class="flex flex-col items-center justify-center pb-6 sm:flex-row sm:justify-between">
-            <div class="mb-4 sm:mb-0">
-                <h2 class="text-gray-600 font-semibold" id="titulo"></h2>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in" x-data="{ activeTab: 'comprados' }">
+
+        {{-- Page Header --}}
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-display font-bold text-surface-900" id="titulo">Mis cursos</h1>
+                <p class="mt-1 text-surface-500">Gestiona tus cursos comprados y creados.</p>
             </div>
-            <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-8">
-                <div class="mt-4 sm:mt-0 space-y-4 sm:space-y-0 sm:ml-10">
-                    <button onclick="abrirComprados()" id="botonComprados"
-                        class="button bg-indigo-500 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Cursos
-                        comprados</button>
-                    <button onclick="abrirCreados()" id="botonCreados"
-                        class="button bg-white px-4 py-2 rounded-md text-black font-semibold tracking-wide cursor-pointer">Cursos
-                        creados</button>
-                </div>
+
+            {{-- Tab Buttons --}}
+            <div class="flex items-center gap-2 mt-4 sm:mt-0 bg-surface-100 p-1 rounded-xl">
+                <button @click="activeTab = 'comprados'" id="botonComprados"
+                    :class="activeTab === 'comprados' ? 'bg-white text-surface-900 shadow-sm' : 'text-surface-500 hover:text-surface-700'"
+                    class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200">
+                    Comprados
+                </button>
+                <button @click="activeTab = 'creados'" id="botonCreados"
+                    :class="activeTab === 'creados' ? 'bg-white text-surface-900 shadow-sm' : 'text-surface-500 hover:text-surface-700'"
+                    class="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-200">
+                    Creados
+                </button>
             </div>
         </div>
-        <div id="cursos-creados">
-            <div>
-                @if ($courses->isEmpty())
-                    <div class="flex items-center flex-auto py-8 pt-0 px-9 mt-20">
-                        <div
-                            class="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-md text-yellow-700 bg-yellow-100 border border-yellow-300 w-full">
-                            <div slot="avatar">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" class="feather feather-info w-5 h-5 mx-2">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <line x1="12" y1="16" x2="12" y2="12">
-                                    </line>
-                                    <line x1="12" y1="8" x2="12.01" y2="8">
-                                    </line>
-                                </svg>
-                            </div>
-                            <div class="text-xl font-normal  max-w-full flex-initial">
-                                <div class="py-2"> Crea tu primer curso. </div>
-                            </div>
-                            <div class="flex flex-auto flex-row-reverse me-2">
-                                <a href="{{ route('mycourses.createCourse') }}" class="text-blue-800 underline">
-                                    <x-primary-button>Crear Curso</x-primary-button>
-                                </a>
-                            </div>
-                        </div>
+
+        {{-- Created Courses Tab --}}
+        <div x-show="activeTab === 'creados'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+            @if ($courses->isEmpty())
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <svg class="w-8 h-8 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
                     </div>
-                @else
-                    <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
-                            <table class="min-w-full leading-normal">
-                                <thead>
-                                    <tr>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Nombre
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Pequeña descripción
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Descripción
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Idioma
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Precio
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Fecha creación
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            Status
-                                        </th>
-                                        <th
-                                            class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                            OPCIONES
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($courses as $course)
-                                        <tr>
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <div class="flex items-center">
-                                                    <div class="flex-shrink-0 w-10 h-10">
-                                                        @if ($course->getMedia('courses_images')->count() > 0)
-                                                            <img class="w-full h-full rounded-full"
-                                                                src="{{ $course->getMedia('courses_images')->last()->getUrl() }}"
-                                                                alt="" />
-                                                        @else
-                                                            <img class="w-full h-full rounded-full"
-                                                                src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
-                                                                alt="" />
-                                                        @endif
-                                                    </div>
-                                                    <div class="ml-3">
-                                                        <p class="text-gray-900 whitespace-no-wrap">
-                                                            {{ $course->name }}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td
-                                                class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
-                                                <p class="text-gray-900 whitespace-no-wrap ">
-                                                    {{ Str::limit($course->short_description, 50) }}
-                                                </p>
-                                            </td>
-                                            <td
-                                                class="px-5 py-5 border-b border-gray-200 bg-white text-sm overflow-ellipsis overflow-hidden">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ Str::limit($course->description, 50) }}
-                                                </p>
-                                            </td>
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $course->language }}
-                                                </p>
-                                            </td>
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $course->price == 0 ? 'Gratis' : number_format($course->price, 2) . '€' }}
-                                                </p>
-                                            </td>
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <p class="text-gray-900 whitespace-no-wrap">
-                                                    {{ $course->created_at }}
-                                                </p>
-                                            </td>
-                                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                                                @if ($course->deleted_at == $course->updated_at && $course->validated === 0)
-                                                    <span
-                                                        class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                        <span aria-hidden
-                                                            class="absolute inset-0 bg-yellow-400 opacity-50 rounded-full"></span>
-                                                        <span class="relative">A VALIDAR</span>
-                                                    </span>
-                                                @elseif ($course->deleted_at == $course->updated_at && $course->validated === 1)
-                                                    <span
-                                                        class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                        <span aria-hidden
-                                                            class="absolute inset-0 bg-red-400 opacity-50 rounded-full"></span>
-                                                        <span class="relative">INACTIVO</span>
-                                                    </span>
-                                                @elseif ($course->deleted_at === null && $course->validated === 1)
-                                                    <span
-                                                        class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                        <span aria-hidden
-                                                            class="absolute inset-0 bg-green-400 opacity-50 rounded-full"></span>
-                                                        <span class="relative">ACTIVO</span>
-                                                    </span>
-                                                @elseif ($course->deleted_at !== null && $course->validated === null)
-                                                    <span
-                                                        class="relative inline-block px-3 py-1 font-semibold text-red-900 leading-tight">
-                                                        <span aria-hidden
-                                                            class="absolute inset-0 bg-red-400 opacity-50 rounded-full"></span>
-                                                        <span class="relative">INACTIVO</span>
-                                                    </span>
-                                                @endif
-
-                                            </td>
-                                            <td class="px-0 py-5 border-b border-gray-200 bg-white text-sm">
-                                                <div class="flex">
-                                                    <div class="items-center">
-                                                        <form action="{{ route('mycourses.editCourse', $course->id) }}"
-                                                            method="GET" class="inline">
-                                                            @csrf
-                                                            @method('GET')
-                                                            <button type="submit"
-                                                                class="text-red-500 hover:text-red-700 flex items-center">
-                                                                <img src="https://i.postimg.cc/d3nq626Q/edit.png"
-                                                                    class="w-8 h-8 mr-2" />
-                                                            </button>
-                                                        </form>
-                                                    </div>
-
-                                                    @if ($course->deleted_at == $course->updated_at && $course->validated === 0)
-                                                        <div class="flex items-center">
-                                                            <img src="https://i.postimg.cc/DZcnwwSX/reloj.png"
-                                                                title="El curso está pendiente de ser validado"
-                                                                class="w-8 h-8 mr-2" />
-                                                        </div>
-                                                    @elseif ($course->deleted_at == $course->updated_at && $course->validated === 1)
-                                                        <div class="flex items-center">
-                                                            <form
-                                                                action="{{ route('mycourses.activate', $course->id) }}"
-                                                                method="POST" class="inline">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <input type="hidden" name="page"
-                                                                    value="{{ request()->input('page') }}">
-                                                                <button type="submit"
-                                                                    class="text-red-500 hover:text-red-700 flex items-center">
-                                                                    <img src="https://i.postimg.cc/tg1wm3qR/check.png"
-                                                                        class="w-8 h-8 mr-2" />
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    @elseif ($course->deleted_at === null && $course->validated === 1)
-                                                        <div class="flex items-center">
-                                                            <form action="{{ route('mycourses.destroy', $course) }}"
-                                                                method="POST" class="inline">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <input type="hidden" name="page"
-                                                                    value="{{ request()->input('page') }}">
-                                                                <button type="submit"
-                                                                    class="text-red-500 hover:text-red-700 flex items-center">
-                                                                    <img src="https://i.postimg.cc/fRq1K2hg/cross.png"
-                                                                        class="w-8 h-8 mr-2" />
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    @elseif ($course->deleted_at !== null && $course->validated === null)
-                                                        <div class="flex items-center">
-                                                            <form
-                                                                action="{{ route('mycourses.validate', $course->id) }}"
-                                                                method="POST" class="inline">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <input type="hidden" name="page"
-                                                                    value="{{ request()->input('page') }}">
-                                                                <button type="submit"
-                                                                    class="text-red-500 hover:text-red-700 flex items-center">
-                                                                    <img src="https://i.postimg.cc/tg1wm3qR/check.png"
-                                                                        class="w-8 h-8 mr-2" />
-                                                                </button>
-                                                            </form>
+                    <h3 class="text-lg font-semibold text-surface-900 mb-1">No tienes cursos creados</h3>
+                    <p class="text-sm text-surface-500 mb-5">Comparte tus conocimientos creando tu primer curso.</p>
+                    <a href="{{ route('mycourses.createCourse') }}" class="btn-primary">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                        Crear curso
+                    </a>
+                </div>
+            @else
+                <div class="data-table">
+                    <div class="data-table-header">
+                        <h3 class="font-semibold text-surface-900">Cursos creados</h3>
+                        <a href="{{ route('mycourses.createCourse') }}" class="btn-primary text-xs !py-2">
+                            <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                            Nuevo curso
+                        </a>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-surface-500 uppercase tracking-wider bg-surface-50">Curso</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-surface-500 uppercase tracking-wider bg-surface-50 hidden lg:table-cell">Descripción</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-surface-500 uppercase tracking-wider bg-surface-50 hidden md:table-cell">Idioma</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-surface-500 uppercase tracking-wider bg-surface-50">Precio</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-semibold text-surface-500 uppercase tracking-wider bg-surface-50">Estado</th>
+                                    <th class="px-6 py-3.5 text-right text-xs font-semibold text-surface-500 uppercase tracking-wider bg-surface-50">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-surface-100">
+                                @foreach ($courses as $course)
+                                    <tr class="hover:bg-surface-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-10 h-10 rounded-xl overflow-hidden flex-shrink-0 bg-surface-100">
+                                                    @if ($course->getMedia('courses_images')->count() > 0)
+                                                        <img class="w-full h-full object-cover"
+                                                            src="{{ $course->getMedia('courses_images')->last()->getUrl() }}" alt="">
+                                                    @else
+                                                        <div class="w-full h-full flex items-center justify-center">
+                                                            <svg class="w-5 h-5 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
                                                         </div>
                                                     @endif
                                                 </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                                                <div>
+                                                    <p class="font-medium text-surface-900 text-sm">{{ $course->name }}</p>
+                                                    <p class="text-xs text-surface-400 mt-0.5">{{ $course->created_at->format('d/m/Y') }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 hidden lg:table-cell">
+                                            <p class="text-sm text-surface-600 line-clamp-1">{{ Str::limit($course->short_description, 50) }}</p>
+                                        </td>
+                                        <td class="px-6 py-4 hidden md:table-cell">
+                                            <span class="text-sm text-surface-600">{{ $course->language }}</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm font-semibold text-surface-900">
+                                                {{ $course->price == 0 ? 'Gratis' : number_format($course->price, 2) . '€' }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            @if ($course->deleted_at == $course->updated_at && $course->validated === 0)
+                                                <span class="badge badge-pending">A validar</span>
+                                            @elseif ($course->deleted_at == $course->updated_at && $course->validated === 1)
+                                                <span class="badge badge-inactive">Inactivo</span>
+                                            @elseif ($course->deleted_at === null && $course->validated === 1)
+                                                <span class="badge badge-active">Activo</span>
+                                            @elseif ($course->deleted_at !== null && $course->validated === null)
+                                                <span class="badge badge-inactive">Inactivo</span>
+                                            @endif
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <div class="flex items-center justify-end gap-1">
+                                                {{-- Edit --}}
+                                                <a href="{{ route('mycourses.editCourse', $course->id) }}" class="btn-icon" title="Editar">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                                </a>
+
+                                                {{-- Status Actions --}}
+                                                @if ($course->deleted_at == $course->updated_at && $course->validated === 0)
+                                                    <span class="btn-icon cursor-default" title="Pendiente de validación">
+                                                        <svg class="w-4 h-4 text-warning-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                    </span>
+                                                @elseif ($course->deleted_at == $course->updated_at && $course->validated === 1)
+                                                    <form action="{{ route('mycourses.activate', $course->id) }}" method="POST" class="inline">
+                                                        @csrf @method('PUT')
+                                                        <input type="hidden" name="page" value="{{ request()->input('page') }}">
+                                                        <button type="submit" class="btn-icon text-accent-600 hover:text-accent-700" title="Activar">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                        </button>
+                                                    </form>
+                                                @elseif ($course->deleted_at === null && $course->validated === 1)
+                                                    <form action="{{ route('mycourses.destroy', $course) }}" method="POST" class="inline">
+                                                        @csrf @method('DELETE')
+                                                        <input type="hidden" name="page" value="{{ request()->input('page') }}">
+                                                        <button type="submit" class="btn-icon text-danger-500 hover:text-danger-600" title="Desactivar">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                                                        </button>
+                                                    </form>
+                                                @elseif ($course->deleted_at !== null && $course->validated === null)
+                                                    <form action="{{ route('mycourses.validate', $course->id) }}" method="POST" class="inline">
+                                                        @csrf @method('PUT')
+                                                        <input type="hidden" name="page" value="{{ request()->input('page') }}">
+                                                        <button type="submit" class="btn-icon text-accent-600 hover:text-accent-700" title="Enviar a validación">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
-                @endif
-            </div>
-            <div class="mt-4">
-                {{ $courses->links() }}
-            </div>
+                    @if($courses->hasPages())
+                        <div class="px-6 py-4 border-t border-surface-100">
+                            {{ $courses->links() }}
+                        </div>
+                    @endif
+                </div>
+            @endif
         </div>
 
-        <div id="cursos-comprados" onclick="abrirComprados()">
+        {{-- Purchased Courses Tab --}}
+        <div x-show="activeTab === 'comprados'" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
             @if ($usersCourses->isEmpty())
-                <div class="flex items-center flex-auto py-8 pt-0 px-9 mt-20">
-                    <div
-                        class="flex justify-center items-center m-1 font-medium py-1 px-2 rounded-md text-yellow-700 bg-yellow-100 border border-yellow-300 w-full">
-                        <div slot="avatar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-info w-5 h-5 mx-2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <line x1="12" y1="16" x2="12" y2="12">
-                                </line>
-                                <line x1="12" y1="8" x2="12.01" y2="8">
-                                </line>
-                            </svg>
-                        </div>
-                        <div class="text-xl font-normal  max-w-full flex-initial">
-                            <div class="py-2"> Compra un curso para empezar la experiencia
-                                StudyHub-App. </div>
-                        </div>
-                        <div class="flex flex-auto flex-row-reverse me-2">
-                            <a href="{{ route('marketplace') }}" class="text-blue-800 underline">
-                                <x-primary-button>Ver cursos</x-primary-button>
-                            </a>
-                        </div>
+                <div class="empty-state">
+                    <div class="empty-state-icon">
+                        <svg class="w-8 h-8 text-surface-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
                     </div>
+                    <h3 class="text-lg font-semibold text-surface-900 mb-1">No tienes cursos comprados</h3>
+                    <p class="text-sm text-surface-500 mb-5">Compra un curso para empezar la experiencia StudyHub.</p>
+                    <a href="{{ route('marketplace') }}" class="btn-primary">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        Explorar marketplace
+                    </a>
                 </div>
             @else
-                <div class="flex flex-wrap xl:ms-20 lg:ms-3 sm:ms-24">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                     @foreach ($usersCourses as $userCourse)
                         @php
                             $courseUser = $coursesUsers->firstWhere('id', $userCourse->courses_id);
                         @endphp
 
                         @if ($courseUser)
-                            <div
-                                class="course-card sm:w-44 md:w-56 lg:w-64 xl:w-72 2xl:w-96 sm:me-10 sm:mb-10 mx-auto sm:mx-0">
-                                <div>
-                                    <p class="text head oculto mb-4">{{ $courseUser->name }}</p>
+                            <div class="course-card-modern animate-slide-up" style="animation-delay: {{ $loop->iteration * 0.05 }}s">
+                                {{-- Image --}}
+                                <div class="relative aspect-[4/3] overflow-hidden">
+                                    @if ($courseUser->getMedia('courses_images')->count() > 0)
+                                        <img class="course-image"
+                                             src="{{ $courseUser->getMedia('courses_images')->last()->getUrl() }}"
+                                             alt="{{ $courseUser->name }}" loading="lazy">
+                                    @else
+                                        <div class="w-full h-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                                            <svg class="w-12 h-12 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                            </svg>
+                                        </div>
+                                    @endif
+
+                                    @php
+                                        $progress = $userCourse->userCourseProgresses->first();
+                                    @endphp
+
+                                    {{-- Status Badge --}}
+                                    <div class="absolute top-3 right-3">
+                                        @if($progress && $progress->users_courses_statuses_id == 3)
+                                            <span class="badge badge-active !text-xs">Completado</span>
+                                        @elseif($progress && $progress->users_courses_statuses_id == 2)
+                                            <span class="badge badge-info !text-xs">En progreso</span>
+                                        @else
+                                            <span class="badge badge-pending !text-xs">Nuevo</span>
+                                        @endif
+                                    </div>
                                 </div>
 
-                                @if ($courseUser->getMedia('courses_images')->count() > 0)
-                                    <img class="w-44 h-44 rounded-full img mt-10"
-                                        src="{{ $courseUser->getMedia('courses_images')->last()->getUrl() }}"
-                                        alt="" />
-                                @else
-                                    <img class="w-40 h-40 img" src="https://i.postimg.cc/HkL86Lc1/sinfoto.png"
-                                        alt="" />
-                                @endif
+                                {{-- Content --}}
+                                <div class="p-5">
+                                    <h3 class="text-lg font-bold text-surface-900 line-clamp-1 mb-3">{{ $courseUser->name }}</h3>
 
-                                <div class="textBox">
-
-                                    <span></span>
-                                    <span class="px-0 py-5 mb-16 text-sm">
-                                        <form action="{{ route('mycourses.createPlay', $courseUser->id) }}"
-                                            method="GET">
-                                            @csrf
-
-                                            @php
-                                                $progress = $userCourse->userCourseProgresses->first();
-                                            @endphp
-
-                                            @if ($progress->users_courses_statuses_id == 1)
-                                                <button
-                                                    class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white"
-                                                    type="submit">
-                                                    EMPEZAR
-                                                    <div
-                                                        class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                    </div>
-                                                </button>
-                                            @elseif ($progress->users_courses_statuses_id == 2)
-                                                <input type="hidden" name="continuar" value="true">
-                                                <button
-                                                    class="group relative h-8 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white"
-                                                    type="submit">
-                                                    CONTINUAR
-                                                    <div
-                                                        class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                    </div>
-                                                </button>
-                                            @elseif ($progress->users_courses_statuses_id == 3)
-                                                <input type="hidden" name="empezarDeNuevo" value="true">
-                                                <button
-                                                    class="group relative h-12 w-32 overflow-hidden rounded-2xl bg-green-500 text-sm font-bold text-white"
-                                                    type="submit">
-                                                    EMPEZAR DE NUEVO
-                                                    <div
-                                                        class="absolute inset-0 h-full w-full scale-0 rounded-2xl transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30">
-                                                    </div>
-                                                </button>
-                                            @endif
-                                        </form>
-                                    </span>
+                                    <form action="{{ route('mycourses.createPlay', $courseUser->id) }}" method="GET">
+                                        @csrf
+                                        @if ($progress && $progress->users_courses_statuses_id == 1)
+                                            <button type="submit" class="btn-accent w-full">
+                                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                Empezar
+                                            </button>
+                                        @elseif ($progress && $progress->users_courses_statuses_id == 2)
+                                            <input type="hidden" name="continuar" value="true">
+                                            <button type="submit" class="btn-primary w-full">
+                                                <svg class="w-4 h-4 mr-1.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                                Continuar
+                                            </button>
+                                        @elseif ($progress && $progress->users_courses_statuses_id == 3)
+                                            <input type="hidden" name="empezarDeNuevo" value="true">
+                                            <button type="submit" class="btn-secondary w-full">
+                                                <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                                                Empezar de nuevo
+                                            </button>
+                                        @endif
+                                    </form>
                                 </div>
                             </div>
                         @endif
@@ -359,63 +249,25 @@
         </div>
     </div>
 
-    </div>
-
     <script>
-        const cursosCreados = document.getElementById('cursos-creados');
-        const cursosComprados = document.getElementById('cursos-comprados');
-        const titulo = document.getElementById('titulo');
-
-        cursosCreados.style.display = 'none';
-        // cursosComprados.style.display = 'none';
-        titulo.innerHTML = 'CURSOS COMPRADOS';
-
-        function abrirCreados() {
-            const cursosCreados = document.getElementById('cursos-creados');
-            const cursosComprados = document.getElementById('cursos-comprados');
-            const titulo = document.getElementById('titulo');
-            let botonCreados = document.getElementById('botonCreados');
-            let botonComprados = document.getElementById('botonComprados');
-
-            cursosCreados.style.display = 'block';
-            cursosComprados.style.display = 'none';
-            titulo.innerHTML = 'CURSOS CREADOS';
-
-            botonCreados.classList.remove('bg-white', 'text-black');
-            botonCreados.classList.add('bg-indigo-500', 'text-white');
-
-            botonComprados.classList.remove('bg-indigo-500', 'text-white');
-            botonComprados.classList.add('bg-white', 'text-black');
-        }
-
-        function abrirComprados() {
-            let botonCreados = document.getElementById('botonCreados');
-            let botonComprados = document.getElementById('botonComprados');
-
-            cursosCreados.style.display = 'none';
-            cursosComprados.style.display = 'block';
-            titulo.innerHTML = 'CURSOS COMPRADOS';
-
-            botonComprados.classList.remove('bg-white', 'text-black');
-            botonComprados.classList.add('bg-indigo-500', 'text-white');
-
-            botonCreados.classList.remove('bg-indigo-500', 'text-white');
-            botonCreados.classList.add('bg-white', 'text-black');
-        }
-    </script>
-
-    <script>
+        // Handle session-based tab opening (for redirects from edit/create)
         var abrir = @json(session('abrirCreados', false));
         var pageRecibido = @json(session('pageActual'));
 
-        if (abrir === true) {
-            if (pageRecibido !== null) {
-                window.location.href = window.location.href + '?page=' + pageRecibido;
-            } else {
-                abrirCreados();
+        document.addEventListener('alpine:init', () => {
+            if (abrir === true || window.location.href.includes('page')) {
+                // Set Alpine activeTab to 'creados'
+                setTimeout(() => {
+                    const el = document.querySelector('[x-data]');
+                    if (el && el.__x) {
+                        el.__x.$data.activeTab = 'creados';
+                    }
+                }, 50);
+
+                if (pageRecibido !== null && abrir === true) {
+                    window.location.href = window.location.href.split('?')[0] + '?page=' + pageRecibido;
+                }
             }
-        } else if (window.location.href.includes('page')) {
-            abrirCreados();
-        }
+        });
     </script>
 </x-app-layout>

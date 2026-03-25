@@ -9,7 +9,7 @@
     <x-slot name="slot">
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('storeUser') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.storeUser') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     {{-- 1 --}}
                     <div class="mb-5">

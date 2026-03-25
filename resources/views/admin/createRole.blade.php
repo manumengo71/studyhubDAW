@@ -9,7 +9,7 @@
     <x-slot name="slot">
         <div class="flex items-center justify-center p-12">
             <div class="mx-auto w-full">
-                <form action="{{ route('storeRole') }}" method="POST">
+                <form action="{{ route('admin.storeRole') }}" method="POST">
                     @csrf
                     <div class="mb-5">
                         <label for="name" class="mb-3 block text-base font-medium text-[#07074D]">
