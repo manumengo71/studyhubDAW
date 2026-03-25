@@ -142,7 +142,7 @@ Puedes encontrar toda la documentación completa, junto a toda la información y
 
 * **Si la base de datos se ha migrado SIN datos de prueba:** *
 2. En la sección "Crear cuenta", ingrese la siguiente información para establecer una cuenta de administrador con todos los permisos necesarios. Se creará tambien la cuenta global de la aplicación:
-    - email -> hola.studyhubapp.com
+    - email -> hola.studyhubapp@gmail.com
     - username -> studyhub-app-admin
     - password -> adminstudyhub-app
 
