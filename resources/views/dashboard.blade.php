@@ -68,7 +68,7 @@
 
     @if (isset($mostrarTarjeta))
         {{-- Continuar donde lo dejaste Card --}}
-        <div class="flex flex-wrap -mx-24 mb-5 hidden md:block">
+        <div class="flex flex-wrap mx-auto mb-5 hidden md:block">
             <div class="w-full max-w-full px-3 mb-6 sm:w-1/2 mx-auto">
                 <div
                     class="relative flex flex-col min-w-0 break-words bg-indigo-500 border-0 bg-clip-border rounded-2xl mb-5 draggable">
