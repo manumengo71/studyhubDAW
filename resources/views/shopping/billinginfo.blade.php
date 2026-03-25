@@ -243,19 +243,19 @@
 
 
         <div class="w-full m-10 sm:w-1/2 md:w-1/2 lg:w-1/2 xl:w-3/4 ml-12">
-            <p class="text-black bg-green-100 rounded-lg p-2">Listado de compras:</p>
+            <p class="text-surface-900 dark:text-surface-100 bg-surface-100 dark:bg-surface-800 rounded-lg p-2 font-medium">Listado de compras:</p>
 
             <div
-                class="rounded-[10px] border-[1px] border-gray-200 p-4 bg-white bg-clip-border shadow-md shadow-[#F3F3F3] dark:border-[#ffffff33] dark:!bg-navy-800 dark:text-white dark:shadow-none">
+                class="rounded-[10px] border-[1px] border-surface-200 p-4 bg-white bg-clip-border shadow-md dark:border-surface-700 dark:bg-surface-900 dark:text-white dark:shadow-none">
                 <div class="flex items-center justify-between rounded-t-3xl p-3 w-full">
-                    <div class="text-lg font-bold text-navy-700 dark:text-black">
+                    <div class="text-lg font-bold text-surface-900 dark:text-white">
                         Historial de compras:
                     </div>
                 </div>
                 @if (isset($coursesHistory))
                     @foreach ($coursesHistory as $courseHistory)
                         <div
-                            class="flex flex-col md:flex-row h-full w-full items-start justify-between rounded-md border-[1px] border-[transparent] dark:hover:border-white/20 bg-white px-3 py-[20px] transition-all duration-150 hover:border-gray-200 dark:!bg-navy-800 dark:hover:!bg-navy-700">
+                            class="flex flex-col md:flex-row h-full w-full items-start justify-between rounded-md border-[1px] border-[transparent] dark:border-surface-800 bg-white dark:bg-surface-800 px-3 py-[20px] transition-all duration-150 hover:border-surface-200 dark:hover:border-surface-600">
                             <div class="flex items-center gap-3">
                                 <div class="flex h-16 w-16 items-center justify-center">
                                     @if ($courseHistory->course->getMedia('courses_images')->count() > 0)
@@ -268,45 +268,35 @@
                                     @endif
                                 </div>
                                 <div class="flex flex-col">
-                                    <h5 class="text-base font-bold text-navy-700 dark:text-black">
+                                    <h5 class="text-base font-bold text-surface-900 dark:text-white">
                                         {{ $courseHistory->course->name }}
                                     </h5>
-                                    <p class="mt-1 text-sm font-normal text-gray-600">
+                                    <p class="mt-1 text-sm font-normal text-surface-600 dark:text-surface-400">
                                         Creado por: <span
                                             class="font-bold">{{ $courseHistory->course->owner->username }}</span>
                                     </p>
                                 </div>
                             </div>
-                            <div class="mt-4 flex items-center justify-center text-navy-700 text-gray-600">
-                                {{-- <div>
-                            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 320 512"
-                                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M311.9 260.8L160 353.6 8 260.8 160 0l151.9 260.8zM160 383.4L8 290.6 160 512l152-221.4-152 92.8z">
-                                </path>
-                            </svg>
-                        </div> --}}
+                            <div class="mt-4 flex items-center justify-center text-surface-700 dark:text-surface-300">
                                 <div
-                                    class="ml-1 hidden lg:flex items-center text-sm font-bold text-navy-700 text-gray-600">
+                                    class="ml-1 hidden lg:flex items-center text-sm font-bold text-surface-700 dark:text-surface-300">
                                     <p>| PRECIO: </p>
                                     <p class="ml-1"> {{ number_format($courseHistory->course->price, 2) . '€' }} |</p>
                                 </div>
-                                <div class="ml-2 hidden lg:flex items-center text-sm font-normal text-gray-600">
+                                <div class="ml-2 hidden lg:flex items-center text-sm font-normal text-surface-600 dark:text-surface-400">
                                     <p>Fecha de compra: </p>
                                     <p class="ml-1">
                                         {{ \Carbon\Carbon::parse($courseHistory->created_at)->format('d/m/Y') }} | </p>
                                 </div>
-                                <div class="ml-2 flex items-center text-sm font-normal dark:text-black">
-                                    <a href="{{ route('downloadPdf', ['id' => $courseHistory->id]) }}"><button
-                                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                            id="printButton">Descargar</button></a>
+                                <div class="ml-2 flex items-center text-sm font-normal">
+                                    <a href="{{ route('downloadPdf', ['id' => $courseHistory->id]) }}" class="btn-primary !text-xs !py-1.5" id="printButton">Descargar</a>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                     {{ $coursesHistory->links() }}
                 @else
-                    <p class="text-black italic">No hay historial de compras.</p>
+                    <p class="text-surface-900 dark:text-surface-100 italic">No hay historial de compras.</p>
                 @endif
             </div>
         </div>

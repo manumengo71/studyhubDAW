@@ -69,6 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/updateCourse/{id}', [App\Http\Controllers\CourseController::class, 'update'])->name('mycourses.updateCourse');
     Route::get('/course-play/{id}/{idlesson?}', [App\Http\Controllers\CourseController::class, 'createPlay'])->name('mycourses.createPlay');
     Route::get('/courses/createInfo/{id}', [App\Http\Controllers\CourseController::class, 'createInfo'])->name('mycourses.createInfo');
+    Route::get('/certificate/{id}', [App\Http\Controllers\CourseController::class, 'downloadCertificate'])->name('certificate.download');
 
     /** LECCIONES (🔐 CORREGIDO: antes NO tenían middleware auth) */
     Route::get('/createLessonStep1/{id}', [App\Http\Controllers\LessonController::class, 'createLessonStep1'])->name('createLessonStep1');

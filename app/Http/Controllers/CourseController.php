@@ -15,6 +15,7 @@ use App\Models\Lesson;
 use App\Models\User_course_progress;
 use App\Models\User_course_status;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class CourseController extends Controller
 {
@@ -328,5 +329,32 @@ class CourseController extends Controller
         $courseImage = $course->getFirstMediaUrl('courses_images');
 
         return view('courses.courseInfo')->with(['course' => $course, 'courseImage' => $courseImage]);
+    }
+
+    /**
+     * Descargar certificado de finalización del curso.
+     */
+    public function downloadCertificate(Request $request, $id)
+    {
+        $user = auth()->user();
+        $course = Course::withTrashed()->findOrFail($id);
+
+        $userCourse = User_course_progress::where('user_id', $user->id)
+            ->where('course_id', $course->id)
+            ->first();
+
+        if (!$userCourse || $userCourse->users_courses_statuses_id != 3) {
+            abort(403, 'No has completado este curso.');
+        }
+
+        // Obtener la fecha de finalización (podría ser updated_at del progreso)
+        $date = $userCourse->updated_at->format('d/m/Y');
+
+        $pdf = FacadePdf::loadView('courses.certificatePdf', compact('user', 'course', 'date'));
+        
+        // Formato horizontal para diploma
+        $pdf->setPaper('A4', 'landscape');
+
+        return $pdf->download("Certificado_{$course->name}.pdf");
     }
 }

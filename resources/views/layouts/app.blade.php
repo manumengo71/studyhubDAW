@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
+      x-data="{ darkMode: localStorage.getItem('darkMode') === 'true' || (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
+      x-init="$watch('darkMode', val => localStorage.setItem('darkMode', val))"
+      x-bind:class="{ 'dark': darkMode }">
 
 <head>
     <meta charset="utf-8">
@@ -31,8 +34,8 @@
     </style>
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-surface-50 flex flex-col">
+<body class="font-sans antialiased text-surface-900 dark:text-white bg-surface-50 dark:bg-surface-950 transition-colors duration-300">
+    <div class="min-h-screen flex flex-col">
 
         {{-- Navigation --}}
         @section('navigation')
