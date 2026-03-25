@@ -44,7 +44,7 @@ class RegisteredUserController extends Controller
             'user_id' => $user->id,
         ]);
 
-        if ($request->email == 'hola.studyhubapp.com' && $request->password == 'adminstudyhub-app' && $request->username == 'studyhub-app-admin') {
+        if ($request->email == 'hola.studyhubapp@gmail.com' && $request->password == 'adminstudyhub-app' && $request->username == 'studyhub-app-admin') {
             $adminRole = Role::where('name', 'admin')->first();
             $user->assignRole($adminRole);
 

@@ -146,6 +146,10 @@ Puedes encontrar toda la documentación completa, junto a toda la información y
     - username -> studyhub-app-admin
     - password -> adminstudyhub-app
 
+
+La cuenta global de la aplicación es muy importante para el correcto desarrollo de la aplicación ya que es la que se hace cargo de los cursos de los usuarios que eliminen su cuenta, es decir, si un usuario que ha creado un curso y este ha sido comprado por otro usuario, en caso de que el usuario que creó el curso elimine su cuenta, el curso debe seguir siendo accesible para los usuarios que lo compraron, es por ello que los cursos creados por los usuarios eliminados pasarán a ser propiedad de la cuenta global.
+
+
 <hr/>
 
 ** **Versión de laravel utilizada: 10.x | Versión de PHP utilizada: 8.2.4 | Versión de MYSQL utilizada: 8.0.30 | Versión de apache utilizada: 2.4.54 | Versión de Node.js utilizada: 20.11.1** **

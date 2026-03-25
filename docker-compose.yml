@@ -7,6 +7,7 @@ services:
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: StudyHub-App
         volumes:
             - mysql_data:/var/lib/mysql
 
@@ -17,7 +18,7 @@ services:
         container_name: mi-contenedor-laravel
         ports:
             - "8000:80"
-            - "5173:5173" # Mapea el puerto 5173 del contenedor al puerto 5173 del host
+            - "5173:5173" # Map port 5173 of the container to port 5173 of the host
         depends_on:
             - mysql
         environment:
@@ -28,8 +29,8 @@ services:
             DB_USERNAME: root
             DB_PASSWORD: root
         volumes:
-            - ./storage:/var/www/html/storage # Mapea la carpeta de almacenamiento de Laravel
-            - ./php.ini:/usr/local/etc/php/conf.d/uploads.ini # Mapea el archivo de configuración de PHP
+            - ./storage:/var/www/html/storage # Map Laravel storage folder
+            - ./php.ini:/usr/local/etc/php/conf.d/uploads.ini # Map PHP configuration file
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin

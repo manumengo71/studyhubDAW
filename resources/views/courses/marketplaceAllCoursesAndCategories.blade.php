@@ -74,7 +74,7 @@
 
     <div class="flex items-center">
         <h1 class="text-3xl font-bold text-gray-800 m-10" id="allCategories">| Todas las categorías |</h1>
-        <a href="#allCourses" class="hover:text-cyan-700 -ms-6">Ir a categorías</a>
+        <a href="#allCourses" class="hover:text-cyan-700 -ms-6">Ir a cursos</a>
     </div>
     <div class="flex flex-wrap justify-center mb-4">
         @foreach ($temas as $category)
