@@ -89,10 +89,10 @@
                             <label for="leccionMovil" class="block text-md font-medium text-white">Seleccionar
                                 lección: </label>
                             <select id="leccionMovil" name="leccion"
-                                class="mt-4 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500 text-black">
-                                <option class="text-black" value="0">Seleciona una lección</option>
+                                class="mt-4 p-2 block w-full border border-surface-600 dark:border-surface-700 bg-surface-800 dark:bg-surface-900 text-white rounded-md focus:outline-none focus:border-primary-500">
+                                <option class="text-white" value="0">Seleciona una lección</option>
                                 @foreach ($lessons as $lessonItem)
-                                    <option class="text-black" value="{{ $lessonItem->id }}"
+                                    <option class="text-white" value="{{ $lessonItem->id }}"
                                         {{ session('leccion') == $lessonItem->id ? 'selected' : '' }}>
                                         {{ ucfirst($lessonItem->title) }}</option>
                                 @endforeach
@@ -113,10 +113,10 @@
                                 @method('GET')
                                 @csrf
                                 <div class="mb-2">
-                                    <label for="leccion" class="block text-md font-medium text-gray-600">Seleccionar
+                                    <label for="leccion" class="block text-md font-medium text-surface-600 dark:text-surface-400">Seleccionar
                                         lección: </label>
                                     <select id="leccion" name="leccion"
-                                        class="mt-1 p-2 block w-full border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500">
+                                        class="mt-1 p-2 block w-full border border-surface-300 dark:border-surface-700 bg-white dark:bg-surface-900 text-surface-900 dark:text-white rounded-md focus:outline-none focus:border-primary-500">
                                         <option value="0">Seleciona una lección</option>
                                         @foreach ($lessons as $lessonItem)
                                             <option value="{{ $lessonItem->id }}"
@@ -128,13 +128,18 @@
                             </form>
                             <div>
                                 <hr class="mb-4 mt-4 border border-gray-400">
-                                <label for="archivos" class="block text-md font-medium text-gray-600">Información de la
+                                <label for="archivos" class="block text-md font-medium text-surface-600 dark:text-surface-400">Información de la
                                     lección: </label>
                                 <div class="flex flex-col mt-2">
-                                    <p class="text-sm font-semibold text-gray-600"><span
-                                            class="font-bold underline">Descripción:</span>
-                                        {{ ucfirst($lesson->subtitle) }}</p>
-                                    {{-- <p class="text-sm font-semibold text-gray-600">Nº de lección: {{ $lessons->pluck('id')->search($lesson->id) + 1 }} / {{ $lessons->count() }}</p> --}}
+                                    <p class="text-sm font-semibold text-surface-600 dark:text-surface-400">
+                                        <span class="font-bold underline">Descripción:</span>
+                                        @if($lesson)
+                                            {{ ucfirst($lesson->subtitle) }}
+                                        @else
+                                            No hay ninguna lección seleccionada.
+                                        @endif
+                                    </p>
+                                    {{-- <p class="text-sm font-semibold text-surface-600">Nº de lección: {{ $lessons->pluck('id')->search($lesson->id) + 1 }} / {{ $lessons->count() }}</p> --}}
                                 </div>
                                 <hr class="mb-4 mt-4 border border-gray-400">
                                 <label for="archivos" class="block text-md font-medium text-gray-600">Información del

@@ -15,21 +15,27 @@
             color: #1e293b;
         }
         .container {
-            width: 100%;
-            height: 100%;
-            padding: 40px;
-            box-sizing: border-box;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
             background: #ffffff;
-            border: 20px solid #4f46e5;
-            position: relative;
+            border: 15px solid #4f46e5;
         }
         .inner-border {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            bottom: 15px;
             border: 2px solid #e2e8f0;
-            width: 100%;
-            height: 100%;
-            padding: 40px;
-            box-sizing: border-box;
             text-align: center;
+            padding-top: 40px;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
         }
         .logo {
             font-size: 32px;
@@ -98,22 +104,24 @@
     <div class="container">
         <div class="watermark">StudyHub</div>
         <div class="inner-border">
-            <div class="logo">STUDYHUB</div>
-            
-            <div class="title">Certificado de Finalización</div>
-            <div class="subtitle">Otorgado oficialmente por completar exitosamente el curso</div>
-            
-            <div class="text">Se certifica que</div>
-            <div class="name">{{ mb_strtoupper($user->name . ' ' . $user->last_name) }}</div>
-            
-            <div class="text">ha completado satisfactoriamente todos los módulos y evaluaciones del curso:</div>
-            <div class="course-name">"{{ mb_strtoupper($course->name) }}"</div>
-            
-            <div class="footer">
-                <p>Fecha de finalización: <strong>{{ $date }}</strong></p>
-                <div class="signature">
-                    <strong>StudyHub Platform</strong><br>
-                    <small>Director Académico</small>
+            <div class="content-wrapper">
+                <div class="logo">STUDYHUB</div>
+                
+                <div class="title">Certificado de Finalización</div>
+                <div class="subtitle">Otorgado oficialmente por completar exitosamente el curso</div>
+                
+                <div class="text">Se certifica que</div>
+                <div class="name">{{ mb_strtoupper($user->name . ' ' . $user->last_name) }}</div>
+                
+                <div class="text">ha completado satisfactoriamente todos los módulos y evaluaciones del curso:</div>
+                <div class="course-name">"{{ mb_strtoupper($course->name) }}"</div>
+                
+                <div class="footer">
+                    <p>Fecha de finalización: <strong>{{ $date }}</strong></p>
+                    <div class="signature">
+                        <strong>StudyHub Platform</strong><br>
+                        <small>Director Académico</small>
+                    </div>
                 </div>
             </div>
         </div>
