@@ -48,17 +48,15 @@ RUN sed -i 's|APP_URL=http://localhost|APP_URL=http://localhost:8000|g' .env
 # Generate Laravel application key
 RUN php artisan key:generate
 
+# Copy the entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Set appropriate permissions
 RUN chown -R www-data:www-data /var/www/html
 
 # Expose port 80 for the Apache web server
 EXPOSE 80
 
-# Expose port 5173 for Vite development server
-EXPOSE 5173
-
-# Create the symbolic link for Laravel public storage
-RUN php artisan storage:link
-
-# Default command to start Apache and Vite development server
-CMD ["sh", "-c", "npm run dev & apache2-foreground"]
+# Use the entrypoint script
+ENTRYPOINT ["docker-entrypoint.sh"]

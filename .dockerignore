@@ -1,0 +1,14 @@
+vendor
+node_modules
+.git
+.env
+storage/*.key
+public/storage
+public/build
+.phpunit.cache
+.vscode
+.idea
+Dockerfile
+docker-compose.yml
+docker-entrypoint.sh
+000-default.conf
