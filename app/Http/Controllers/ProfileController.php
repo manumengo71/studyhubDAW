@@ -16,9 +16,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Mostrar el formulario para editar el perfil del usuario.
-     */
+    // Muestra la pagina de editar perfil
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -27,17 +25,15 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
+    // Actualiza los datos del perfil (username y email)
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
 
-        // Actualizar el campo 'username' en lugar de 'name'
+        // Actualizamos el username
         $user->username = $request->input('username');
 
-        // Resto de la lógica de actualización
+        // Si ha cambiado el email, quitamos la verificacion para que la repita
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
@@ -47,9 +43,7 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Soft delete the user's account.
-     */
+    // Desactiva la cuenta del usuario (borrado logico, se puede recuperar)
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -68,9 +62,7 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    /**
-     * Hard delete the user's account.
-     */
+    // Elimina la cuenta de forma permanente. Los cursos pasan a la cuenta global
     public function forceDelete(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -81,16 +73,16 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        // Obtener todos los cursos del usuario
+        // Cogemos todos los cursos que tenia
         $courses = Course::withTrashed()->where('owner_id', $user->id)->get();
 
-        // Obtener id del usuario StudyHub-App
+        // Buscamos la cuenta global de la app
         $academy = User::where('username', 'studyhub-app')->first();
 
-        // Modificar el owner_id de cada curso
+        // Pasamos sus cursos a la cuenta global para que no se pierdan
         foreach ($courses as $course) {
-            $course->owner_id = $academy->id; // Modificar el owner_id según sea necesario
-            $course->save(); // Guardar el curso con el nuevo owner_id
+            $course->owner_id = $academy->id;
+            $course->save();
         }
 
         $user->forceDelete();

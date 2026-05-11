@@ -6,21 +6,19 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Rutas de la aplicacion
 |--------------------------------------------------------------------------
 |
-| Rutas organizadas por secciones con middleware correctamente aplicado.
+| Aqui estan todas las rutas organizadas por secciones.
 |
 */
 
-/** RUTA PRINCIPAL */
+// Pagina principal
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-/**
- * RUTAS PARA LEGAL (públicas)
- */
+// Paginas legales (accesibles sin login)
 Route::view('/condiciones', 'legal.condiciones')->name('condiciones');
 Route::view('/ayuda', 'legal.ayudaAsistencia')->name('ayuda');
 Route::view('/politicaPrivacidad', 'legal.politicaPrivacidad')->name('privacidad');
@@ -29,15 +27,15 @@ require __DIR__ . '/auth.php';
 
 /*
 |--------------------------------------------------------------------------
-| Rutas autenticadas y verificadas
+| Rutas que necesitan estar logueado
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    /** DASHBOARD */
+    // Dashboard
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-    /** PERFIL */
+    // Perfil
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -45,19 +43,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/userprofile', [UserProfileController::class, 'update'])->name('userprofile.update');
     Route::delete('/userprofile', [ProfileController::class, 'forceDelete'])->name('userprofile.destroy');
 
-    /** MARKETPLACE */
+    // Marketplace
     Route::get('/marketplace', [App\Http\Controllers\MarketplaceController::class, 'index'])->name('marketplace');
     Route::get('/marketplace/allcoursesAndCategories', [App\Http\Controllers\MarketplaceController::class, 'createAllCoursesAndCategories'])->name('marketplace.allCoursesAndCategories');
     Route::get('/marketplace/busqueda', [App\Http\Controllers\MarketplaceController::class, 'search'])->name('marketplace.search');
     Route::post('/marketplace/comprarCurso/{id}', [App\Http\Controllers\MarketplaceController::class, 'comprarCurso'])->name('marketplace.comprarCurso');
     Route::get('/marketplace/cursosPorCategoria/{id}', [App\Http\Controllers\MarketplaceController::class, 'cursosPorCategoria'])->name('marketplace.cursosPorCategoria');
 
-    /** INFORMACIÓN DE PAGO */
+    // Informacion de pago
     Route::get('/billinginfo', [App\Http\Controllers\BillingInformationController::class, 'getInfo'])->name('billinginfo');
     Route::post('/storeCreditCard', [App\Http\Controllers\BillingInformationController::class, 'storeCreditCard'])->name('storeCreditCard');
     Route::get('/billingpdf/{id}', [App\Http\Controllers\BillingInformationController::class, 'downloadPdf'])->name('downloadPdf');
 
-    /** CURSOS */
+    // Cursos
     Route::get('/courses', [App\Http\Controllers\CourseController::class, 'index'])->name('mycourses');
     Route::put('/courses-activate/{id}', [App\Http\Controllers\CourseController::class, 'activate'])->name('mycourses.activate');
     Route::put('/course-validate/{id}', [App\Http\Controllers\CourseController::class, 'validateCourse'])->name('mycourses.validate');
@@ -71,7 +69,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/courses/createInfo/{id}', [App\Http\Controllers\CourseController::class, 'createInfo'])->name('mycourses.createInfo');
     Route::get('/certificate/{id}', [App\Http\Controllers\CourseController::class, 'downloadCertificate'])->name('certificate.download');
 
-    /** LECCIONES (🔐 CORREGIDO: antes NO tenían middleware auth) */
+    // Lecciones
     Route::get('/createLessonStep1/{id}', [App\Http\Controllers\LessonController::class, 'createLessonStep1'])->name('createLessonStep1');
     Route::post('/storeLessonStep1/{id}', [App\Http\Controllers\LessonController::class, 'storeLessonStep1'])->name('storeLessonStep1');
     Route::get('/createLessonStep2/{id}/{lessonId}', [App\Http\Controllers\LessonController::class, 'createLessonStep2'])->name('createLessonStep2');
@@ -84,18 +82,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 /*
 |--------------------------------------------------------------------------
-| Rutas de Administración
+| Rutas de Administracion (solo admins)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', function () {
         return view('admin.index');
-    })->name('index'); // accessible as admin.index AND 'admin' (alias below)
+    })->name('index');
 
-    // Backward-compatible alias
+    // Redireccion por si alguien entra a /admin/dashboard
     Route::get('/dashboard', function () { return redirect()->route('admin.index'); })->name('dashboard');
 
-    /** CATEGORÍAS */
+    // Categorias
     Route::get('/categories', [App\Http\Controllers\AdminController::class, 'listCategories'])->name('listCategories');
     Route::get('/categories/busqueda', [App\Http\Controllers\AdminController::class, 'searchCategories'])->name('categories.search');
     Route::get('/createCategory', [App\Http\Controllers\AdminController::class, 'createCategory'])->name('createCategory');
@@ -106,7 +104,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::get('/categories-edit/{category}', [App\Http\Controllers\AdminController::class, 'editCategoryView'])->name('category.editView');
     Route::patch('/categories-edit/{id}', [App\Http\Controllers\AdminController::class, 'editCategory'])->name('category.edit');
 
-    /** CURSOS */
+    // Cursos
     Route::get('/courses', [App\Http\Controllers\AdminController::class, 'listCourses'])->name('listCourses');
     Route::get('/courses/busqueda', [App\Http\Controllers\AdminController::class, 'searchCourses'])->name('courses.search');
     Route::get('/createCourse', [App\Http\Controllers\AdminController::class, 'createCourse'])->name('createCourse');
@@ -118,7 +116,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('/deleteCourse/{course}', [App\Http\Controllers\AdminController::class, 'deleteCourse'])->name('courses.delete');
     Route::get('/viewCourse/{id}', [App\Http\Controllers\AdminController::class, 'viewCourse'])->name('courses.viewCourse');
 
-    /** LECCIONES */
+    // Lecciones
     Route::get('/createLessonStep1/{id}', [App\Http\Controllers\AdminController::class, 'createLessonStep1'])->name('createLessonStep1');
     Route::get('/createLessonStep2/{id}/{lessonId}', [App\Http\Controllers\AdminController::class, 'createLessonStep2'])->name('createLessonStep2');
     Route::post('/storeLessonStep1/{id}', [App\Http\Controllers\AdminController::class, 'storeLessonStep1'])->name('storeLessonStep1');
@@ -127,7 +125,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::patch('/updateLesson/{id}', [App\Http\Controllers\AdminController::class, 'updateLesson'])->name('updateLesson');
     Route::delete('/deleteLesson/{id}', [App\Http\Controllers\AdminController::class, 'deleteLesson'])->name('deleteLesson');
 
-    /** USUARIOS */
+    // Usuarios
     Route::get('/users', [App\Http\Controllers\AdminController::class, 'listUsers'])->name('listUsers');
     Route::get('/users/busqueda', [App\Http\Controllers\AdminController::class, 'searchUsers'])->name('users.search');
     Route::get('/createUser', [App\Http\Controllers\AdminController::class, 'createUser'])->name('createUser');
@@ -138,7 +136,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
     Route::delete('/disableUser/{user}', [App\Http\Controllers\AdminController::class, 'disableUser'])->name('users.disable');
     Route::delete('/deleteUser/{user}', [App\Http\Controllers\AdminController::class, 'deleteUser'])->name('users.delete');
 
-    /** ROLES */
+    // Roles
     Route::get('/roles', [App\Http\Controllers\AdminController::class, 'listRoles'])->name('listRoles');
     Route::get('/roles/busqueda', [App\Http\Controllers\AdminController::class, 'searchRole'])->name('roles.search');
     Route::get('/createRole', [App\Http\Controllers\AdminController::class, 'createRole'])->name('createRole');

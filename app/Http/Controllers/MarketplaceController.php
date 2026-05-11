@@ -34,9 +34,7 @@ class MarketplaceController extends Controller
         return view('courses.marketplacePrincipal', compact('courses', 'temas', 'categoriasPopulares', 'languages', 'input'));
     }
 
-    /**
-     * Muestra el listado de todos los cursos y categorías.
-     */
+    // Muestra todos los cursos y categorias juntos
 
     public function createAllCoursesAndCategories(): View
     {
@@ -47,9 +45,7 @@ class MarketplaceController extends Controller
         return view('courses.marketplaceAllCoursesAndCategories', compact('courses', 'temas', 'languages', 'input'));
     }
 
-    /**
-     * Comprar un curso.
-     */
+    // Proceso de compra de un curso
     public function comprarCurso(Request $request)
     {
         $userAuth = auth()->user()->id;
@@ -83,17 +79,15 @@ class MarketplaceController extends Controller
         }
     }
 
-    /**
-     * Función para buscar cursos y categorías.
-     */
+    // Buscador de cursos y categorias con filtros
     public function search(SearchRequest $request): View
     {
         $request->safe();
 
-        /** Input */
+        // Lo que ha escrito el usuario
         $search = $request->input('search');
 
-        /** Filters */
+        // Filtros que ha marcado
         $solocursos = $request->has('solocursos');
         $solocategorias = $request->has('solocategorias');
         $porNombre = $request->has('nombre');
@@ -102,17 +96,17 @@ class MarketplaceController extends Controller
         $temas = $request->input('categoria');
         $orden = $request->input('orden');
 
-        /** Query */
+        // Preparamos las colecciones vacias para los resultados
         $coursesSearch = collect();
         $temasSearch = collect();
         $input = $request->all();
 
-        /** Boolean de combinacion válida */
+        // Controlamos que la combinacion de filtros tenga sentido
         $combinacionValida = false;
 
-        // Si está seleccionado el filtro de solo categorias
+        // Si solo quiere ver categorias
         if ($solocategorias) {
-            // Si esta seleccionado o no además el filtro de por nombre
+            // Buscamos categorias por nombre
             if ($porNombre == true || $porNombre == false) {
                 $temasSearch = CourseCategory::where('name', 'LIKE', '%' . $search . '%')->get();
                 $combinacionValida = true;
@@ -121,7 +115,7 @@ class MarketplaceController extends Controller
             }
         }
 
-        // Si está seleccionado el filtro de solo cursos
+        // Si solo quiere ver cursos
         if ($solocursos) {
             $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                 ->orWhere('short_description', 'LIKE', '%' . $search . '%')
@@ -131,19 +125,19 @@ class MarketplaceController extends Controller
                 })
                 ->get();
 
-            // Si está seleccionado o no además el filtro de por nombre
+            // Si ha marcado buscar por nombre
             if ($porNombre == true) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')->get();
                 $combinacionValida = true;
-                // Si está seleccionado o no además el filtro de por descripcion
+                // Si ha marcado buscar por descripcion
             } else if ($porDescripcion == true) {
                 $coursesSearch = Course::where('short_description', 'LIKE', '%' . $search . '%')->get();
                 $combinacionValida = true;
-                // Si está seleccionado o no además el filtro de por idioma
+                // Si ha elegido un idioma concreto
             } else if ($idioma != 0) {
                 $coursesSearch = Course::where('language', 'LIKE', '%' . $idioma . '%')->get();
                 $combinacionValida = true;
-                // Si está seleccionado o no además el filtro de por temas
+                // Si ha elegido una categoria concreta
             } else if ($temas != 0) {
                 $coursesSearch = Course::whereHas('courseCategory', function ($query) use ($temas) {
                     $query->where('id', $temas);
@@ -151,7 +145,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por nombre y por descripcion
+            // Nombre + descripcion
             if ($porNombre == true && $porDescripcion == true) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                     ->orWhere('short_description', 'LIKE', '%' . $search . '%')
@@ -159,7 +153,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por nombre y por idioma
+            // Nombre + idioma
             if ($porNombre == true && $idioma != 0) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                     ->where('language', 'LIKE', '%' . $idioma . '%')
@@ -167,7 +161,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por nombre y por temas
+            // Nombre + categoria
             if ($porNombre == true && $temas != 0) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                     ->whereHas('courseCategory', function ($query) use ($temas) {
@@ -176,7 +170,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por descripcion y por idioma
+            // Descripcion + idioma
             if ($porDescripcion == true && $idioma != 0) {
                 $coursesSearch = Course::where('short_description', 'LIKE', '%' . $search . '%')
                     ->where('language', 'LIKE', '%' . $idioma . '%')
@@ -184,7 +178,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por descripcion y por temas
+            // Descripcion + categoria
             if ($porDescripcion == true && $temas != 0) {
                 $coursesSearch = Course::where('short_description', 'LIKE', '%' . $search . '%')
                     ->whereHas('courseCategory', function ($query) use ($temas) {
@@ -193,7 +187,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por idioma y por temas
+            // Idioma + categoria
             if ($idioma != 0 && $temas != 0) {
                 $coursesSearch = Course::where('language', 'LIKE', '%' . $idioma . '%')
                     ->whereHas('courseCategory', function ($query) use ($temas) {
@@ -202,7 +196,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por nombre, por descripcion y por idioma
+            // Nombre + descripcion + idioma
             if ($porNombre == true && $porDescripcion == true && $idioma != 0) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                     ->orWhere('short_description', 'LIKE', '%' . $search . '%')
@@ -211,7 +205,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por nombre, por descripcion y por temas
+            // Nombre + descripcion + categoria
             if ($porNombre == true && $porDescripcion == true && $temas != 0) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                     ->orWhere('short_description', 'LIKE', '%' . $search . '%')
@@ -221,7 +215,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por descripcion, por idioma y por temas
+            // Nombre + idioma + categoria
             if ($porNombre == true && $idioma != 0 && $temas != 0) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                     ->where('language', 'LIKE', '%' . $idioma . '%')
@@ -231,7 +225,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por nombre, por descripcion, por idioma y por temas
+            // Todos los filtros a la vez
             if ($porDescripcion == true && $idioma != 0 && $temas != 0) {
                 $coursesSearch = Course::where('short_description', 'LIKE', '%' . $search . '%')
                     ->where('language', 'LIKE', '%' . $idioma . '%')
@@ -241,7 +235,7 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si está seleccionado o no además el filtro de por nombre, por descripcion, por idioma y por temas
+            // Descripcion + idioma + categoria
             if ($porNombre == true && $porDescripcion == true && $idioma != 0 && $temas != 0) {
                 $coursesSearch = Course::where('name', 'LIKE', '%' . $search . '%')
                     ->orWhere('short_description', 'LIKE', '%' . $search . '%')
@@ -252,41 +246,41 @@ class MarketplaceController extends Controller
                 $combinacionValida = true;
             }
 
-            // Si orden es ascendente
+            // Ordenar de A a Z
             if ($orden == 'asc') {
                 $coursesSearch = $coursesSearch->sortBy('name');
                 $combinacionValida = true;
-                // Si orden es descendente
+                // Ordenar de Z a A
             } else if ($orden == 'desc') {
                 $coursesSearch = $coursesSearch->sortByDesc('name');
                 $combinacionValida = true;
             }
 
-            // Si orden es ascendente y por nombre es true
+            // Ordenar por nombre de A a Z
             if ($orden == 'asc' && $porNombre == true) {
                 $coursesSearch = $coursesSearch->sortBy('name');
                 $combinacionValida = true;
-                // Si orden es descendente y por nombre es true
+                // Ordenar por nombre de Z a A
             } else if ($orden == 'desc' && $porNombre == true) {
                 $coursesSearch = $coursesSearch->sortByDesc('name');
                 $combinacionValida = true;
             }
 
-            // Si orden es ascendente y por descripcion es true
+            // Ordenar por descripcion de A a Z
             if ($orden == 'asc' && $porDescripcion == true) {
                 $coursesSearch = $coursesSearch->sortBy('short_description');
                 $combinacionValida = true;
-                // Si orden es descendente y por descripcion es true
+                // Ordenar por descripcion de Z a A
             } else if ($orden == 'desc' && $porDescripcion == true) {
                 $coursesSearch = $coursesSearch->sortByDesc('short_description');
                 $combinacionValida = true;
             }
 
-            // Si orden es ascendente y nombre y descripcion son true
+            // Ordenar por nombre y descripcion de A a Z
             if ($orden == 'asc' && $porNombre == true && $porDescripcion == true) {
                 $coursesSearch = $coursesSearch->sortBy('name');
                 $combinacionValida = true;
-                // Si orden es descendente y nombre y descripcion son true
+                // Ordenar por nombre y descripcion de Z a A
             } else if ($orden == 'desc' && $porNombre == true && $porDescripcion == true) {
                 $coursesSearch = $coursesSearch->sortByDesc('name');
                 $combinacionValida = true;
@@ -316,9 +310,7 @@ class MarketplaceController extends Controller
         return view('courses.marketplaceSearch', compact('coursesSearch', 'temasSearch', 'temas', 'languages', 'input'), ['alert' => $alert]);
     }
 
-    /**
-     * Click en categoría te lleva a todos los cursos con esa categoría.
-     */
+    // Al pulsar en una categoria, muestra todos los cursos de esa categoria
 
     public function cursosPorCategoria($id): View
     {

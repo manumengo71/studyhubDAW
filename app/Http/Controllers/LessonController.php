@@ -14,23 +14,19 @@ use Illuminate\Http\Request;
 
 class LessonController extends Controller
 {
-    /**
-     * Mostrar el formulario para crear el step 1 de una lección.
-     */
+    // Formulario para crear una leccion (paso 1: titulo y subtitulo)
 
     public function createLessonStep1($id): View
     {
         $curso = Course::withTrashed()->find($id);
 
-        // Verificar si existen lecciones para este curso
+        // Miramos si ya tiene alguna leccion creada
         $hasLessons = Lesson::where('courses_id', $id)->exists();
 
         return view('lesson.createLessonStep1', compact('curso', 'hasLessons'));
     }
 
-    /**
-     * Guardar el step1 de una lección en la base de datos.
-     */
+    // Guarda la leccion (paso 1: titulo y subtitulo)
     public function storeLessonStep1(StoreRequestStep1 $request, $id)
     {
 
@@ -57,9 +53,7 @@ class LessonController extends Controller
         return redirect()->route('createLessonStep2', ['id' => $courseId, 'lessonId' => $lessonId]);
     }
 
-    /**
-     * Mostrar el formulario para crear una nueva lección.
-     */
+    // Formulario para crear una leccion (paso 2: contenido)
 
     public function createLessonStep2($id, $lessonId): View
     {
@@ -68,9 +62,7 @@ class LessonController extends Controller
         return view('lesson.createLessonStep2', compact('curso', 'lessonId'));
     }
 
-    /**
-     * Guardar una nueva lección en la base de datos.
-     */
+    // Guarda el contenido de la leccion (paso 2)
     public function storeLessonStep2(StoreRequestStep2 $request, $id)
     {
 
@@ -108,9 +100,7 @@ class LessonController extends Controller
         return redirect()->route('createLessonStep1', ['id' => $courseId])->with(compact('hasLessons'));
     }
 
-    /**
-     * Mostrar el formulario para editar una lección.
-     */
+    // Muestra el formulario para editar una leccion
     public function editLesson(Request $request)
     {
         $lesson = Lesson::where('id', $request->id)->first();
@@ -124,9 +114,7 @@ class LessonController extends Controller
         ]);
     }
 
-    /**
-     * Actualizar una lección en la base de datos.
-     */
+    // Actualiza los datos de una leccion del usuario
     public function updateLesson(UpdateRequest $request)
     {
         $request->safe();
@@ -155,9 +143,7 @@ class LessonController extends Controller
         return redirect()->route('mycourses.editCourse', ['id' => $courseId]);
     }
 
-    /**
-     * Actualizar una lección en la base de datos.
-     */
+    // Actualiza una leccion desde el panel de admin
     public function updateLessonAdmin(UpdateRequest $request)
     {
         $request->safe();
@@ -176,10 +162,7 @@ class LessonController extends Controller
         return redirect()->route('admin.editCourse', ['id' => $courseId]);
     }
 
-    /**
-     * Guardar imagen
-     *
-     */
+    // Sube una imagen para el editor de contenido
     public function postMedia(PostMediaRequest $request, $courseId, $lessonId)
     {
 
@@ -201,9 +184,7 @@ class LessonController extends Controller
         }
     }
 
-    /**
-     * Eliminar una lección.
-     */
+    // Borra una leccion de forma permanente
     public function deleteLesson($id)
     {
         $lesson = Lesson::find($id);

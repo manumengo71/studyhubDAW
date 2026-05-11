@@ -11,10 +11,7 @@ class DashboardController extends Controller
         private CourseProgressService $progressService
     ) {}
 
-    /**
-     * Muestra el dashboard principal del usuario.
-     * La lógica de cálculo de progreso se ha extraído a CourseProgressService.
-     */
+    // Muestra el dashboard principal con el progreso del usuario
     public function index(): View
     {
         $user = auth()->user()->load([

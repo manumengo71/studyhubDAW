@@ -19,15 +19,13 @@ use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
 
 class CourseController extends Controller
 {
-    /**
-     * Mostrar la lista de cursos del usuario.
-     */
+    // Muestra los cursos creados y comprados del usuario
     public function index(): View
     {
         $user = auth()->user();
         $courses = Course::withTrashed()->where('owner_id', $user->id)->paginate(5);
 
-        $usersCourses = $user->usersCourses()->with('userCourseProgresses')->orderBy('created_at', 'desc')->get(); // En VisualStudio da error, pero funciona bien.
+        $usersCourses = $user->usersCourses()->with('userCourseProgresses')->orderBy('created_at', 'desc')->get(); // VSCode marca error aqui pero funciona sin problema
 
         $coursesIds = $usersCourses->pluck('courses_id')->toArray();
         $coursesUsers = Course::withTrashed()->whereIn('id', $coursesIds)->get();
@@ -38,9 +36,7 @@ class CourseController extends Controller
         return view('courses.mycourses', compact('courses', 'temas', 'user', 'usersCourses', 'coursesUsers'));
     }
 
-    /**
-     * Mostrar el formulario para crear un nuevo curso.
-     */
+    // Muestra el formulario para crear un curso nuevo
     public function create(): View
     {
         $user = auth()->user();
@@ -52,9 +48,7 @@ class CourseController extends Controller
         ]);
     }
 
-    /**
-     * Mostrar la vista del detalle del curso.
-     */
+    // Muestra la pagina con toda la info del curso (detalle)
 
     public function createDetail(CreateDetailRequest $request)
     {
@@ -63,7 +57,7 @@ class CourseController extends Controller
         $request->id;
         $user = auth()->user();
         $temas = CourseCategory::all();
-        // $courses = Course::inRandomOrder()->limit(4)->get();
+        // Sacamos cursos aleatorios que el usuario no haya comprado ya, para sugerirle otros
         $courses = Course::whereNotIn('id', function ($query) use ($user) {
             $query->select('courses_id')
                 ->from('users_courses')
@@ -83,18 +77,14 @@ class CourseController extends Controller
         ]);
     }
 
-    /**
-     * Mostrar la vista del reproductor del curso.
-     */
+    // Carga el reproductor del curso con sus lecciones
 
     public function createPlay(CreatePlayRequest $request): View
     {
         $course = Course::withTrashed()->find($request->id);
         $lessons = Lesson::where('courses_id', $course->id)->get();
 
-        /**
-         * Inicializa la variable $lesson en null.
-         */
+        // Empezamos sin leccion seleccionada
         $lesson = null;
         $data = null;
 
@@ -111,16 +101,12 @@ class CourseController extends Controller
             $userCourse->save();
         }
 
-        /**
-         * Si el request trae una lección, se guarda en la sesión.
-         */
+        // Si viene una leccion en la peticion, la guardamos en sesion y actualizamos el progreso
         if (!$request->input('leccion') == null) {
             $lesson = Lesson::find($request->input('leccion'));
             $request->session()->put('leccion', $lesson->id);
 
-            /**
-             * Guardar el progreso del curso.
-             */
+            // Guardamos hasta donde ha llegado el usuario en el curso
 
             $user = auth()->user();
 
@@ -128,7 +114,7 @@ class CourseController extends Controller
 
             $ultimaLeccionCurso = Lesson::where('courses_id', $course->id)->orderBy('id', 'desc')->first();
 
-            // dd($userCourse->lesson_id, $ultimaLeccionCurso->id);
+
 
             if ($userCourse->lesson_id < $lesson->id) {
                 $userCourse->lesson_id = $lesson->id;
@@ -152,9 +138,7 @@ class CourseController extends Controller
             $request->session()->put('leccion', 0);
         }
 
-        /**
-         * Enviamos la vista con el curso, las lecciones y la lección actual.
-         */
+        // Devolvemos la vista con todo lo necesario para el reproductor
         return view('courses.coursePlay', [
             'course' => $course,
             'lessons' => $lessons,
@@ -163,16 +147,14 @@ class CourseController extends Controller
         ])->with('lesson', $lesson);
     }
 
-    /**
-     * Guardar un nuevo curso en la base de datos.
-     */
+    // Guarda un curso nuevo en la base de datos
     public function store(StoreRequest $request)
     {
         $request->safe();
 
-        // Se valida los datos en el request.
 
-        // Se crea el curso
+
+        // Creamos el curso con los datos del formulario
         $curso = Course::create([
             'name' => $request->input('name'),
             'short_description' => $request->input('short_description'),
@@ -184,23 +166,21 @@ class CourseController extends Controller
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
 
-        // SoftDelete del curso para que no aparezca en la lista de cursos (Se puede activar después)
+        // Lo dejamos desactivado por defecto, ya se activara cuando este listo
         $curso->delete();
 
-        // Si recibe una imagen, se guarda.
+        // Si sube una imagen la guardamos, si no le ponemos una por defecto
         if ($request->hasFile('imageCourse')) {
             $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
         } else {
             $curso->addMediaFromUrl('https://i.postimg.cc/HkL86Lc1/sinfoto.png')->toMediaCollection('courses_images');
         }
 
-        // Se redirige a la vista de crear lección para seguir con el proceso.
+        // Redirigimos al siguiente paso: crear la primera leccion
         return redirect()->route('createLessonStep1', ['id' => $curso]);
     }
 
-    /**
-     * Actualizar un curso en la base de datos.
-     */
+    // Actualiza los datos de un curso existente
     public function update(UpdateRequest $request)
     {
         $request->safe();
@@ -227,9 +207,7 @@ class CourseController extends Controller
         return redirect()->route('mycourses')->with(['abrirCreados' => $abrirCreados]);
     }
 
-    /**
-     * Mostrar el formulario para editar un curso.
-     */
+    // Muestra el formulario de edicion de un curso
     public function edit(Request $request, Course $course)
     {
         $user = auth()->user();
@@ -247,9 +225,7 @@ class CourseController extends Controller
         ]);
     }
 
-    /**
-     * Activar un curso. **Aparece en marketplace**
-     */
+    // Activa un curso para que aparezca en el marketplace (solo si esta validado)
     public function activate(Request $request)
     {
         $curso = Course::withTrashed()->find($request->id);
@@ -267,9 +243,7 @@ class CourseController extends Controller
         }
     }
 
-    /**
-     * Enviar a validar un curso. **Valida Admin en listado de cursos**
-     */
+    // Envia el curso a validacion, el admin lo revisara y decidira si lo aprueba
     public function validateCourse(Request $request)
     {
         $curso = Course::withTrashed()->find($request->id);
@@ -289,9 +263,7 @@ class CourseController extends Controller
         }
     }
 
-    /**
-     * Desactivar un curso. **Desaparece del marketplace**
-     */
+    // Desactiva un curso, deja de aparecer en el marketplace
     public function destroy(Course $course, Request $request)
     {
         if ($course->deleted_at === null && $course->validated === 1) {
@@ -310,17 +282,13 @@ class CourseController extends Controller
         }
     }
 
-    /**
-     * Comprar un curso.
-     */
+    // Comprar un curso (pendiente de completar)
     public function comprarCurso(Request $request)
     {
         $user = auth()->user();
     }
 
-    /**
-     * Mostrar la vista de información del curso.
-     */
+    // Muestra la ficha informativa del curso
 
     public function createInfo(Request $request)
     {
@@ -331,9 +299,7 @@ class CourseController extends Controller
         return view('courses.courseInfo')->with(['course' => $course, 'courseImage' => $courseImage]);
     }
 
-    /**
-     * Descargar certificado de finalización del curso.
-     */
+    // Genera y descarga el certificado en PDF cuando el usuario ha terminado el curso
     public function downloadCertificate(Request $request, $id)
     {
         $user = auth()->user();
@@ -347,12 +313,12 @@ class CourseController extends Controller
             abort(403, 'No has completado este curso.');
         }
 
-        // Obtener la fecha de finalización (podría ser updated_at del progreso)
+        // Sacamos la fecha en la que termino el curso
         $date = $userCourse->updated_at->format('d/m/Y');
 
         $pdf = FacadePdf::loadView('courses.certificatePdf', compact('user', 'course', 'date'));
         
-        // Formato horizontal para diploma
+        // Lo ponemos en horizontal que queda mejor como diploma
         $pdf->setPaper('A4', 'landscape');
 
         return $pdf->download("Certificado_{$course->name}.pdf");

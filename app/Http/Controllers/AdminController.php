@@ -34,22 +34,22 @@ class AdminController extends Controller
 
     public function searchRole(Request $request)
     {
-        /** Input */
+        // Lo que ha escrito en el buscador
         $search = $request->input('search');
 
-        /** Filtros */
+        // Filtros que ha marcado
         $porNombre = $request->input('name');
         $PorGuard_name = $request->input('guard_name');
         $porStatus = $request->input('status');
         $porOrden = $request->input('orden');
 
-        /** Inputs */
+        // Guardamos todos los campos para mantenerlos en la vista
         $input = $request->all();
 
-        /** Query */
+        // Traemos todos los roles, incluidos los borrados
         $query = CustomRole::withTrashed();
 
-        /** Aplicar filtros */
+        // Aplicamos los filtros que haya seleccionado
         if ($porNombre) {
             $query->where('name', 'LIKE', "%$search%");
         }
@@ -71,7 +71,7 @@ class AdminController extends Controller
             $query->whereNotNull('deleted_at');
         }
 
-        /** Aplicar búsqueda global */
+        // Busqueda general por todos los campos
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'LIKE', "%$search%")
@@ -79,7 +79,7 @@ class AdminController extends Controller
             });
         }
 
-        /** Aplicar orden */
+        // Ordenamos si ha elegido algun orden
         if ($porOrden) {
             if ($porOrden === 'asc' || $porOrden === 'desc') {
                 $query->orderBy('name', $porOrden)
@@ -87,32 +87,32 @@ class AdminController extends Controller
             }
         }
 
-        /** Paginar los resultados */
+        // Paginamos de 5 en 5
         $roles = $query->paginate(5)->appends($request->except('page'));
 
-        /** Devolver la vista con los resultados */
+        // Devolvemos la vista con lo que hemos encontrado
 
         return view('admin.listadoRoles', compact('roles', 'input'));
     }
 
     public function searchCategories(Request $request)
     {
-        // Barra de búsqueda
+        // Lo que ha escrito en el buscador
         $keywords = $request->input('search');
 
-        // Filtros
+        // Filtros seleccionados
         $name = $request->input('nombre');
         $descripcion = $request->input('descripcion');
         $status = $request->input('status');
         $orden = $request->input('orden');
 
-        // inputs
+        // Guardamos todo para mantener los valores en la vista
         $input = $request->all();
 
-        // Crear query de categorias con todos los categorias existentes en la base de datos (incluso las eliminadas) para poder filtrarlas correctamente en la vista listado-categorias
+        // Traemos todas las categorias, incluidas las eliminadas
         $query = CourseCategory::withTrashed();
 
-        // Aplicar filtros
+        // Aplicamos los filtros
         if ($name) {
             $query->where('name', 'LIKE', "%$keywords%");
         }
@@ -128,7 +128,7 @@ class AdminController extends Controller
             $query->whereNotNull('deleted_at');
         }
 
-        // Aplicar búsqueda global
+        // Busqueda general
         if ($keywords) {
             $query->where(function ($q) use ($keywords) {
                 $q->where('name', 'LIKE', "%$keywords%")
@@ -136,7 +136,7 @@ class AdminController extends Controller
             });
         }
 
-        //Orden de búsqueda
+        // Orden
         if ($orden) {
             if ($orden === 'asc' || $orden === 'desc') {
                 $query->orderBy('name', $orden)
@@ -144,19 +144,17 @@ class AdminController extends Controller
             }
         }
 
-        // Paginar los resultados
+        // Paginamos los resultados
         $categories = $query->paginate(5)->appends($request->except('page'));
 
-        // Devolver la vista con los resultados
+        // Devolvemos la vista
         return view('admin.listadoCategorias', compact('categories', 'input'));
     }
 
-    /**
-     * Buscar cursos
-     */
+    // Buscar cursos con filtros
     public function searchCourses(Request $request)
     {
-        // Barra de búsqueda
+        // Texto del buscador
         $keywords = $request->input('search');
 
         // Filtros
@@ -167,13 +165,13 @@ class AdminController extends Controller
         $status = $request->input('status');
         $orden = $request->input('orden');
 
-        // inputs
+        // Guardamos todos los campos
         $input = $request->all();
 
-        // Crear query de cursos con todos los cursos existentes en la base de datos (incluso los eliminados) para poder filtrarlos correctamente en la vista listado-cursos
+        // Traemos todos los cursos, incluidos los eliminados
         $query = Course::withTrashed();
 
-        // Aplicar filtros
+        // Aplicamos los filtros
         if ($name) {
             $query->where('name', 'LIKE', "%$keywords%");
         }
@@ -204,7 +202,7 @@ class AdminController extends Controller
                 ->whereRaw('deleted_at = updated_at');
         }
 
-        // Aplicar búsqueda global
+        // Busqueda general por todos los campos
         if ($keywords) {
             $query->where(function ($q) use ($keywords) {
                 $q->where('name', 'LIKE', "%$keywords%")
@@ -230,16 +228,14 @@ class AdminController extends Controller
     }
 
 
-    /**
-     * Buscar usuarios
-     */
+    // Buscar usuarios con filtros
 
     public function searchUsers(Request $request)
     {
-        // Input
+        // Texto del buscador
         $search = $request->input('search');
 
-        // Filtros
+        // Filtros seleccionados
         $porUsername = $request->input('username');
         $porEmail = $request->input('email');
         $porNombre = $request->input('nombre');
@@ -251,13 +247,13 @@ class AdminController extends Controller
         $porStatus = $request->input('status');
         $porOrden = $request->input('orden');
 
-        // Inputs
+        // Guardamos todo
         $input = $request->all();
 
-        // Query
+        // Traemos todos los usuarios, incluidos los eliminados
         $query = User::withTrashed();
 
-        // Aplicar filtros
+        // Aplicamos los filtros
         if ($porUsername) {
             $query->where('username', 'LIKE', "%$search%");
         }
@@ -311,7 +307,7 @@ class AdminController extends Controller
             $query->whereNotNull('deleted_at');
         }
 
-        // Aplicar búsqueda global
+        // Busqueda general por todos los campos
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('username', 'LIKE', "%$search%")
@@ -329,7 +325,7 @@ class AdminController extends Controller
             });
         }
 
-        // Aplicar orden
+        // Ordenamos los resultados
         if ($porOrden) {
             if ($porOrden === 'asc' || $porOrden === 'desc') {
                 $query->orderBy('username', $porOrden)
@@ -338,17 +334,15 @@ class AdminController extends Controller
             }
         }
 
-        // Paginar los resultados
+        // Paginamos
         $users = $query->paginate(5)->appends($request->except('page'));
         $roles = Role::whereHas('users')->get();
 
-        // Devolver la vista con los resultados
+        // Devolvemos la vista
         return view('admin.listadoUsuario', compact('users', 'input', 'roles'));
     }
 
-    /**
-     * Listar usuarios
-     */
+    // Listado de todos los usuarios
     public function listUsers()
     {
         $roles = Role::whereHas('users')->get();
@@ -357,9 +351,7 @@ class AdminController extends Controller
         return view('admin.listadoUsuario', compact('users', 'roles', 'input'));
     }
 
-    /**
-     * Listar cursos
-     */
+    // Listado de todos los cursos
     public function listCourses()
     {
 
@@ -369,9 +361,7 @@ class AdminController extends Controller
         return view('admin.listadoCursos', compact('courses', 'languages', 'input'));
     }
 
-    /**
-     * Listar categorías
-     */
+    // Listado de todas las categorias
     public function listCategories()
     {
         $categories = CourseCategory::withTrashed()->paginate(5);
@@ -379,9 +369,7 @@ class AdminController extends Controller
         return view('admin.listadoCategorias', compact('categories', 'input'));
     }
 
-    /**
-     * Listar roles
-     */
+    // Listado de todos los roles
     public function listRoles()
     {
         $roles = CustomRole::withTrashed()->paginate(5);
@@ -389,9 +377,7 @@ class AdminController extends Controller
         return view('admin.listadoRoles', compact('roles', 'input'));
     }
 
-    /**
-     * Crear un curso
-     */
+    // Guarda un curso nuevo
     public function storeCourse(StoreCourseRequest $request)
     {
         $request->safe();
@@ -406,11 +392,11 @@ class AdminController extends Controller
             'courses_categories_id' => $request->input('courses_categories_id'),
         ]);
 
-        // SoftDelete del curso para que no aparezca en la lista de cursos (Se puede activar después)
+        // Lo dejamos desactivado, ya se activara cuando este listo
         $curso->delete();
 
 
-        // Si recibe una imagen, se guarda.
+        // Si sube una imagen la guardamos, si no le ponemos una por defecto
         if ($request->hasFile('imageCourse')) {
             $curso->addMediaFromRequest('imageCourse')->toMediaCollection('courses_images');
         } else {
@@ -420,9 +406,7 @@ class AdminController extends Controller
         return redirect()->route('listCourses');
     }
 
-    /**
-     * Editar un curso
-     */
+    // Actualiza los datos de un curso
 
     public function updateCourse(UpdateCourseRequest $request)
     {
@@ -450,9 +434,7 @@ class AdminController extends Controller
         return redirect()->route('listCourses')->with('success', 'Curso editado correctamente');
     }
 
-    /**
-     * Redirigir a la vista para crear un curso
-     */
+    // Muestra el formulario para crear un curso
     public function createCourse(): View
     {
         $users = User::withTrashed()->get();
@@ -460,9 +442,7 @@ class AdminController extends Controller
         return view('admin.createCourse', compact('users', 'categories'));
     }
 
-    /**
-     * Redirigir a la vista para editar un curso
-     */
+    // Muestra el formulario para editar un curso
     public function editCourse(Request $request, Course $course): View
     {
         $users = user::withTrashed()->get();
@@ -480,24 +460,20 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * Redirigir a la vista para crear una categoría
-     */
+    // Muestra el formulario para crear una categoria
     public function createCategory(): View
     {
         return view('admin.createCategory');
     }
 
-    /**
-     * Crear una categoría
-     */
+    // Guarda una categoria nueva
     public function storeCategory(StoreCategoryRequest $request)
     {
         $request->safe();
 
-        // Se valida los datos en el request.
 
-        // Se crea la categoría
+
+        // Creamos la categoria con los datos del formulario
         $category = CourseCategory::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),
@@ -509,40 +485,34 @@ class AdminController extends Controller
 
         $category->delete();
 
-        // Se devuelve a listCategories con mensaje de éxito.
+        // Redirigimos al listado
         return redirect()->route('listCategories')->with('success', 'Categoría creada correctamente');
     }
 
-    /**
-     * Redirigir a la vista para crear un rol
-     */
+    // Muestra el formulario para crear un rol
     public function createRole(): View
     {
         return view('admin.createRole');
     }
 
-    /**
-     * Crear un rol
-     */
+    // Guarda un rol nuevo
     public function storeRole(StoreRoleRequest $request)
     {
         $request->safe();
 
-        // Se valida los datos en el request.
 
-        // Se crea el rol
+
+        // Creamos el rol
         $role = Role::create([
             'name' => $request->input('name'),
             'guard_name' => $request->input('guard_name'),
         ]);
 
-        // Devolver a listRoles con mensaje de éxito.
+        // Redirigimos al listado
         return redirect()->route('listRoles')->with('success', 'Rol creado correctamente');
     }
 
-    /**
-     * Redirigir a la vista para crear un usuario
-     */
+    // Muestra el formulario para crear un usuario
     public function createUser(): View
     {
         $roles = Role::all();
@@ -550,9 +520,7 @@ class AdminController extends Controller
         return view('admin.new-user', compact('roles'));
     }
 
-    /**
-     * Crear un usuario
-     */
+    // Guarda un usuario nuevo
     public function storeUser(StoreUserRequest $request)
     {
         $request->safe();
@@ -584,10 +552,7 @@ class AdminController extends Controller
         return redirect()->route('listUsers')->with('success', 'Usuario creado correctamente');
     }
 
-    /**
-     * Desactivar una categoría
-     *
-     */
+    // Desactiva una categoria (borrado logico)
     public function destroyCategory(CourseCategory $category)
     {
         $category->delete();
@@ -596,10 +561,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Activar una categoría
-     *
-     */
+    // Reactiva una categoria que estaba desactivada
     public function activateCategory(Request $category)
     {
         $category = CourseCategory::withTrashed()->find($category->category);
@@ -610,10 +572,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Eliminar una categoría
-     *
-     */
+    // Elimina una categoria de forma permanente
     public function forceDestroyCategory(Request $category)
     {
         $category = CourseCategory::withTrashed()->find($category->id);
@@ -624,10 +583,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Redirigir a la vista para editar una categoría
-     *
-     */
+    // Muestra el formulario para editar una categoria
     public function editCategoryView(Request $category): View
     {
         $category = CourseCategory::withTrashed()->find($category->category);
@@ -635,10 +591,7 @@ class AdminController extends Controller
         return view('admin.editCategory', compact('category'));
     }
 
-    /**
-     * Editar una categoría
-     *
-     */
+    // Actualiza los datos de una categoria
     public function editCategory(EditCategoryRequest $request)
     {
         $request->safe();
@@ -657,10 +610,7 @@ class AdminController extends Controller
         return redirect()->route('listCategories')->with('success', 'Categoría editada correctamente');
     }
 
-    /**
-     * Redirigir a la vista para editar un curso
-     *
-     */
+    // Muestra el formulario para editar un rol
     public function editRoleView(Request $request): View
     {
         $id = $request->id;
@@ -670,10 +620,7 @@ class AdminController extends Controller
         return view('admin.editRole', compact('role'));
     }
 
-    /**
-     * Editar un role
-     *
-     */
+    // Actualiza los datos de un rol
     public function editRole(EditRoleRequest $request)
     {
         $request->safe();
@@ -690,10 +637,7 @@ class AdminController extends Controller
         return redirect()->route('listRoles')->with('success', 'Rol editado correctamente');
     }
 
-    /**
-     * Activar un role
-     *
-     */
+    // Reactiva un rol que estaba desactivado
     public function activateRole(Request $request)
     {
         $id = $request->id;
@@ -706,10 +650,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Desactivar un role
-     *
-     */
+    // Desactiva un rol (borrado logico)
     public function destroyRole(Request $request)
     {
         $id = $request->id;
@@ -722,16 +663,13 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Eliminar un role
-     *
-     */
+    // Elimina un rol de forma permanente
     public function forceDestroyRole(Request $request)
     {
         $id = $request->id;
         $guardName = $request->guard_name;
 
-        // si el guard no existe no deja borrarlo, como hago para crear roles con guard_name diferente a web?
+        // Si no encuentra el guard no deja borrarlo
         $role = CustomRole::withTrashed()->where('id', $id)->where('guard_name', $guardName)->first();
 
         $role->forceDelete();
@@ -740,10 +678,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Redirigir a la vista para editar un curso
-     *
-     */
+    // Muestra el formulario para editar un usuario
     public function editUser($id)
     {
         $user = User::withTrashed()->findOrFail($id);
@@ -753,10 +688,7 @@ class AdminController extends Controller
         return view('admin.editUser', compact('user', 'roles', 'userProfile'));
     }
 
-    /**
-     * Editar un usuario
-     *
-     */
+    // Actualiza los datos de un usuario
     public function updateUser(UpdateUserRequest $request): RedirectResponse
     {
         $request->safe();
@@ -785,22 +717,22 @@ class AdminController extends Controller
 
         $userProfile->save();
 
-        // Verificar si 'role' está presente en los datos validados
+        // Comprobamos si le han asignado un rol
         $role = $request->validated()['role'] ?? null;
 
         if ($role) {
-            // Actualizar el rol del usuario
+            // Le asignamos el rol nuevo
             $roleName = Role::findById($role);
             $user->syncRoles([$roleName]);
         } else if ($request->input('role') == null) {
             $user->syncRoles([]);
         }
 
-        // Subir la nueva imagen
+        // Si sube nueva foto de perfil
         if ($request->hasFile('avatar')) {
-            // Eliminar la imagen actual
+            // Quitamos la que tenia antes
             $userProfile->clearMediaCollection('users_avatar');
-            // Subir la nueva imagen
+            // Subimos la nueva
             $userProfile->addMediaFromRequest('avatar')->toMediaCollection('users_avatar');
         } elseif ($request->input('avatar-remove') == 1) {
             $userProfile->clearMediaCollection('users_avatar');
@@ -809,10 +741,7 @@ class AdminController extends Controller
         return Redirect::route('listUsers')->with('success', 'Usuario actualizado correctamente');
     }
 
-    /**
-     * Activar un usuario
-     *
-     */
+    // Reactiva un usuario que estaba desactivado
     public function activateUser(Request $request)
     {
         $user = User::withTrashed()->find($request->id);
@@ -822,10 +751,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Desactivar un usuario
-     *
-     */
+    // Desactiva un usuario (borrado logico)
     public function disableUser(User $user)
     {
         $user->delete();
@@ -834,25 +760,22 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Eliminar un usuario
-     *
-     */
+    // Elimina un usuario de forma permanente. Sus cursos pasan a la cuenta global de la app
     public function deleteUser($id)
     {
-        // Obtener todos los cursos del usuario
+        // Cogemos todos los cursos que tenia este usuario
         $courses = Course::withTrashed()->where('owner_id', $id)->get();
 
-        // Obtener id del usuario StudyHub-App
+        // Buscamos la cuenta global de la aplicacion
         $academy = User::where('username', 'studyhub-app')->first();
 
-        // Modificar el owner_id de cada curso
+        // Pasamos cada curso a la cuenta global para que los compradores no los pierdan
         foreach ($courses as $course) {
-            $course->owner_id = $academy->id; // Modificar el owner_id según sea necesario
-            $course->save(); // Guardar el curso con el nuevo owner_id
+            $course->owner_id = $academy->id;
+            $course->save();
         }
 
-        // Eliminar al usuario
+        // Ahora si borramos al usuario
         $user = User::withTrashed()->find($id);
         $user->forceDelete();
 
@@ -860,10 +783,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Activar un curso
-     *
-     */
+    // Activa un curso (lo valida y lo hace visible)
     public function activateCourse(Request $request)
     {
         $course = Course::withTrashed()->find($request->id);
@@ -883,10 +803,7 @@ class AdminController extends Controller
         // return redirect()->route('listCourses');
     }
 
-    /**
-     * Desactivar un curso
-     *
-     */
+    // Desactiva un curso (deja de ser visible)
     public function disableCourse(Course $course)
     {
         $course->delete();
@@ -895,10 +812,7 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Eliminar un curso
-     *
-     */
+    // Elimina un curso de forma permanente
     public function deleteCourse($id)
     {
         $course = Course::withTrashed()->find($id);
@@ -908,23 +822,19 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Mostrar el formulario para crear el step 1 de una lección.
-     */
+    // Formulario para crear una leccion (paso 1: titulo y subtitulo)
 
     public function createLessonStep1($id): View
     {
         $curso = Course::withTrashed()->find($id);
 
-        // Verificar si existen lecciones para este curso
+        // Miramos si ya tiene alguna leccion creada
         $hasLessons = Lesson::where('courses_id', $id)->exists();
 
         return view('admin.createLessonStep1', compact('curso', 'hasLessons'));
     }
 
-    /**
-     * Guardar el step1 de una lección en la base de datos.
-     */
+    // Guarda la leccion (paso 1: titulo y subtitulo)
     public function storeLessonStep1(StoreLessonRequestStep1 $request, $id)
     {
 
@@ -951,9 +861,7 @@ class AdminController extends Controller
         return redirect()->route('admin.createLessonStep2', ['id' => $courseId, 'lessonId' => $lessonId]);
     }
 
-    /**
-     * Mostrar el formulario para crear una nueva lección.
-     */
+    // Formulario para crear una leccion (paso 2: contenido)
 
     public function createLessonStep2($id, $lessonId): View
     {
@@ -962,9 +870,7 @@ class AdminController extends Controller
         return view('admin.createLessonStep2', compact('curso', 'lessonId'));
     }
 
-    /**
-     * Guardar una nueva lección en la base de datos.
-     */
+    // Guarda el contenido de la leccion (paso 2)
     public function storeLessonStep2(StoreLessonRequestStep2 $request, $id)
     {
 
@@ -1002,9 +908,7 @@ class AdminController extends Controller
         return redirect()->route('admin.createLessonStep1', ['id' => $courseId])->with(compact('hasLessons'));
     }
 
-    /**
-     * Mostrar el formulario para editar una lección.
-     */
+    // Muestra el formulario para editar una leccion
     public function editLesson(Request $request)
     {
         $lesson = Lesson::where('id', $request->id)->first();
@@ -1018,9 +922,7 @@ class AdminController extends Controller
         ]);
     }
 
-    /**
-     * Actualizar una lección en la base de datos.
-     */
+    // Actualiza los datos de una leccion
     public function updateLesson(UpdateLessonRequest $request)
     {
         $request->safe();
@@ -1049,9 +951,7 @@ class AdminController extends Controller
         return redirect()->route('admin.editCourse', ['id' => $courseId]);
     }
 
-    /**
-     * Eliminar una lección.
-     */
+    // Borra una leccion de forma permanente
     public function deleteLesson($id)
     {
         $lesson = Lesson::find($id);
@@ -1060,24 +960,18 @@ class AdminController extends Controller
         return back();
     }
 
-    /**
-     * Visionar Curso desde Admin
-     */
+    // Vista previa de un curso desde el panel de admin
 
     public function viewCourse(ViewCourseRequest $request, $id)
     {
         $course = Course::withTrashed()->find($id);
         $lessons = Lesson::where('courses_id', $course->id)->get();
 
-        /**
-         * Inicializa la variable $lesson en null.
-         */
+        // Empezamos sin leccion seleccionada
         $lesson = null;
         $data = null;
 
-        /**
-         * Si el request trae una lección, se guarda en la sesión.
-         */
+        // Si ha seleccionado una leccion, la guardamos
         if (!$request->input('leccion') == null) {
             $lesson = Lesson::find($request->input('leccion'));
             $request->session()->put('leccion', $lesson->id);
@@ -1091,9 +985,7 @@ class AdminController extends Controller
 
 
 
-        /**
-         * Enviamos la vista con el curso, las lecciones y la lección actual.
-         */
+        // Devolvemos la vista con todo lo necesario
         return view('admin.viewCourse', [
             'course' => $course,
             'lessons' => $lessons,

@@ -7,10 +7,7 @@ use App\Models\User;
 
 class CourseProgressService
 {
-    /**
-     * Obtiene los datos del dashboard para el usuario autenticado.
-     * Reemplaza las ~70 líneas de lógica compleja del DashboardController original.
-     */
+    // Recoge toda la info que necesita el dashboard para el usuario que esta logueado
     public function getDashboardData(User $user): array
     {
         $progresses = $user->userCourseProgresses()
@@ -28,13 +25,13 @@ class CourseProgressService
             return $data;
         }
 
-        // Buscar el último curso no finalizado
+        // Buscamos el ultimo curso que no haya terminado todavia
         $activeProgress = $progresses
             ->where('users_courses_statuses_id', '!=', 3)
             ->sortByDesc('updated_at')
             ->first();
 
-        // Si no hay curso activo, usar el último finalizado
+        // Si no tiene ningun curso activo, cogemos el ultimo que haya terminado
         $latestProgress = $activeProgress 
             ?? $progresses->where('users_courses_statuses_id', 3)
                 ->sortByDesc('updated_at')
@@ -53,9 +50,7 @@ class CourseProgressService
         return $data;
     }
 
-    /**
-     * Calcula el porcentaje de progreso de un curso.
-     */
+    // Calcula el porcentaje de avance del usuario en un curso
     public function calculateProgress(Course $course, $progress): float
     {
         $lessons = $course->lesson()->pluck('id');

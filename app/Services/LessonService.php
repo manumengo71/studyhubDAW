@@ -7,10 +7,7 @@ use App\Models\Lesson;
 
 class LessonService
 {
-    /**
-     * Crear el paso 1 de una lección (título/subtítulo).
-     * Compartido entre LessonController y AdminController.
-     */
+    // Crea la leccion (paso 1): titulo y subtitulo
     public function createStep1(array $data, int $courseId): Lesson
     {
         $lesson = Lesson::create([
@@ -25,9 +22,7 @@ class LessonService
         return $lesson;
     }
 
-    /**
-     * Guardar el paso 2 de una lección (contenido/media).
-     */
+    // Guarda el contenido de la leccion (paso 2): el archivo o texto
     public function createStep2($request, int $courseId): void
     {
         $lesson = Lesson::where('courses_id', $courseId)->latest()->first();
@@ -48,9 +43,7 @@ class LessonService
         $this->invalidateCourseValidation($courseId);
     }
 
-    /**
-     * Actualizar una lección existente.
-     */
+    // Actualiza una leccion que ya existia
     public function update(array $data, int $lessonId, $request = null): Lesson
     {
         $lesson = Lesson::findOrFail($lessonId);
@@ -69,19 +62,14 @@ class LessonService
         return $lesson;
     }
 
-    /**
-     * Eliminar una lección permanentemente.
-     */
+    // Borra una leccion de forma permanente
     public function delete(int $lessonId): void
     {
         $lesson = Lesson::findOrFail($lessonId);
         $lesson->forceDelete();
     }
 
-    /**
-     * Invalidar la validación del curso cuando se modifican sus lecciones.
-     * Esto pone el curso en estado "pendiente de re-validación".
-     */
+    // Cuando se tocan las lecciones de un curso, lo marcamos como pendiente de validar otra vez
     private function invalidateCourseValidation(int $courseId): void
     {
         $course = Course::withTrashed()->find($courseId);
