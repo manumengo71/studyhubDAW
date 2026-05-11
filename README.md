@@ -2,11 +2,11 @@
   <img src="https://i.postimg.cc/4yKH00Nd/9f3469e4-2cf4-44e0-bf77-bc28b015f363.jpg" alt="StudyHub-App" width="200">
 </p>
 
-# StudyHub - Plataforma de Compra/Creación/Realización de Cursos y Panel Administrador
+# StudyHub-App - Plataforma de Compra/Creación/Realización de Cursos y Panel Administrador
 
 ## 1. Introducción
 
-Este repositorio contiene el código fuente de **StudyHub**, una aplicación web diseñada para la compra, creación y realización de cursos de diferentes temáticas, junto con un panel administrador completo para gestionar la plataforma. El proyecto se ha desarrollado siguiendo una arquitectura orientada a servicios dentro de Laravel, con un diseño moderno que incluye modo oscuro, editor de contenido enriquecido y generación de certificados en PDF.
+Este repositorio contiene el código fuente de **StudyHub-App**, una aplicación web diseñada para la compra, creación y realización de cursos de diferentes temáticas, junto con un panel administrador completo para gestionar la plataforma. El proyecto se ha desarrollado siguiendo una arquitectura orientada a servicios dentro de Laravel, con un diseño moderno que incluye modo oscuro, editor de contenido enriquecido y generación de certificados en PDF.
 
 ## 2. Datos generales del Proyecto
 
@@ -14,7 +14,7 @@ Este repositorio contiene el código fuente de **StudyHub**, una aplicación web
 StudyHub-App
 
 ### 2.2 Descripción del proyecto
-StudyHub es una aplicación que permite a los usuarios comprar, crear y realizar cursos sobre diversas temáticas, además de proporcionar un panel administrador para gestionar la plataforma. Incluye un sistema completo de progreso de cursos, gestión de lecciones multimedia, facturación con historial de compras, certificados de finalización y un diseño adaptable con modo claro/oscuro.
+StudyHub-App es una aplicación que permite a los usuarios comprar, crear y realizar cursos sobre diversas temáticas, además de proporcionar un panel administrador para gestionar la plataforma. Incluye un sistema completo de progreso de cursos, gestión de lecciones multimedia, facturación con historial de compras, certificados de finalización y un diseño adaptable con modo claro/oscuro.
 
 ### 2.3 Necesidades a cubrir
 La plataforma permite a los usuarios buscar, comprar y realizar cursos en línea, ofreciendo flexibilidad y comodidad en el aprendizaje.
@@ -41,7 +41,7 @@ Acude a nuestra web debido a su sencillez y ser online (no es presencial, por lo
 
 ## 3. Descripción del proyecto
 
-StudyHub es una plataforma completa que incluye las siguientes características:
+StudyHub-App es una plataforma completa que incluye las siguientes características:
 
 - **Autenticación completa**: Registro, inicio de sesión, recuperación de contraseña por email, verificación de correo electrónico y eliminación de cuenta (soft-delete y hard-delete).
 - **Panel de usuario (Dashboard)**: Panel principal con resumen del último curso en progreso, porcentaje de avance, número de cursos finalizados y accesos directos a las diferentes secciones.
@@ -171,17 +171,18 @@ Puedes encontrar toda la documentación completa, junto a toda la información y
 
 1. Clona este repositorio: `git clone https://github.com/manumengo71/StudyHub-App`
 
-2. Ejecutar `docker-compose up --build -d` (construye las imágenes de Docker según el archivo dockerfile, inicia los contenedores en segundo plano y los deja corriendo).
-
-3. Lanzar `docker exec -it mi-contenedor-laravel /bin/bash` (Abre terminal para utilizar comandos).
-    - 3.1. Lanzar `php artisan migrate` para ejecutar las migraciones (Crear base de datos).
-    - 3.2. (SI SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed`
-    - 3.3. (SI NO SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed --class=DatabaseProductionSeeder`
+1. Ejecutar `docker-compose up --build -d` (Construye las imágenes e inicia los contenedores).
+2. Lanzar `docker exec -it mi-contenedor-laravel /bin/bash` (Acceso interactivo al contenedor).
+3. Dentro del contenedor, ejecutar la base de datos:
+    - `php artisan migrate` (Crea las tablas).
+    - `php artisan db:seed` (Puebla con datos de prueba).
+    - O bien: `php artisan db:seed --class=DatabaseProductionSeeder` (Solo datos esenciales).
 
 Los contenedores Docker incluyen:
-- **Laravel + Apache**: Servidor web con PHP 8.2 y Vite.
+- **Laravel + Apache**: Servidor web (Puerto 8000).
 - **MySQL 8.0**: Base de datos.
-- **phpMyAdmin**: Interfaz web para gestión de la base de datos (accesible en `http://localhost:8080`).
+- **phpMyAdmin**: Gestión de BD (Accesible en `http://localhost:8080`).
+- **Mailpit**: Servidor de correo para pruebas (Accesible en `http://localhost:8025`).
 
 <br/>
 <br/>

@@ -1,16 +1,18 @@
 version: '3.8'
 
 services:
+    # La base de datos de la aplicación
     mysql:
         image: mysql:8.0.30
         container_name: mi-mysql
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: StudyHub-App
+            MYSQL_DATABASE: studyhub_app
         volumes:
             - mysql_data:/var/lib/mysql
 
+    # El contenedor principal con Laravel y el servidor web
     laravel:
         build:
             context: .
@@ -21,16 +23,37 @@ services:
         depends_on:
             - mysql
         environment:
+            APP_NAME: StudyHub-App
+            APP_ENV: local
+            APP_KEY: base64:45oW4YsU6oBHm8ZfgyrQZWOnlPx5T5jYuRVyuNgSf6w=
+            APP_DEBUG: "true"
+            APP_URL: http://localhost:8000
             DB_CONNECTION: mysql
             DB_HOST: mi-mysql
             DB_PORT: 3306
-            DB_DATABASE: StudyHub-App
+            DB_DATABASE: studyhub_app
             DB_USERNAME: root
             DB_PASSWORD: root
+            SESSION_DRIVER: file
+            CACHE_DRIVER: file
+            FILESYSTEM_DISK: local
+            QUEUE_CONNECTION: sync
+            MAIL_MAILER: smtp
+            MAIL_HOST: smtp.gmail.com
+            MAIL_PORT: 587
+            MAIL_USERNAME: hola.studyhubapp@gmail.com
+            MAIL_PASSWORD: aerghzcwqbshossz
+            MAIL_ENCRYPTION: tls
+            MAIL_FROM_ADDRESS: "hola.studyhubapp@gmail.com"
+            MAIL_FROM_NAME: "StudyHub-App"
         volumes:
-            - ./storage:/var/www/html/storage # Map Laravel storage folder
-            - ./php.ini:/usr/local/etc/php/conf.d/uploads.ini # Map PHP configuration file
+            - .:/var/www/html
+            - /var/www/html/vendor
+            - /var/www/html/node_modules
+            - ./storage:/var/www/html/storage
+            - ./php.ini:/usr/local/etc/php/conf.d/uploads.ini
 
+    # Interfaz web para gestionar la base de datos fácilmente
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: mi-phpmyadmin
@@ -43,5 +66,6 @@ services:
             PMA_PORT: 3306
             PMA_ARBITRARY: 1
 
+# Definimos dónde se guardarán los datos de la base de datos de forma persistente
 volumes:
     mysql_data:

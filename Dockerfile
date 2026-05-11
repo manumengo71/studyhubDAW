@@ -1,7 +1,7 @@
-# Use a PHP base image with Apache
+# Usamos una imagen de PHP con Apache ya configurado
 FROM php:8.2.4-apache
 
-# Install necessary dependencies for Laravel and enable PHP extensions
+# Instalamos las librerías necesarias para que Laravel y sus extensiones funcionen bien
 RUN apt-get update && apt-get install -y \
     libzip-dev \
     unzip \
@@ -13,50 +13,50 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gd \
     && a2enmod rewrite
 
-# Set the working directory inside the container
+# Nos situamos en la carpeta donde va a estar la web
 WORKDIR /var/www/html
 
-# Copy Apache configuration file to the container
+# Metemos nuestra configuración de Apache en el sitio que toca
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
-# Install Composer
+# Instalamos Composer para gestionar las librerías de PHP
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Copy composer files and install dependencies
+# Traemos los archivos de dependencias y las instalamos (sin las de desarrollo)
 COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader --ignore-platform-reqs --no-scripts
 
-# Copy project files to the container
+# Copiamos todo el código del proyecto al contenedor
 COPY . .
 
-# Install Node.js 18.x and npm
+# Instalamos Node.js para poder compilar los estilos y el JS
 RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
     && apt-get install -y nodejs
 
-# Remove existing node_modules and package-lock.json if they exist
+# Limpiamos instalaciones antiguas para evitar líos
 RUN rm -rf package-lock.json node_modules
 
-# Install npm dependencies
+# Instalamos todas las librerías de Node
 RUN npm install
 
-# Copy the environment file
+# Preparamos el archivo de configuración .env
 COPY .env.example .env
 
-# Change APP_URL to http://localhost:8000 in .env
+# Ajustamos la URL de la aplicación para que funcione en el puerto 8000
 RUN sed -i 's|APP_URL=http://localhost|APP_URL=http://localhost:8000|g' .env
 
-# Generate Laravel application key
+# Generamos la clave de seguridad de Laravel
 RUN php artisan key:generate
 
-# Copy the entrypoint script
+# Traemos el script que se encarga de arrancar todo al encender el contenedor
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Set appropriate permissions
+# Nos aseguramos de que los permisos de las carpetas sean los correctos para Apache
 RUN chown -R www-data:www-data /var/www/html
 
-# Expose port 80 for the Apache web server
+# Abrimos el puerto 80 para que la web sea accesible
 EXPOSE 80
 
-# Use the entrypoint script
+# Le decimos al contenedor que use nuestro script de arranque
 ENTRYPOINT ["docker-entrypoint.sh"]
