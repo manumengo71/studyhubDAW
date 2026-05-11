@@ -6,7 +6,7 @@
 
 ## 1. Introducción
 
-Este repositorio contiene el código fuente de StudyHub, una aplicación web diseñada para la compra de cursos de diferentes temáticas, junto con un panel administrador completo para gestionar la plataforma.
+Este repositorio contiene el código fuente de **StudyHub**, una aplicación web diseñada para la compra, creación y realización de cursos de diferentes temáticas, junto con un panel administrador completo para gestionar la plataforma. El proyecto se ha desarrollado siguiendo una arquitectura orientada a servicios dentro de Laravel, con un diseño moderno que incluye modo oscuro, editor de contenido enriquecido y generación de certificados en PDF.
 
 ## 2. Datos generales del Proyecto
 
@@ -14,7 +14,7 @@ Este repositorio contiene el código fuente de StudyHub, una aplicación web dis
 StudyHub-App
 
 ### 2.2 Descripción del proyecto
-StudyHub es una aplicación que permite a los usuarios comprar, crear y realizar cursos sobre diversas temáticas, además de proporcionar un panel administrador para gestionar la plataforma.
+StudyHub es una aplicación que permite a los usuarios comprar, crear y realizar cursos sobre diversas temáticas, además de proporcionar un panel administrador para gestionar la plataforma. Incluye un sistema completo de progreso de cursos, gestión de lecciones multimedia, facturación con historial de compras, certificados de finalización y un diseño adaptable con modo claro/oscuro.
 
 ### 2.3 Necesidades a cubrir
 La plataforma permite a los usuarios buscar, comprar y realizar cursos en línea, ofreciendo flexibilidad y comodidad en el aprendizaje.
@@ -22,16 +22,19 @@ La plataforma permite a los usuarios buscar, comprar y realizar cursos en línea
 EJ: Una persona quiere realizar un curso online de NextJS, así que para ello accede a nuestra plataforma y compra un curso, pudiendo elegir entre todos los disponibles. La persona realiza el curso.
 Acude a nuestra web debido a su sencillez y ser online (no es presencial, por lo que tiene total control de horas y evita la movilidad). 
 
-### 2.3 Entorno Tecnológico del proyecto
-- Laravel
-- Blade
-- Tailwind CSS
-- MySQL
-- Apache
-- PHP
-- npm
+### 2.4 Entorno Tecnológico del proyecto
+- **Backend:** Laravel 10.x / PHP 8.2
+- **Frontend:** Blade + Tailwind CSS 3.x + Alpine.js
+- **Bundler:** Vite 4.x
+- **Editor de contenido:** Editor.js (con plugins de código, imágenes, listas, citas, etc.)
+- **Base de datos:** MySQL 8.0
+- **Servidor web:** Apache 2.4
+- **Generación de PDFs:** DomPDF (barryvdh/laravel-dompdf)
+- **Gestión de medios:** Spatie Media Library
+- **Roles y permisos:** Spatie Laravel Permission
+- **Autenticación:** Laravel Breeze
 
-### 2.4 Software
+### 2.5 Software
 - Visual Studio Code
 - Laragon
 - Docker
@@ -40,46 +43,91 @@ Acude a nuestra web debido a su sencillez y ser online (no es presencial, por lo
 
 StudyHub es una plataforma completa que incluye las siguientes características:
 
-- **Autenticación**: Los usuarios pueden registrarse e iniciar sesión en la plataforma, junto con todo lo relacionado con ello y lo que implica (Recuperar contraseña, eliminar cuenta...).
-- **Panel de usuario**: Cada usuario tiene un perfil personal donde pueden ver y actualizar su información, así como administrar su cuenta. También tienen una sección donde podrán administrar y realizar los cursos creados y comprados.
-- **Compra de cursos**: Los usuarios pueden explorar, comprar y realizar cursos de diferentes temáticas desde el marketplace integrado.
-- **Creación de cursos**: Los usuarios también tienen la posibilidad de crear sus propios cursos y administrarlos.
-- **Panel administrador**: Los administradores tienen acceso a un panel especial con funciones de administración completa, incluyendo CRUD para los diferentes modelos de datos.
+- **Autenticación completa**: Registro, inicio de sesión, recuperación de contraseña por email, verificación de correo electrónico y eliminación de cuenta (soft-delete y hard-delete).
+- **Panel de usuario (Dashboard)**: Panel principal con resumen del último curso en progreso, porcentaje de avance, número de cursos finalizados y accesos directos a las diferentes secciones.
+- **Perfil de usuario**: Gestión de información personal (nombre, email, contraseña) y perfil extendido con avatar, biografía y datos adicionales.
+- **Compra de cursos**: Marketplace integrado para explorar, filtrar, buscar y comprar cursos por categoría. Vista detallada de cada curso con información completa y cursos relacionados.
+- **Creación de cursos**: Los usuarios pueden crear sus propios cursos con un flujo guiado: información básica → creación de lecciones en dos pasos (metadatos + contenido). Los cursos nuevos quedan desactivados hasta ser validados por un administrador.
+- **Reproductor de cursos**: Visualización de lecciones con soporte para múltiples tipos de contenido (vídeo, PDF, imágenes, texto, contenido enriquecido con Editor.js). Sistema de progreso automático con seguimiento de la lección actual.
+- **Certificados de finalización**: Generación y descarga de certificados en PDF (formato A4 horizontal) al completar un curso.
+- **Información de pago**: Gestión de tarjeta de crédito asociada a la cuenta y historial de compras con descarga de recibos en PDF.
+- **Panel administrador**: Sección exclusiva con CRUD completo para usuarios, cursos, categorías, lecciones y roles. Incluye sistema de validación de cursos, búsquedas avanzadas y gestión de estados (activar/desactivar/eliminar).
+- **Modo oscuro**: Soporte completo de tema claro/oscuro en la interfaz, con clases `dark:` de Tailwind CSS.
+- **Páginas legales**: Condiciones de uso, política de privacidad y ayuda/asistencia.
 
 ### 3.1 Pantallas
 
-- **Landpage**: Página principal con información básica y enlaces de registro e inicio de sesión.
+- **Landing Page**: Página principal con información de la plataforma y enlaces de registro e inicio de sesión.
   
 - **Auth**:
-  - Registro: Formulario de registro. Botón para ir al login.
-  - Inicio de sesión: Formulario de inicio de sesión. Botón de has olvidado contraseña para recuperarla a través de un correo electrónico.
+  - Registro: Formulario de registro con validación de nombre de usuario personalizada.
+  - Inicio de sesión: Formulario de login con opción de recuperación de contraseña por email.
+  - Verificación de email y restablecimiento de contraseña.
     
-- **Dashboard**: Panel principal con enlaces rápidos a las diferentes secciones de la plataforma.
+- **Dashboard**: Panel principal con widget del último curso en progreso, barra de porcentaje, cursos finalizados y accesos rápidos.
   
-- **Perfil**: Información del usuario y opciones de gestión de la cuenta.
+- **Perfil**: Información de la cuenta y perfil extendido. Opciones de actualización de datos, contraseña y eliminación de cuenta (soft-delete / hard-delete).
   
-- **Mis cursos**: Lista de cursos comprados y creados por el usuario.
-  - Cursos creados: Se podrán editar y desactivar/activar a través de un formulario de actualización. Se podrán agregar o eliminar lecciones. Los cursos nuevos/editados tendrán que ser validados por un administrador para su publicación.
-  - Cursos comprados: Se podrán empezar o seguir desde el último punto. Se visualizará el contenido de él.
-        - Las lecciones de cada curso podrán ser de diferentes tipos (pdf, texto, video, imágenes…). Se visualizará en un reproductor de lecciones.
-        - Se podrá descargar en forma de PDF el recibo de la compra de los cursos comprados(en otra vista).
+- **Mis cursos**: 
+  - **Cursos creados**: Listado paginado con opciones de editar, activar/desactivar y enviar a validación. Gestión de lecciones (agregar, editar, eliminar). Los cursos editados requieren re-validación por un administrador.
+  - **Cursos comprados**: Listado con estado de progreso. Posibilidad de empezar, continuar desde el último punto o reiniciar. Descarga de certificado al finalizar.
+    - Las lecciones pueden ser de diferentes tipos: vídeo, PDF, texto, imágenes o contenido enriquecido (Editor.js).
+    - Reproductor de lecciones integrado con navegación entre lecciones y seguimiento automático del progreso.
+    - Descarga de recibo de compra en PDF.
 
-- **Marketplace**: Página para explorar y comprar cursos.
-  - En la página se podrán ver categorías y cursos, aparecerán los ultimos cursos y categorías, asi como lo mas relevantes y la posibilidad de tener una lista completa (página que los contiene a todos) de todos juntos.
-  - Desde esta página se podran crear nuevos cursos (por defecto irán desactivados hasta no completar un mínimo de información de él).
-  - Se podrá ir a la vista detallada del curso en la que aparecerá toda su información y cursos relacionados.
-  - Una vez comprado un curso se agregará a la lista en mis cursos.
-  - Se podrá filrar y buscar los cursos y categorías a través de su buscador integrado.
-    
-- **Información de pago**: Agregar/editar la tarjeta de crédito asociada a la cuenta. Historial de compras, donde se podrá ver un general de cada curso y podrá descargarase un pdf con el recibo de compra.
+- **Marketplace**: Exploración de cursos y categorías.
+  - Últimos cursos y categorías destacadas.
+  - Vista completa de todos los cursos y categorías con paginación.
+  - Buscador integrado con filtros.
+  - Vista detallada de cada curso con descripción, lecciones, precio y cursos relacionados.
+  - Creación de nuevos cursos directamente desde el marketplace.
+  - Compra de cursos (requiere tarjeta de crédito registrada).
+
+- **Información de pago**: Agregar/editar tarjeta de crédito. Historial de compras con descarga de recibo en PDF.
   
-- **Panel administrador**: Sección exclusiva para administradores con funciones de gestión. Se tiene acceso completo a todos los datos y modelos de la aplicación y la total gestión de ellos. Métodos de validación de cursos para seguridad.
+- **Panel administrador**: 
+  - Dashboard de administración con acceso a todas las secciones.
+  - CRUD de categorías: crear, editar, activar/desactivar, eliminar permanentemente.
+  - CRUD de cursos: crear, editar, validar/rechazar, activar/desactivar, eliminar. Vista detallada de cada curso.
+  - CRUD de usuarios: crear, editar, activar/desactivar, eliminar.
+  - CRUD de roles: crear, editar, activar/desactivar, eliminar. Gestión de permisos con Spatie.
+  - CRUD de lecciones: crear (2 pasos), editar, eliminar.
+  - Buscadores integrados en cada sección.
 
-### 3.2 Tecnologías utilizadas
+### 3.2 Arquitectura y patrones
 
-La plataforma utiliza Laravel como framework backend, Blade, JS , Tailwind CSS para el diseño, y MySQL como base de datos.
+La aplicación sigue una arquitectura MVC con **capa de servicios** para la lógica de negocio reutilizable:
 
-### 3.3 Consideraciones adicionales
+- **Controllers**: Gestionan las peticiones HTTP y delegan la lógica a servicios.
+- **Services**: `CourseProgressService` (cálculo de progreso y datos del dashboard) y `LessonService` (creación, actualización y eliminación de lecciones compartida entre controladores de usuario y administrador).
+- **Form Requests**: Validación de datos separada en request classes dedicadas.
+- **Custom Rules**: Regla personalizada `UsernameValidationRule` para validación de nombres de usuario.
+- **Blade Components**: Componentes reutilizables para botones, modales, inputs, dropdowns, navegación, etc.
+- **Layouts compartidos**: `app.blade.php` (autenticado) y `guest.blade.php` (invitado) con navegación responsive.
+- **Soft Deletes**: Sistema de borrado lógico para cursos y usuarios, permitiendo restauración.
+- **Spatie Media Library**: Gestión de archivos multimedia asociados a cursos y lecciones.
+- **Spatie Laravel Permission**: Sistema de roles y permisos granular.
+
+### 3.3 Modelos de datos
+
+| Modelo | Descripción |
+|---|---|
+| `User` | Usuarios de la plataforma |
+| `UserProfile` | Perfil extendido del usuario |
+| `Course` | Cursos con soft-delete y validación |
+| `CourseCategory` | Categorías de cursos |
+| `Lesson` | Lecciones pertenecientes a cursos |
+| `LessonType` | Tipos de lección (vídeo, PDF, texto, imagen, editor) |
+| `User_course` | Relación usuario-curso (compras) |
+| `User_course_progress` | Progreso del usuario en un curso |
+| `User_course_status` | Estados del curso (no empezado, en progreso, finalizado) |
+| `User_lesson` | Relación usuario-lección |
+| `BillingInformation` | Información de tarjeta de crédito |
+| `BillingHistory` | Historial de compras |
+| `CreditCardType` | Tipos de tarjeta de crédito |
+| `CustomRole` | Roles personalizados |
+
+### 3.4 Consideraciones adicionales
 
 Se utilizan layouts compartidos para mejorar la eficiencia y la consistencia del código y la interfaz de usuario.
 
@@ -111,9 +159,11 @@ Puedes encontrar toda la documentación completa, junto a toda la información y
 
 9. Genera un acceso directo al almacenamiento público ejecutando: `php artisan storage:link`.
 
-10. Inicia el servidor: `php artisan serve` (en caso de no utilizar alguna aplicación como laragon, xampp...)
+10. Compila los assets de frontend: `npm run dev` (desarrollo) o `npm run build` (producción).
 
-11. Visita `http://localhost:8000` en tu navegador (o la ruta utilizada por tu aplicación).
+11. Inicia el servidor: `php artisan serve` (en caso de no utilizar alguna aplicación como Laragon, XAMPP...).
+
+12. Visita `http://localhost:8000` en tu navegador (o la ruta utilizada por tu aplicación).
     
 <br/>
 
@@ -124,9 +174,14 @@ Puedes encontrar toda la documentación completa, junto a toda la información y
 2. Ejecutar `docker-compose up --build -d` (construye las imágenes de Docker según el archivo dockerfile, inicia los contenedores en segundo plano y los deja corriendo).
 
 3. Lanzar `docker exec -it mi-contenedor-laravel /bin/bash` (Abre terminal para utilizar comandos).
-    - 3.2. Lanzar `php artisan migrate` para ejecutar las migraciones (Crear base de datos).
-    - 3.3. (SI SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed`
-    - 4.4. (SI NO SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed --class=DatabaseProductionSeeder`
+    - 3.1. Lanzar `php artisan migrate` para ejecutar las migraciones (Crear base de datos).
+    - 3.2. (SI SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed`
+    - 3.3. (SI NO SE REQUIEREN DATOS DE PRUEBA) -> Lanzar `php artisan db:seed --class=DatabaseProductionSeeder`
+
+Los contenedores Docker incluyen:
+- **Laravel + Apache**: Servidor web con PHP 8.2 y Vite.
+- **MySQL 8.0**: Base de datos.
+- **phpMyAdmin**: Interfaz web para gestión de la base de datos (accesible en `http://localhost:8080`).
 
 <br/>
 <br/>
@@ -152,12 +207,23 @@ La cuenta global de la aplicación es muy importante para el correcto desarrollo
 
 <hr/>
 
-** **Versión de laravel utilizada: 10.x | Versión de PHP utilizada: 8.2.4 | Versión de MYSQL utilizada: 8.0.30 | Versión de apache utilizada: 2.4.54 | Versión de Node.js utilizada: 20.11.1** **
+### Versiones utilizadas
+
+| Tecnología | Versión |
+|---|---|
+| Laravel | 10.x |
+| PHP | 8.2.4 |
+| MySQL | 8.0.30 |
+| Apache | 2.4.54 |
+| Node.js | 20.11.1 |
+| Tailwind CSS | 3.x |
+| Vite | 4.x |
+| Alpine.js | 3.x |
 
 <br/>
 
 ## Creador, redes e información:
-¡Hola! Soy Manuel Cándido Mendoza González, actualmente estoy cursando el grado superior DAM (Desarrollo de aplicaciones multiplataforma) en modalidad dual y estoy realizando mi FCT y TFG. Este repositorio incluye todo mi trabajo para el proyecto del TFG. ¡Espero que os guste!
+¡Hola! Soy Manuel C. Mendoza González, actualmente estoy cursando el grado superior DAW (Desarrollo de Aplicaciones Web). Este repositorio incluye todo mi trabajo del proyecto. ¡Espero que os guste!
 <br/><br/>
 Hecho con cariño ❤️.
 
